@@ -4,10 +4,10 @@ from pathlib import Path
 import openai
 
 class Config:
-    api_key = "sk"
+    api_key = "sk-123456"
     base_url = "http://localhost:8000/v1"
-    model = "Qwen3-VL-8B"
-    image_dir = str(Path(__file__).with_name("C:\Zoo\Kestrel\data\20250422T150435"))
+    model = "qwen3-vl-8b-instruct"
+    image_dir = "/home/vision/Kestrel/data/20250422T150435"
     prompt_md_path = str(Path(__file__).with_name("prompt.md"))
     max_images = 14
     max_tokens = 8192
