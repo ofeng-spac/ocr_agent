@@ -9,7 +9,7 @@ from PIL import Image, ImageOps
 class Config:
     api_key = "sk-123456"
     base_url = "http://localhost:8000/v1"
-    model = "qwen3-vl-8b-instruct"
+    model = "qwen3-vl-8b-instruct-awq-4bit"
     image_dir = "/home/vision/Kestrel/data/20250422T150435"
     prompt_md_path = str(Path(__file__).with_name("prompt.md"))
     max_images = 14
