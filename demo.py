@@ -1,83 +1,44 @@
-import http.server
+import base64
 import io
-import threading
-import urllib.parse
+import mimetypes
 from pathlib import Path
 import openai
 from PIL import Image, ImageOps
 
 class Config:
-    api_key = "sk-123456"
-    base_url = "http://localhost:8000/v1"
-    model = "qwen3-vl-8b-instruct-awq-4bit"
-    image_dir = "/home/vision/Kestrel/data/20250422T150435"
+    api_key = "sk-67656f65a21a45bea7b6bfa0e206bcd4"
+    base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    model = "qwen3-vl-235b-a22b-instruct"
+    image_dir = r"C:/Zoo/Kestrel/data/20250422T150435"
     prompt_md_path = str(Path(__file__).with_name("prompt.md"))
     max_images = 14
     image_detail = "auto"
-    image_base_url = "http://127.0.0.1:9001"
-    start_image_server = True
-    image_server_host = "127.0.0.1"
-    image_server_port = 9001
     max_image_side = 1280
     jpeg_quality = 85
     max_tokens = 8192
 
-def _start_image_server(root: Path, host: str, port: int, max_side: int, jpeg_quality: int) -> None:
-    class Handler(http.server.SimpleHTTPRequestHandler):
-        extensions_map = {
-            **http.server.SimpleHTTPRequestHandler.extensions_map,
-            ".jpg": "image/jpeg",
-            ".jpeg": "image/jpeg",
-            ".png": "image/png",
-            ".webp": "image/webp",
-            ".bmp": "image/bmp",
-            ".tif": "image/tiff",
-            ".tiff": "image/tiff",
-            ".gif": "image/gif",
-        }
+def _to_data_url(path: Path, max_side: int, jpeg_quality: int) -> str:
+    mime, _ = mimetypes.guess_type(str(path))
+    if mime == "image/gif":
+        b64 = base64.b64encode(path.read_bytes()).decode("utf-8")
+        return f"data:{mime};base64,{b64}"
 
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, directory=str(root), **kwargs)
+    with Image.open(path) as im:
+        im = ImageOps.exif_transpose(im)
+        if im.mode != "RGB":
+            im = im.convert("RGB")
 
-        def log_message(self, format, *args):
-            return
+        w, h = im.size
+        if max_side and max(w, h) > max_side:
+            scale = max_side / max(w, h)
+            im = im.resize((round(w * scale), round(h * scale)), Image.Resampling.LANCZOS)
 
-        def do_GET(self) -> None:
-            path = Path(self.translate_path(self.path))
-            if not path.is_file():
-                self.send_error(404)
-                return
+        with io.BytesIO() as out:
+            im.save(out, format="JPEG", quality=jpeg_quality, optimize=True, progressive=True)
+            buf = out.getvalue()
 
-            if path.suffix.lower() == ".gif":
-                return super().do_GET()
-
-            with Image.open(path) as im:
-                im = ImageOps.exif_transpose(im)
-                if im.mode != "RGB":
-                    im = im.convert("RGB")
-
-                w, h = im.size
-                if max_side and max(w, h) > max_side:
-                    scale = max_side / max(w, h)
-                    im = im.resize((round(w * scale), round(h * scale)), Image.Resampling.LANCZOS)
-
-                with io.BytesIO() as out:
-                    im.save(out, format="JPEG", quality=jpeg_quality, optimize=True, progressive=True)
-                    buf = out.getvalue()
-
-            self.send_response(200)
-            self.send_header("Content-Type", "image/jpeg")
-            self.send_header("Content-Length", str(len(buf)))
-            self.end_headers()
-            self.wfile.write(buf)
-
-    httpd = http.server.ThreadingHTTPServer((host, port), Handler)
-    t = threading.Thread(target=httpd.serve_forever, daemon=True)
-    t.start()
-
-def _file_url(file_path: Path, root: Path, base_url: str) -> str:
-    rel = file_path.resolve().relative_to(root.resolve()).as_posix()
-    return base_url.rstrip("/") + "/" + urllib.parse.quote(rel)
+    b64 = base64.b64encode(buf).decode("utf-8")
+    return f"data:image/jpeg;base64,{b64}"
 
 def _images_in(folder: Path) -> list[Path]:
     exts = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".tif", ".tiff"}
@@ -103,16 +64,13 @@ def main() -> int:
     prompt_path = Path(cfg.prompt_md_path).expanduser().resolve()
     prompt = _read_prompt_md(prompt_path)
 
-    if cfg.start_image_server:
-        _start_image_server(folder, cfg.image_server_host, cfg.image_server_port, cfg.max_image_side, cfg.jpeg_quality)
-
     content = [{"type": "text", "text": prompt}]
     for img in images:
         content.append(
             {
                 "type": "image_url",
                 "image_url": {
-                    "url": _file_url(img, folder, cfg.image_base_url),
+                    "url": _to_data_url(img, cfg.max_image_side, cfg.jpeg_quality),
                     "detail": cfg.image_detail,
                 },
             }
