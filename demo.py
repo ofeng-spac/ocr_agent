@@ -9,7 +9,7 @@ class Config:
     api_key = "sk-67656f65a21a45bea7b6bfa0e206bcd4"
     base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
     model = "qwen3-vl-flash"    # "qwen3-vl-235b-a22b-instruct"
-    image_dir = r"C:/Zoo/Kestrel/data/20250425T194218"
+    image_dir = r"C:/Zoo/Kestrel/data/20250424T183246"
     prompt_md_path = str(Path(__file__).with_name("prompt.md"))
     max_images = 14
     image_detail = "auto"
@@ -83,22 +83,7 @@ def main() -> int:
         max_tokens=cfg.max_tokens,
     )
     print(response.choices[0].message.content)
-
-    # 生产环境可以注释掉下面这段
-    total_tokens = None
-    usage = getattr(response, "usage", None)
-    if usage is not None:
-        if isinstance(usage, dict):
-            total_tokens = usage.get("total_tokens")
-        else:
-            total_tokens = getattr(usage, "total_tokens", None)
-    if total_tokens is None:
-        try:
-            total_tokens = (response.model_dump().get("usage") or {}).get("total_tokens")
-        except Exception:
-            total_tokens = None
-    print(f"消耗tokens：{total_tokens if total_tokens is not None else '未知'}")
-
+    
     return 0
 
 if __name__ == "__main__":
