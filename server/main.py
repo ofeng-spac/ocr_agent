@@ -4,7 +4,7 @@ import numpy as np
 import os
 from concurrent.futures import ThreadPoolExecutor
 
-from config import Config
+from server.config import Config
 from server.ingestion import crop_background, video_downsample
 
 def main() -> int:
