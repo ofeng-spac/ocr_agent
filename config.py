@@ -4,6 +4,8 @@ class Config:
     video_path = str(Path(__file__).resolve().parent / "video" / "video5.mp4")
     target_fps = 5
 
+    ocr = "vlm"    # "vlm" "paddle" "tesseract"
+
     enable_crop_background = True
     crop_border = 10
     crop_k = 3.2
@@ -21,3 +23,10 @@ class Config:
     vlm_base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
     vlm_model = "qwen3-vl-flash"
     vlm_max_tokens = 8192
+
+    tesseract_lang = "chi_sim+eng"
+    tesseract_psm = None
+    tesseract_oem = None
+    tesseract_cmd = None
+    tesseract_extra_config = None
+    tesseract_cmd = r"C:\Users\hanze\scoop\apps\tesseract\current\tesseract.exe"

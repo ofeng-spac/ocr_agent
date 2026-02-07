@@ -6,7 +6,6 @@ from concurrent.futures import ThreadPoolExecutor
 
 from config import Config
 from server.ingestion import crop_background, video_downsample
-from ocr.vlm_ocr import vlm_ocr
 
 def main() -> int:
     cfg = Config()
@@ -25,7 +24,29 @@ def main() -> int:
             with ThreadPoolExecutor(max_workers=max_workers) as ex:
                 frames = list(ex.map(_one, frames))
 
-    result = vlm_ocr(frames, cfg)
+    ocr = getattr(cfg, "ocr", "vlm")
+
+    def _run_vlm() -> str:
+        from server.ocr.vlm_ocr import vlm_ocr
+
+        return vlm_ocr(frames, cfg)
+
+    def _run_paddle() -> str:
+        from server.ocr.paddle_ocr import paddle_ocr
+
+        return paddle_ocr(frames)
+
+    def _run_tesseract() -> str:
+        from server.ocr.tesseract_ocr import tesseract_ocr
+
+        return tesseract_ocr(frames, lang=getattr(cfg, "tesseract_lang", "chi_sim+eng"), psm=getattr(cfg, "tesseract_psm", None), oem=getattr(cfg, "tesseract_oem", None), tesseract_cmd=getattr(cfg, "tesseract_cmd", None), extra_config=getattr(cfg, "tesseract_extra_config", None))
+
+    runners = {
+        "vlm": _run_vlm,
+        "paddle": _run_paddle,
+        "tesseract": _run_tesseract,
+    }
+    result = runners.get(ocr, _run_vlm)()
     print(result)
     t1 = time.perf_counter()
     print(f"用时: {t1 - t0:.3f}s", file=sys.stderr)

@@ -4,6 +4,8 @@ from typing import List
 from config import Config
 from server.ingestion import ImgLike, to_urls
 
+_PROMPT_CACHE: dict[str, tuple[int, str]] = {}
+_CLIENT_CACHE: dict[tuple[str, str], openai.OpenAI] = {}
 
 def _normalize_base_url(base_url: str) -> str:
     b = base_url.strip().rstrip("/")
@@ -13,7 +15,14 @@ def _normalize_base_url(base_url: str) -> str:
 
 
 def _read_prompt_md(path: Path) -> str:
-    return path.read_text(encoding="utf-8").strip()
+    key = str(path)
+    mtime = path.stat().st_mtime_ns
+    cached = _PROMPT_CACHE.get(key)
+    if cached and cached[0] == mtime:
+        return cached[1]
+    prompt = path.read_text(encoding="utf-8").strip()
+    _PROMPT_CACHE[key] = (mtime, prompt)
+    return prompt
 
 
 def vlm_ocr(images: List[ImgLike], cfg: Config) -> str:
@@ -35,10 +44,12 @@ def vlm_ocr(images: List[ImgLike], cfg: Config) -> str:
             }
         )
 
-    client = openai.OpenAI(
-        base_url=_normalize_base_url(cfg.vlm_base_url),
-        api_key=cfg.vlm_api_key,
-    )
+    base_url = _normalize_base_url(cfg.vlm_base_url)
+    api_key = cfg.vlm_api_key
+    client = _CLIENT_CACHE.get((base_url, api_key))
+    if client is None:
+        client = openai.OpenAI(base_url=base_url, api_key=api_key)
+        _CLIENT_CACHE[(base_url, api_key)] = client
     response = client.chat.completions.create(
         model=cfg.vlm_model,
         messages=[{"role": "user", "content": content}],
