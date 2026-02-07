@@ -1,7 +1,8 @@
 import sys
 import time
 import numpy as np
-from PIL import Image
+import os
+from concurrent.futures import ThreadPoolExecutor
 
 from config import Config
 from server.ingestion import crop_background, video_downsample
@@ -14,18 +15,15 @@ def main() -> int:
     frames = frames[: cfg.max_images]
 
     if cfg.enable_crop_background:
-        processed: list[Image.Image] = []
-        for im in frames:
-            arr = np.asarray(im)
-            cropped = crop_background(
-                arr,
-                border=cfg.crop_border,
-                k=cfg.crop_k,
-                area_ratio=cfg.crop_area_ratio,
-                pad_ratio=cfg.crop_pad_ratio,
-            )
-            processed.append(Image.fromarray(cropped))
-        frames = processed
+        def _one(arr: np.ndarray) -> np.ndarray:
+            return crop_background(arr, border=cfg.crop_border, k=cfg.crop_k, area_ratio=cfg.crop_area_ratio, pad_ratio=cfg.crop_pad_ratio)
+            
+        if len(frames) <= 1:
+            frames = [_one(frames[0])] if frames else []
+        else:
+            max_workers = min(len(frames), 8, (os.cpu_count() or 4))
+            with ThreadPoolExecutor(max_workers=max_workers) as ex:
+                frames = list(ex.map(_one, frames))
 
     result = vlm_ocr(frames, cfg)
     print(result)

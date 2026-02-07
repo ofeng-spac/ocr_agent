@@ -4,9 +4,11 @@ import cv2
 import base64
 import numpy as np
 from PIL import Image, ImageOps
+import os
+from concurrent.futures import ThreadPoolExecutor
 from typing import List, Union
 
-def video_downsample(video_path: str, target_fps: int) -> List[Image.Image]:
+def video_downsample(video_path: str, target_fps: int) -> List[np.ndarray]:
     if target_fps <= 0:
         raise ValueError("target_fps must be > 0")
     if not Path(video_path).expanduser().exists():
@@ -20,7 +22,7 @@ def video_downsample(video_path: str, target_fps: int) -> List[Image.Image]:
     fps = cap.get(cv2.CAP_PROP_FPS) or 0.0
     interval = max(1, int(round(fps / float(target_fps))) if fps > 0 else 1)
 
-    frames: List[Image.Image] = []
+    frames: List[np.ndarray] = []
     frame_idx = 0
 
     try:
@@ -30,7 +32,7 @@ def video_downsample(video_path: str, target_fps: int) -> List[Image.Image]:
                 break
             if frame_idx % interval == 0:
                 rgb = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
-                frames.append(Image.fromarray(rgb))
+                frames.append(rgb)
             frame_idx += 1
     finally:
         cap.release()
@@ -88,20 +90,35 @@ ImgLike = Union[Image.Image, np.ndarray]
 
 
 def to_urls(images: List[ImgLike], max_side: int, jpeg_quality: int) -> List[str]:
-    urls: List[str] = []
-    for img in images:
-        if isinstance(img, np.ndarray):
-            if img.ndim == 2:
-                pil = Image.fromarray(img)
-            else:
-                try:
-                    pil = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-                except Exception:
-                    pil = Image.fromarray(img)
+    def _encode_ndarray_to_data_url(arr: np.ndarray) -> str:
+        if arr.ndim == 2:
+            img = arr
+        elif arr.ndim == 3 and arr.shape[2] == 3:
+            img = cv2.cvtColor(arr, cv2.COLOR_RGB2BGR)
         else:
-            pil = img
+            raise ValueError(f"Unsupported ndarray shape: {arr.shape!r}")
 
-        pil = ImageOps.exif_transpose(pil)
+        if img.dtype != np.uint8:
+            img = np.clip(img, 0, 255).astype(np.uint8, copy=False)
+        img = np.ascontiguousarray(img)
+
+        h, w = img.shape[:2]
+        if max_side and max(h, w) > max_side:
+            scale = max_side / max(h, w)
+            new_w, new_h = round(w * scale), round(h * scale)
+            img = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_LANCZOS4)
+
+        q = int(jpeg_quality)
+        q = 1 if q < 1 else 100 if q > 100 else q
+        ok, buf = cv2.imencode(".jpg", img, [int(cv2.IMWRITE_JPEG_QUALITY), q])
+        if not ok:
+            raise ValueError("Failed to encode jpeg")
+
+        b64 = base64.b64encode(buf.tobytes()).decode("utf-8")
+        return f"data:image/jpeg;base64,{b64}"
+
+    def _encode_pil_to_data_url(pil_img: Image.Image) -> str:
+        pil = ImageOps.exif_transpose(pil_img)
         if pil.mode != "RGB":
             pil = pil.convert("RGB")
 
@@ -115,6 +132,16 @@ def to_urls(images: List[ImgLike], max_side: int, jpeg_quality: int) -> List[str
             buf = out.getvalue()
 
         b64 = base64.b64encode(buf).decode("utf-8")
-        urls.append(f"data:image/jpeg;base64,{b64}")
+        return f"data:image/jpeg;base64,{b64}"
 
-    return urls
+    def _one(img: ImgLike) -> str:
+        if isinstance(img, np.ndarray):
+            return _encode_ndarray_to_data_url(img)
+        return _encode_pil_to_data_url(img)
+
+    if len(images) <= 1:
+        return [_one(images[0])] if images else []
+
+    max_workers = min(len(images), 8, (os.cpu_count() or 4))
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        return list(ex.map(_one, images))

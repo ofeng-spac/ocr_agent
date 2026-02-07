@@ -1,7 +1,7 @@
 from pathlib import Path
 
 class Config:
-    video_path = str(Path(__file__).resolve().parent / "video" / "video3.mp4")
+    video_path = str(Path(__file__).resolve().parent / "video" / "video5.mp4")
     target_fps = 5
 
     enable_crop_background = True
