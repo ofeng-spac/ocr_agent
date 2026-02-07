@@ -9,7 +9,7 @@ class Config:
     api_key = "sk-67656f65a21a45bea7b6bfa0e206bcd4"
     base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
     model = "qwen3-vl-flash"    # "qwen3-vl-235b-a22b-instruct"
-    image_dir = r"C:/Zoo/Kestrel/data/20250424T183246"
+    image_dir = r"C:\Zoo\Kestrel\v1.0\image\20250422T150435"
     prompt_md_path = str(Path(__file__).with_name("prompt.md"))
     max_images = 14
     image_detail = "auto"
