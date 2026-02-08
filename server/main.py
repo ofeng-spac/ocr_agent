@@ -3,6 +3,11 @@ import time
 import numpy as np
 import os
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
+
+_ROOT = Path(__file__).resolve().parent.parent
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
 
 from server.config import Config
 from server.ingestion import crop_background, video_downsample

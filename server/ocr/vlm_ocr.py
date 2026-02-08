@@ -1,7 +1,7 @@
 import openai
 from pathlib import Path
 from typing import List
-from config import Config
+from server.config import Config
 from server.ingestion import ImgLike, to_urls
 
 _PROMPT_CACHE: dict[str, tuple[int, str]] = {}
