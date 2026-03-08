@@ -29,7 +29,6 @@ def vlm_ocr(images: List[ImgLike], cfg: Config) -> str:
     prompt_path = Path(cfg.prompt_md_path).expanduser().resolve()
     prompt = _read_prompt_md(prompt_path)
 
-    images = images[: cfg.max_images]
     urls = to_urls(images, max_side=cfg.max_image_side, jpeg_quality=cfg.jpeg_quality)
 
     content = [{"type": "text", "text": prompt}]

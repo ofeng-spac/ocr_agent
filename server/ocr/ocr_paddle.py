@@ -1,9 +1,9 @@
 import numpy as np
 from PIL import Image, ImageOps
 from paddleocr import PaddleOCR  # type: ignore
-from typing import Sequence, Union
+from typing import Sequence
 
-ImgLike = Union[Image.Image, np.ndarray]
+from server.ingestion import ImgLike
 
 _OCR_CACHE: dict[str, PaddleOCR] = {}
 

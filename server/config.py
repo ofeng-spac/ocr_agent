@@ -1,10 +1,7 @@
 from pathlib import Path
 
 class Config:
-    video_path = str(Path(__file__).resolve().parent.parent / "video" / "video5.mp4")
     target_fps = 5
-
-    ocr = "vlm"    # "vlm" "paddle" "tesseract"
 
     enable_crop_background = True
     crop_border = 10
@@ -12,7 +9,7 @@ class Config:
     crop_area_ratio = 0.02
     crop_pad_ratio = 0.06
 
-    max_images = 14
+    max_images = 15
     image_detail = "auto"
     max_image_side = 1280
     jpeg_quality = 85
@@ -27,6 +24,5 @@ class Config:
     tesseract_lang = "chi_sim+eng"
     tesseract_psm = None
     tesseract_oem = None
-    tesseract_cmd = None
     tesseract_extra_config = None
     tesseract_cmd = r"C:\Users\hanze\scoop\apps\tesseract\current\tesseract.exe"
