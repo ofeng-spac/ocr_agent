@@ -49,10 +49,10 @@ def main():
     args = parser.parse_args()
 
     cfg = Config()
-    log_path = _ROOT / f"experiment_log_{args.mode}.txt"
+    log_path = _ROOT / f"log_{args.mode}.txt"
     videos = sorted(VIDEO_DIR.glob("*.mp4"))
     total = len(videos)
-    print(f"共 {total} 个视频，模式: {args.mode}，日志写入 {log_path}")
+    print(f"共 {total} 组数据\n模式: {args.mode}")
 
     with log_path.open("w", encoding="utf-8") as log:
         for i, video_path in enumerate(videos, 1):
@@ -68,7 +68,7 @@ def main():
             print(body)
             log.write(body + "\n")
 
-    print(f"完成，日志已保存至 {log_path}")
+    print(f"完成！")
 
 
 if __name__ == "__main__":

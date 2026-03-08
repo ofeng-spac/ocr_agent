@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmd /c \"where xelatex\")",
+      "Bash(cmd /c \"xelatex --version\")",
+      "Read(//c/Users/hanze/scoop/apps//**)",
+      "Read(//c/ProgramData/scoop/apps//**)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/texlive/**)",
+      "Read(//c/Users/hanze/AppData/Local/Programs/**)",
+      "Bash(/c/texlive/2025/bin/windows/kpsewhich.exe svjour3.cls)",
+      "Bash(/c/texlive/2025/bin/windows/kpsewhich.exe spbasic.bst)",
+      "Bash(/c/texlive/2025/bin/windows/tlmgr.bat search --global svjour)",
+      "Bash(powershell -Command \":*)",
+      "Bash(/c/texlive/2025/bin/windows/tlmgr.bat --repository 'https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2025/tlnet/' install svjour3)",
+      "Bash(/c/texlive/2025/bin/windows/xelatex.exe -interaction=nonstopmode main.tex)",
+      "Bash(python -c \":*)"
+    ],
+    "additionalDirectories": [
+      "c:\\Zoo\\Kestrel\\server",
+      "C:\\Users\\hanze\\.claude\\projects\\c--Zoo-Kestrel"
+    ]
+  }
+}

@@ -53,6 +53,7 @@ def vlm_ocr(images: List[ImgLike], cfg: Config) -> str:
         model=cfg.vlm_model,
         messages=[{"role": "user", "content": content}],
         max_tokens=cfg.vlm_max_tokens,
+        temperature=0,
     )
 
     return (response.choices[0].message.content or "").strip()

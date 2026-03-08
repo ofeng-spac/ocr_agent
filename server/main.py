@@ -54,6 +54,7 @@ def main() -> int:
         "tesseract": _run_tesseract,
     }
     result = runners[args.mode]()
+
     print(result)
     t1 = time.perf_counter()
     print(f"用时: {t1 - t0:.3f}s", file=sys.stderr)
