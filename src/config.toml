@@ -1,0 +1,23 @@
+[video]
+fps = 5
+max_frames = 14
+
+[crop]
+border = 10
+k = 3.2
+area_ratio = 0.02
+pad_ratio = 0.06
+
+[image]
+max_side = 1280
+quality = 85
+
+[api.qwen3-vl-flash]
+base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+api_key = "sk-67656f65a21a45bea7b6bfa0e206bcd4"
+model = "qwen3-vl-flash"
+
+[api.qwen3-vl-plus]
+base_url = "ttps://dashscope.aliyuncs.com/compatible-mode/v1"
+api_key = "sk-67656f65a21a45bea7b6bfa0e206bcd4"
+model = "qwen3-vl-plus"
