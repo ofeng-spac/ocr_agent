@@ -1,3 +1,5 @@
+models = ["qwen3-vl-flash", "qwen3-vl-plus"]
+
 [video]
 fps = 5
 max_frames = 14
@@ -18,6 +20,6 @@ api_key = "sk-67656f65a21a45bea7b6bfa0e206bcd4"
 model = "qwen3-vl-flash"
 
 [api.qwen3-vl-plus]
-base_url = "ttps://dashscope.aliyuncs.com/compatible-mode/v1"
+base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 api_key = "sk-67656f65a21a45bea7b6bfa0e206bcd4"
 model = "qwen3-vl-plus"
