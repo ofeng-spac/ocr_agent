@@ -61,7 +61,7 @@ def encode_frame(frame, max_side=1280, quality=85):
     return "data:image/jpeg;base64," + base64.b64encode(buf.tobytes()).decode()
 
 
-def load_prompt(prompt_path, guide=True, kb=True):
+def load_prompt(prompt_path, guide=True, kb=True, cot=True):
     """Load prompt, split by ## headings, selectively join based on flags."""
     text = Path(prompt_path).read_text(encoding="utf-8").strip()
     sections = re.split(r'(?=^## )', text, flags=re.MULTILINE)
@@ -75,6 +75,13 @@ def load_prompt(prompt_path, guide=True, kb=True):
         title = s.split('\n', 1)[0].strip().lstrip('#').strip()
         title_clean = re.sub(r'[（(].+?[）)]', '', title).strip()
         if title_clean not in skip:
+            if not cot and title_clean == "输出格式":
+                # strip CoT lines, keep only 药品名称 line
+                lines = s.splitlines()
+                s = "\n".join(
+                    l for l in lines
+                    if not re.match(r'^(关键信息摘录|不确定性)[：:]', l)
+                )
             parts.append(s.strip())
     return "\n\n".join(parts)
 

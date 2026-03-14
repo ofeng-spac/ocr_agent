@@ -1,10 +1,11 @@
 """
 Batch experiment runner with binary-style encoding.
 
-Code format: <model><knowledge><guide>
+Code format: <model><knowledge><guide><cot>
   - model:     0-9/a-f (index into config.toml models array)
   - knowledge: 0=off, 1=on
   - guide:     0=off, 1=on
+  - cot:       0=off, 1=on  (关键信息摘录 + 不确定性 lines)
 
 Usage:
     python run.py <code>          # run experiment
@@ -12,10 +13,10 @@ Usage:
     python run.py --time          # violin plot of response times
 
 Examples:
-    python run.py 011    → model 0 (flash), kb=on,  guide=on  → logs/log_011.txt
-    python run.py 010    → model 0 (flash), kb=on,  guide=off → logs/log_010.txt
-    python run.py 100    → model 1 (plus),  kb=off, guide=off → logs/log_100.txt
-    python run.py 111    → model 1 (plus),  kb=on,  guide=on  → logs/log_111.txt
+    python run.py 0111   → model 0, kb=on,  guide=on,  cot=on  → logs/log_0111.txt
+    python run.py 0110   → model 0, kb=on,  guide=on,  cot=off → logs/log_0110.txt
+    python run.py 0100   → model 0, kb=on,  guide=off, cot=off → logs/log_0100.txt
+    python run.py 1111   → model 1, kb=on,  guide=on,  cot=on  → logs/log_1111.txt
 --analyze
 Result categories ():
     正确: predicted == ground_truth
@@ -35,7 +36,7 @@ _UNKNOWN_VALUES = {"未知", "无法识别", "无", ""}
 _RE_HEADER = _re.compile(r'^\[(\d+)/(\d+)\] (\S+) \| (.+)$')
 _RE_DRUG   = _re.compile(r'^药品名称[：:]\s*(.*)$')
 _RE_RESULT = _re.compile(r'^结果：(正确|错误)$')
-_RE_META   = _re.compile(r'^(code|model|knowledge|guide):\s*(.+)$')
+_RE_META   = _re.compile(r'^(code|model|knowledge|guide|cot):\s*(.+)$')
 _RE_TIME   = _re.compile(r'^time: ([\d.]+)s$')
 
 
@@ -55,7 +56,7 @@ def _output(text, log_file):
 def _parse_log(log_path):
     """Parse log file. Returns (meta, entries).
     meta: dict with code/model/knowledge/guide
-    entries: list of (is_correct, predicted, elapsed)
+    entries: list of (is_correct, predicted, elapsed, ground_truth)
     """
     lines = log_path.read_text(encoding="utf-8").splitlines()
     meta = {}
@@ -71,6 +72,7 @@ def _parse_log(log_path):
         # entry header
         mh = _RE_HEADER.match(lines[i])
         if mh:
+            ground_truth = mh.group(4).strip()
             predicted = None
             is_correct = None
             j = i + 1
@@ -88,7 +90,7 @@ def _parse_log(log_path):
                 if mt:
                     elapsed = float(mt.group(1))
             if is_correct is not None:
-                entries.append((is_correct, predicted or "", elapsed))
+                entries.append((is_correct, predicted or "", elapsed, ground_truth))
             i = j
         else:
             i += 1
@@ -119,6 +121,31 @@ def _group_stats(entries):
     return n, correct, unknown, misid
 
 
+def _ned(a, b):
+    """Normalized edit distance between two strings (0=identical, 1=totally different)."""
+    la, lb = len(a), len(b)
+    if la == 0 and lb == 0:
+        return 0.0
+    # standard Levenshtein via DP
+    prev = list(range(lb + 1))
+    for i, ca in enumerate(a, 1):
+        curr = [i] + [0] * lb
+        for j, cb in enumerate(b, 1):
+            curr[j] = min(prev[j] + 1, curr[j-1] + 1, prev[j-1] + (0 if ca == cb else 1))
+        prev = curr
+    return prev[lb] / max(la, lb)
+
+
+def _misid_avg_ned(entries):
+    """Mean NED of misidentified entries (excludes 正确 and 未知)."""
+    neds = [
+        _ned(pred, gt)
+        for ok, pred, _, gt in entries
+        if _entry_category(ok, pred) == "误识"
+    ]
+    return sum(neds) / len(neds) if neds else None
+
+
 def analyze_all():
     base = Path(__file__).parent
     log_dir = base.parent / "logs"
@@ -141,8 +168,10 @@ def analyze_all():
             "model": model_short,
             "kb":    meta.get("knowledge", "?"),
             "guide": meta.get("guide", "?"),
+            "cot":   meta.get("cot", "?"),
             "stats": _group_stats(entries),
             "times": times,
+            "ned": _misid_avg_ned(entries),
         })
 
     if not rows:
@@ -161,14 +190,15 @@ def analyze_all():
     lines.append(f"- n={n_total}")
     lines.append("- **正确** = 识别正确　**未知** = 拒识/高不确定性（安全，触发人工复核）　**误识** = 给出错误药名（**危险**）\n")
 
-    lines.append("| code | 模型 | 知识库 | 引导 | 正确 | 未知 | 误识 | 均时 |")
-    lines.append("|------|------|--------|------|-----:|-----:|-----:|-----:|")
+    lines.append("| code | 模型 | 知识库 | 引导 | CoT | 正确 | 未知 | 误识 | 误识均NED | 均时 |")
+    lines.append("|------|------|--------|------|-----|-----:|-----:|-----:|----------:|-----:|")
     for r in rows:
         n, c, u, m = r["stats"]
         avg = f"{sum(r['times'])/len(r['times']):.3f}s" if r["times"] else "-"
+        ned = f"{r['ned']:.2f}" if r["ned"] is not None else "-"
         lines.append(
-            f"| {r['code']} | {r['model']} | {r['kb']} | {r['guide']} "
-            f"| {pct(c,n)} | {pct(u,n)} | {pct(m,n)} | {avg} |"
+            f"| {r['code']} | {r['model']} | {r['kb']} | {r['guide']} | {r['cot']} "
+            f"| {pct(c,n)} | {pct(u,n)} | {pct(m,n)} | {ned} | {avg} |"
         )
 
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -220,13 +250,14 @@ def plot_times():
 
 
 def run_experiment(code):
-    if len(code) != 3:
-        print("Error: code must be 3 characters, e.g. 011")
+    if len(code) != 4:
+        print("Error: code must be 4 characters, e.g. 0111")
         sys.exit(1)
 
     model_idx = int(code[0], 16)  # hex, supports 0-f
     use_kb = code[1] == "1"
     use_guide = code[2] == "1"
+    use_cot = code[3] == "1"
 
     base = Path(__file__).parent
     cfg = tomllib.loads((base / "config.toml").read_text("utf-8"))
@@ -240,7 +271,7 @@ def run_experiment(code):
     api_cfg = cfg["api"][model_name]
 
     # load prompt once
-    prompt = load_prompt(base / "prompt.md", guide=use_guide, kb=use_kb)
+    prompt = load_prompt(base / "prompt.md", guide=use_guide, kb=use_kb, cot=use_cot)
 
     # read video list
     video_dir = base.parent / "video"
@@ -258,6 +289,7 @@ def run_experiment(code):
     total = len(rows)
     kb_str = "on" if use_kb else "off"
     guide_str = "on" if use_guide else "off"
+    cot_str = "on" if use_cot else "off"
 
     # write log header
     with open(log_path, "w", encoding="utf-8") as f:
@@ -266,6 +298,7 @@ def run_experiment(code):
     _output(f"model: {model_name}", log_path)
     _output(f"knowledge: {kb_str}", log_path)
     _output(f"guide: {guide_str}", log_path)
+    _output(f"cot: {cot_str}", log_path)
     _output(f"total: {total}", log_path)
     _output("", log_path)
 
@@ -319,7 +352,7 @@ if __name__ == "__main__":
         run_experiment(sys.argv[1])
     else:
         print("Usage:")
-        print("  python run.py <code>      # run experiment, e.g. 011")
+        print("  python run.py <code>      # run experiment, e.g. 0111")
         print("  python run.py --analyze   # analyze all logs and compare")
         print("  python run.py --time      # violin plot of response times")
         sys.exit(1)
