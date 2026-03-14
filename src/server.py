@@ -14,7 +14,7 @@ def sample_frames(video_path, fps=5, max_frames=14):
     frames, idx = [], 0
     while len(frames) < max_frames:
         ret, bgr = cap.read()
-        if not ret:
+        if not ret or bgr is None:
             break
         if idx % interval == 0:
             frames.append(cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB))
@@ -25,6 +25,7 @@ def sample_frames(video_path, fps=5, max_frames=14):
 
 def crop_background(img, border=10, k=3.2, area_ratio=0.02, pad_ratio=0.06):
     """Crop solid-color background using border pixel statistics, keep foreground."""
+    img = np.ascontiguousarray(img)
     gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     h, w = gray.shape
     b = max(1, min(border, h // 4, w // 4))

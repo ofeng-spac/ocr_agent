@@ -1,4 +1,4 @@
-models = ["qwen3-vl-flash", "qwen3-vl-plus"]
+models = ["qwen3-vl-8b-instruct", "qwen3-vl-8b-instruct-4bit"]
 
 [video]
 fps = 5
@@ -14,12 +14,14 @@ pad_ratio = 0.06
 max_side = 1280
 quality = 85
 
-[api.qwen3-vl-flash]
-base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-api_key = "sk-67656f65a21a45bea7b6bfa0e206bcd4"
-model = "qwen3-vl-flash"
+[api.qwen3-vl-8b-instruct]
+base_url = "http://localhost:8000/v1"
+api_key = "sk-123456"
+model = "qwen3-vl-8b-instruct"
+max_tokens = 512
 
-[api.qwen3-vl-plus]
-base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-api_key = "sk-67656f65a21a45bea7b6bfa0e206bcd4"
-model = "qwen3-vl-plus"
+[api.qwen3-vl-8b-instruct-4bit]
+base_url = "http://localhost:8000/v1"
+api_key = "sk-123456"
+model = "qwen3-vl-8b-instruct-4bit"
+max_tokens = 512

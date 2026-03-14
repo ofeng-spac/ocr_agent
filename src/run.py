@@ -149,7 +149,7 @@ def _misid_avg_ned(entries):
 def analyze_all():
     base = Path(__file__).parent
     log_dir = base.parent / "logs"
-    log_files = sorted(log_dir.glob("log???.txt"))
+    log_files = sorted(log_dir.glob("log????.txt"))
 
     if not log_files:
         print("No log files found in logs/")
@@ -162,10 +162,9 @@ def analyze_all():
             continue
         times = [e[2] for e in entries if e[2] is not None]
         model = meta.get("model", "?")
-        model_short = model.split("-")[-1] if "-" in model else model
         rows.append({
             "code":  meta.get("code", lf.stem[3:]),
-            "model": model_short,
+            "model": model,
             "kb":    meta.get("knowledge", "?"),
             "guide": meta.get("guide", "?"),
             "cot":   meta.get("cot", "?"),
@@ -187,11 +186,11 @@ def analyze_all():
     out = base.parent / "logs" / "analysis.md"
     lines = []
     lines.append("# 实验结果对比\n")
-    lines.append(f"- n={n_total}")
-    lines.append("- **正确** = 识别正确　**未知** = 拒识/高不确定性（安全，触发人工复核）　**误识** = 给出错误药名（**危险**）\n")
+    lines.append(f"n={n_total}\n")
+    lines.append("**正确** = 识别正确　**未知** = 拒识/高不确定性（安全，触发人工复核）　**误识** = 给出错误药名（**危险**）\n")
 
     lines.append("| code | 模型 | 知识库 | 引导 | CoT | 正确 | 未知 | 误识 | 误识均NED | 均时 |")
-    lines.append("|------|------|--------|------|-----|-----:|-----:|-----:|----------:|-----:|")
+    lines.append("|:----:|:----:|:------:|:----:|:---:|:----:|:----:|:----:|:---------:|:----:|")
     for r in rows:
         n, c, u, m = r["stats"]
         avg = f"{sum(r['times'])/len(r['times']):.3f}s" if r["times"] else "-"
@@ -209,7 +208,7 @@ def plot_times():
 
     base = Path(__file__).parent
     log_dir = base.parent / "logs"
-    log_files = sorted(log_dir.glob("log???.txt"))
+    log_files = sorted(log_dir.glob("log????.txt"))
 
     if not log_files:
         print("No log files found in logs/")
@@ -222,7 +221,7 @@ def plot_times():
         if not times:
             continue
         code = meta.get("code", lf.stem[3:])
-        model = meta.get("model", "?").split("-")[-1]
+        model = meta.get("model", "?")
         kb = "kb" if meta.get("knowledge") == "on" else ""
         guide = "g" if meta.get("guide") == "on" else ""
         label = f"{code}\n{model}"
