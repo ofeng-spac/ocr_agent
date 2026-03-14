@@ -41,8 +41,8 @@ _RE_TIME   = _re.compile(r'^time: ([\d.]+)s$')
 
 def _extract_drug_name(result):
     """Extract drug name from VLM output by matching '药品名称：xxx' pattern."""
-    m = _re.search(r'药品名称[：:]\s*(.+)', result)
-    return m.group(1).strip() if m else ""
+    matches = _re.findall(r'药品名称[：:]\s*(.+)', result)
+    return matches[-1].strip() if matches else ""
 
 
 def _output(text, log_file):
