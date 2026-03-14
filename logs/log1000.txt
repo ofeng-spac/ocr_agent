@@ -1,7 +1,0 @@
-code: 1000
-model: qwen3-vl-8b-instruct-4bit
-knowledge: off
-guide: off
-cot: off
-total: 80
-
