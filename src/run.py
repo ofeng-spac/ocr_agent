@@ -214,7 +214,9 @@ def plot_times():
         print("No log files found in logs/")
         return
 
-    labels, data = [], []
+    # group by model index (first char of code)
+    from collections import OrderedDict
+    groups = OrderedDict()  # model_name -> [(config_label, times)]
     for lf in log_files:
         meta, entries = _parse_log(lf)
         times = [e[2] for e in entries if e[2] is not None]
@@ -222,29 +224,71 @@ def plot_times():
             continue
         code = meta.get("code", lf.stem[3:])
         model = meta.get("model", "?")
-        kb = "kb" if meta.get("knowledge") == "on" else ""
-        guide = "g" if meta.get("guide") == "on" else ""
-        label = f"{code}\n{model}"
-        labels.append(label)
-        data.append(times)
+        # config label from last 3 chars: knowledge/guide/cot
+        cfg = code[1:]
+        cfg_parts = []
+        if cfg[0] == "1": cfg_parts.append("kb")
+        if cfg[1] == "1": cfg_parts.append("guide")
+        if cfg[2] == "1": cfg_parts.append("cot")
+        cfg_label = "+".join(cfg_parts) if cfg_parts else "baseline"
+        groups.setdefault(model, []).append((cfg_label, times))
 
-    fig, ax = plt.subplots(figsize=(10, 5))
-    parts = ax.violinplot(data, positions=range(1, len(data)+1),
-                          showmedians=True, showextrema=True)
-    for pc in parts["bodies"]:
-        pc.set_facecolor("#d0e8ff")
-        pc.set_alpha(0.8)
-    parts["cmedians"].set_color("#c0392b")
-    parts["cmedians"].set_linewidth(2)
-    ax.set_xticks(range(1, len(labels)+1))
-    ax.set_xticklabels(labels)
+    models = list(groups.keys())
+    if not models:
+        print("No parseable entries found.")
+        return
+
+    colors = ["#d0e8ff", "#ffe0d0", "#d0ffd8", "#f0d0ff"]
+    fig, ax = plt.subplots(figsize=(12, 6))
+
+    # collect all unique configs across models
+    all_cfgs = []
+    for model in models:
+        for cfg_label, _ in groups[model]:
+            if cfg_label not in all_cfgs:
+                all_cfgs.append(cfg_label)
+
+    positions = []
+    tick_pos = []
+    tick_labels = []
+    bar_colors = []
+    all_data = []
+    x = 1
+    for cfg in all_cfgs:
+        group_start = x
+        for idx, model in enumerate(models):
+            for cfg_label, times in groups[model]:
+                if cfg_label == cfg:
+                    positions.append(x)
+                    all_data.append(times)
+                    bar_colors.append(colors[idx % len(colors)])
+                    x += 1
+                    break
+        tick_pos.append((group_start + x - 1) / 2)
+        tick_labels.append(cfg)
+        x += 1  # gap between groups
+
+    if all_data:
+        parts = ax.violinplot(all_data, positions=positions,
+                              showmedians=True, showextrema=True, widths=0.8)
+        for i, pc in enumerate(parts["bodies"]):
+            pc.set_facecolor(bar_colors[i])
+            pc.set_alpha(0.8)
+        parts["cmedians"].set_color("#c0392b")
+        parts["cmedians"].set_linewidth(2)
+    ax.set_xticks(tick_pos)
+    ax.set_xticklabels(tick_labels, fontsize=9)
     ax.set_ylabel("Response time (s)")
-
     ax.grid(axis="y", linestyle="--", alpha=0.5)
-
+    # legend
+    from matplotlib.patches import Patch
+    def _pretty_model(name):
+        return name.replace("qwen", "Qwen").replace("vl", "VL").replace("instruct", "Instruct").replace("awq", "AWQ")
+    legend_items = [Patch(facecolor=colors[i], alpha=0.8, label=_pretty_model(m))
+                    for i, m in enumerate(models)]
+    ax.legend(handles=legend_items, fontsize=9, loc="upper right")
     out = base.parent / "logs" / "time.png"
     fig.savefig(out, dpi=150, bbox_inches="tight")
-    print(f"Saved: {out}")
     plt.show()
 
 
