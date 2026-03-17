@@ -292,9 +292,9 @@ def analyze_all():
     # Nature-style palette (npg: Nature Publishing Group)
     color_map  = ["#E64B35", "#4DBBD5", "#00A087", "#3C5488", "#F39B7F"]
     marker_map = {"baseline": "o", "kb": "s", "guide": "^", "cot": "D",
-                  "kb+guide": "s", "kb+cot": "^", "guide+cot": "D", "kb+guide+cot": "P"}
+                  "kb+guide": "p", "kb+cot": "h", "guide+cot": "X", "kb+guide+cot": "P"}
 
-    fig2, ax2 = plt.subplots(figsize=(9, 5.5))
+    fig2, ax2 = plt.subplots(figsize=(7, 4.5))
     fig2.patch.set_facecolor("white")
     ax2.set_facecolor("white")
     ax2.set_xlabel("Average response time (s)", fontsize=10)
@@ -305,6 +305,7 @@ def analyze_all():
         spine.set_linewidth(0.6)
         spine.set_color("#aaaaaa")
 
+    rng = np.random.default_rng(0)
     plotted = {}  # track (model, cfg) for legend dedup
     for r in rows:
         if not r["times"]:
@@ -316,10 +317,12 @@ def analyze_all():
         cfg   = _cfg_label(r["code"])
         color  = color_map[mi % len(color_map)]
         marker = marker_map.get(cfg, "o")
-        ax2.scatter(avg_t, acc,
+        jx = rng.uniform(-0.15, 0.15)
+        jy = rng.uniform(-0.4, 0.4)
+        ax2.scatter(avg_t + jx, acc + jy,
                     color=color, marker=marker,
-                    s=55, edgecolors=color, linewidths=0.5,
-                    zorder=3, alpha=0.92)
+                    s=50, edgecolors="black", linewidths=0.6,
+                    zorder=3, alpha=0.75)
         plotted.setdefault("model", set()).add(mi)
         plotted.setdefault("cfg",   set()).add(cfg)
 

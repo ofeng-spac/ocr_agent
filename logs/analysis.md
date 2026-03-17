@@ -2,12 +2,12 @@
 
 n=80　**正确% / 拒识% / 误识%**
 
-| 配置 | Qwen3-VL-8b-Instruct | Qwen3-VL-8b-Instruct-4bit | Qwen3-VL-4b-Instruct | Qwen2.5-VL-7b-Instruct-AWQ |
+| 配置 | Qwen3-VL-8b-Instruct | Qwen3-VL-8b-Instruct-AWQ-4bit | Qwen3-VL-4b-Instruct | Qwen2.5-VL-7b-Instruct-AWQ |
 |:---:|:---:|:---:|:---:|:---:|
 | baseline | 61 / 0 / 39 | 62 / 0 / 38 | 52 / 10 / 38 | 64 / 0 / 36 |
-| kb | - | - | - | - |
-| guide | - | - | - | - |
-| cot | - | - | - | - |
+| kb | 99 / 0 / 1 | 95 / 0 / 5 | 95 / 0 / 5 | 86 / 0 / 14 |
+| guide | 60 / 0 / 40 | 61 / 0 / 39 | 54 / 8 / 39 | 56 / 6 / 38 |
+| cot | 55 / 2 / 42 | 65 / 0 / 35 | 54 / 14 / 32 | 10 / 76 / 14 |
 | kb+guide | 98 / 0 / 2 | 98 / 0 / 2 | 94 / 0 / 6 | 86 / 0 / 14 |
 | kb+cot | 100 / 0 / 0 | 99 / 0 / 1 | 85 / 1 / 14 | 55 / 15 / 30 |
 | guide+cot | 61 / 0 / 39 | 59 / 0 / 41 | 54 / 2 / 44 | 56 / 6 / 38 |

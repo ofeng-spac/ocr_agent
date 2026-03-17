@@ -1,5 +1,5 @@
 code: 1011
-model: qwen3-vl-8b-instruct-4bit
+model: qwen3-vl-8b-instruct-awq-4bit
 knowledge: off
 guide: on
 cot: on

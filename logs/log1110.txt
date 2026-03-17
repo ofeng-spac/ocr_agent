@@ -1,5 +1,5 @@
 code: 1110
-model: qwen3-vl-8b-instruct-4bit
+model: qwen3-vl-8b-instruct-awq-4bit
 knowledge: on
 guide: on
 cot: off
