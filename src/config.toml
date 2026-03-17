@@ -1,4 +1,4 @@
-models = ["qwen3-vl-8b-instruct", "qwen3-vl-8b-instruct-4bit", "qwen3-vl-4b-instruct", "qwen2.5-vl-7b-instruct-awq"]
+models = ["qwen3-vl-8b-instruct", "qwen3-vl-8b-instruct-awq-4bit", "qwen3-vl-4b-instruct", "qwen2.5-vl-7b-instruct-awq"]
 
 [video]
 fps = 5
@@ -20,10 +20,10 @@ api_key = "sk-123456"
 model = "qwen3-vl-8b-instruct"
 max_tokens = 512
 
-[api.qwen3-vl-8b-instruct-4bit]
+[api.qwen3-vl-8b-instruct-awq-4bit]
 base_url = "http://localhost:8000/v1"
 api_key = "sk-123456"
-model = "qwen3-vl-8b-instruct-4bit"
+model = "qwen3-vl-8b-instruct-awq-4bit"
 max_tokens = 512
 
 [api.qwen3-vl-4b-instruct]
