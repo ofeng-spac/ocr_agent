@@ -160,6 +160,7 @@ def analyze_all():
             "cot":   meta.get("cot", "?"),
             "stats": _group_stats(entries),
             "times": times,
+            "entries": entries # Keep entries for detailed plotting
         })
 
     if not rows:
@@ -168,7 +169,7 @@ def analyze_all():
 
     n_total = rows[0]["stats"][0]
 
-    # ── ablation table (消融表) ───────────────────────────────────────────────
+    # ablation table
     # cfg order: canonical 2³ order (kb/guide/cot bits)
     CFG_ORDER = [
         "baseline",
@@ -188,7 +189,7 @@ def analyze_all():
     out_md = base.parent / "logs" / "analysis.md"
     lines = []
 
-    # ── Table 1: 百分比 ────────────────────────────────────────────────────────
+    # table 1
     lines.append("# 消融实验结果\n")
     lines.append(f"n={n_total}　**正确% / 拒识% / 误识%**\n")
 
@@ -208,7 +209,7 @@ def analyze_all():
                 cells.append(f"{c/n*100:.0f} / {u/n*100:.0f} / {m/n*100:.0f}")
         lines.append(f"| {cfg} | " + " | ".join(cells) + " |")
 
-    # ── Table 2: 绝对数值 ───────────────────────────────────────────────────────
+    # table 2
     lines.append("\n## 绝对数值 (正确 / 拒识 / 误识)\n")
 
     header = "| 配置 | " + " | ".join(model_labels) + " |"
@@ -227,7 +228,7 @@ def analyze_all():
                 cells.append(f"{c} / {u} / {m}")
         lines.append(f"| {cfg} | " + " | ".join(cells) + " |")
 
-    # ── Table 3: 响应时间 ───────────────────────────────────────────────────────
+    # table 3
     lines.append("\n## 平均响应时间 (秒)\n")
 
     header = "| 配置 | " + " | ".join(model_labels) + " |"
@@ -248,6 +249,63 @@ def analyze_all():
 
     out_md.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"Analysis saved to {out_md}")
+    
+    # Plotting Violin Plot for Qwen3-VL-8B-Instruct-AWQ-4bit
+    try:
+        import matplotlib.pyplot as plt
+        import seaborn as sns
+        import pandas as pd
+        
+        target_model = "qwen3-vl-8b-instruct-awq-4bit"
+        plot_data = []
+        
+        for cfg in CFG_ORDER:
+            r = lookup.get((target_model, cfg))
+            if r and r["times"]:
+                for t in r["times"]:
+                    plot_data.append({
+                        "Configuration": cfg,
+                        "Response Time (s)": t
+                    })
+                    
+        if plot_data:
+            df = pd.DataFrame(plot_data)
+            plt.figure(figsize=(10, 6))
+            sns.set_theme(style="white") # Changed from whitegrid to white to remove horizontal lines
+            
+            # Create violin plot with better aesthetics
+            ax = sns.violinplot(
+                data=df, 
+                x="Configuration", 
+                y="Response Time (s)", 
+                order=CFG_ORDER,
+                inner="box", 
+                palette="pastel", # Better color palette
+                hue="Configuration", # Required by latest seaborn
+                legend=False
+            )
+            
+            # Keep x-axis labels horizontal and clean
+            plt.xticks(rotation=0)
+            ax.set_xlabel("Ablation Configuration", fontsize=12, fontweight='bold')
+            ax.set_ylabel("Response Time (Seconds)", fontsize=12, fontweight='bold')
+            
+            # Clean up plot borders
+            sns.despine()
+            
+            # Remove title as requested
+            plt.title("")
+            
+            plt.tight_layout()
+            
+            plot_path = base.parent / "essay" / "time.pdf"
+            plot_path.parent.mkdir(exist_ok=True)
+            plt.savefig(plot_path, format="pdf", bbox_inches="tight")
+            print(f"Violin plot saved to {plot_path}")
+            
+    except ImportError:
+        print("matplotlib, seaborn, or pandas not installed. Skipping violin plot generation.")
+        print("Please run: pip install matplotlib seaborn pandas")
 
 
 def run_experiment(code):

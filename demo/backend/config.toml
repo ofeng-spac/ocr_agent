@@ -1,0 +1,21 @@
+models = ["qwen3-vl-8b-instruct-awq-4bit"]
+
+[video]
+fps = 5
+max_frames = 14
+
+[crop]
+border = 10
+k = 3.2
+area_ratio = 0.02
+pad_ratio = 0.06
+
+[image]
+max_side = 1280
+quality = 85
+
+[api.qwen3-vl-8b-instruct-awq-4bit]
+base_url = "http://localhost:8000/v1"
+api_key = "sk-123456"
+model = "qwen3-vl-8b-instruct-awq-4bit"
+max_tokens = 512
