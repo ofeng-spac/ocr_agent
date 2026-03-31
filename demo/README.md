@@ -16,7 +16,7 @@
 ```bash
 cd demo/backend
 pip install -r requirements.txt
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn main:app --host 0.0.0.0 --port 8080 --reload
 ```
 
 后端接口:
@@ -35,7 +35,7 @@ cmd /c npm run dev
 
 默认前端地址: `http://localhost:5173`
 
-前端会通过 Vite 代理访问后端 `http://127.0.0.1:8000`。
+前端会通过 Vite 代理访问后端 `http://127.0.0.1:8080`。
 如果你希望修改地址，可以在前端环境变量中设置 `VITE_API_BASE`。
 
 

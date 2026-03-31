@@ -7,8 +7,8 @@ export default defineConfig({
     host: "0.0.0.0",
     port: 5173,
     proxy: {
-      "/api": "http://127.0.0.1:8000",
-      "/videos": "http://127.0.0.1:8000"
+      "/api": "http://127.0.0.1:8080",
+      "/videos": "http://127.0.0.1:8080"
     }
   }
 });
