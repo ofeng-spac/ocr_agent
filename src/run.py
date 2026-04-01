@@ -50,7 +50,7 @@ RE_META = re.compile(r"^(config|config_label|code|model|knowledge|guide|cot|tota
 RE_HEADER = re.compile(r"^\[(\d+)/(\d+)\]\s+(\S+)\s+\|\s+(.+)$")
 RE_TIME = re.compile(r"^time:\s*([\d.]+)s$")
 RE_RESULT_EN = re.compile(r"^result:\s*(correct|wrong)$", re.IGNORECASE)
-RE_RESULT_ZH = re.compile(r"^结果[：:]\s*(正确|错误)$")
+RE_RESULT_ZH = re.compile(r"^结果[：:]\s*(正确|错误|对|错)$")
 
 
 def _output(text: str, log_file: Path) -> None:
@@ -204,7 +204,7 @@ def _parse_log_experiments(log_path: Path):
 
                 mr_zh = RE_RESULT_ZH.match(c)
                 if mr_zh:
-                    is_correct = mr_zh.group(1) == "正确"
+                    is_correct = mr_zh.group(1) in {"正确", "对"}
 
             if is_correct is None and predicted:
                 is_correct = predicted == ground_truth
@@ -367,7 +367,6 @@ def run_model_group(model_idx: int) -> None:
 
         prompt = load_prompt(base / "prompt.md", guide=use_guide, kb=use_kb, cot=use_cot)
 
-        _output("=" * 48, log_path)
         _output(f"config: {config_name}", log_path)
         _output(f"model: {model_name}", log_path)
         _output(f"knowledge: {'on' if use_kb else 'off'}", log_path)
@@ -402,7 +401,7 @@ def run_model_group(model_idx: int) -> None:
             _output(f"[{i:03d}/{total}] {video_name} | {ground_truth}", log_path)
             _output(result, log_path)
             _output(f"time: {elapsed}s", log_path)
-            _output(f"result: {'correct' if is_correct else 'wrong'}", log_path)
+            _output(f"结果: {'正确' if is_correct else '错误'}", log_path)
             _output("", log_path)
 
         avg_time = round(sum(times) / len(times), 3) if times else 0
