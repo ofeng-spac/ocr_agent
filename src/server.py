@@ -1,7 +1,6 @@
 import re
 import base64
 import cv2
-import numpy as np
 import openai
 from pathlib import Path
 
@@ -22,30 +21,6 @@ def sample_frames(video_path, fps=5, max_frames=14):
     cap.release()
     return frames
 
-
-def crop_background(img, border=10, k=3.2, area_ratio=0.02, pad_ratio=0.06):
-    """Crop solid-color background using border pixel statistics, keep foreground."""
-    img = np.ascontiguousarray(img)
-    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-    h, w = gray.shape
-    b = max(1, min(border, h // 4, w // 4))
-    bg = np.concatenate([gray[:b].ravel(), gray[-b:].ravel(),
-                         gray[:, :b].ravel(), gray[:, -b:].ravel()])
-    med = float(np.median(bg))
-    mad = float(np.median(np.abs(bg - med))) + 1e-6
-    thr = med + k * 1.4826 * mad
-
-    mask = (gray >= thr).astype(np.uint8)
-
-    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    if not contours:
-        return img
-    c = max(contours, key=cv2.contourArea)
-    if cv2.contourArea(c) < h * w * area_ratio:
-        return img
-    x, y, ww, hh = cv2.boundingRect(c)
-    pad = round(pad_ratio * max(ww, hh))
-    return img[max(0, y - pad):min(h, y + hh + pad), max(0, x - pad):min(w, x + ww + pad)]
 
 
 def encode_frame(frame, max_side=1280, quality=85):

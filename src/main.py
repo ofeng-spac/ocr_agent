@@ -28,10 +28,6 @@ def main():
 
     # 1. sample frames
     frames = sample_frames(args.video, cfg["video"]["fps"], cfg["video"]["max_frames"])
-    # 2. crop background
-    crop = cfg.get("crop")
-    if crop:
-        frames = [crop_background(f, **crop) for f in frames]
     # 3. encode to base64
     urls = [encode_frame(f, **cfg.get("image", {})) for f in frames]
     # 4. load prompt

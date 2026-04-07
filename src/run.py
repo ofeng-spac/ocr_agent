@@ -18,7 +18,7 @@ import time
 import tomllib
 from pathlib import Path
 
-from server import call_vlm, crop_background, encode_frame, load_prompt, sample_frames
+from server import call_vlm, encode_frame, load_prompt, sample_frames
 
 
 CONFIGS = [
@@ -383,9 +383,6 @@ def run_model_group(model_idx: int) -> None:
             video_path = str(video_dir / video_name)
 
             frames = sample_frames(video_path, cfg["video"]["fps"], cfg["video"]["max_frames"])
-            crop = cfg.get("crop")
-            if crop:
-                frames = [crop_background(f, **crop) for f in frames]
             urls = [encode_frame(f, **cfg.get("image", {})) for f in frames]
 
             t0 = time.perf_counter()
