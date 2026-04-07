@@ -35,10 +35,7 @@ def crop_background(img, border=10, k=3.2, area_ratio=0.02, pad_ratio=0.06):
     mad = float(np.median(np.abs(bg - med))) + 1e-6
     thr = med + k * 1.4826 * mad
 
-    mask = (cv2.GaussianBlur(gray, (5, 5), 0) >= thr).astype(np.uint8)
-    kern = cv2.getStructuringElement(cv2.MORPH_RECT, (9, 9))
-    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kern, iterations=2)
-    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kern, iterations=1)
+    mask = (gray >= thr).astype(np.uint8)
 
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     if not contours:
