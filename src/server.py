@@ -21,8 +21,6 @@ def sample_frames(video_path, fps=5, max_frames=14):
     cap.release()
     return frames
 
-
-
 def encode_frame(frame, max_side=1280, quality=85):
     """Encode RGB frame to JPEG, return base64 data URL."""
     img = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
