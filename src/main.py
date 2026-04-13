@@ -8,9 +8,17 @@ Examples:
 """
 import argparse
 import json
+import sys
 import time
 import tomllib
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from app.services.recognition_parser import parse_recognition_result
+from app.services.verifier import DrugCatalogVerifier
 from server import *
 
 
@@ -37,7 +45,27 @@ def main():
     result = call_vlm(urls, prompt, **api_cfg)
     elapsed = round(time.perf_counter() - t0, 3)
 
-    print(json.dumps({"result": result, "elapsed": elapsed}, ensure_ascii=False, indent=2))
+    parsed = parse_recognition_result(result)
+    verifier = DrugCatalogVerifier()
+    verification = verifier.verify(parsed["raw_name"], parsed["evidence_text"])
+
+    output = {
+        "result": result,
+        "elapsed": elapsed,
+        "raw_name": parsed["raw_name"],
+        "evidence_text": parsed["evidence_text"],
+        "uncertainty_text": parsed["uncertainty_text"],
+        "uncertainty_level": parsed["uncertainty_level"],
+        "canonical_name": verification["canonical_name"],
+        "verify_status": verification["status"],
+        "verify_match_type": verification["match_type"],
+        "verify_reason": verification["reason"],
+    }
+
+    if verification.get("candidate_name"):
+        output["candidate_name"] = verification["candidate_name"]
+
+    print(json.dumps(output, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
