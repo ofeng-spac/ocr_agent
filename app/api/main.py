@@ -7,7 +7,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.models.schemas import RecognizeRequest
+from app.models.schemas import RecognizeRequest, VerifyRequest
 from app.services.recognizer import VIDEO_DIR, list_videos, recognize_video
 
 
@@ -58,6 +58,47 @@ async def recognize(req: RecognizeRequest):
             req.guide,
             req.expected_drug_name,
         )
+    except KeyError as exc:
+        raise HTTPException(status_code=400, detail=f"Unknown model preset: {req.model}") from exc
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.post("/api/verify")
+async def verify(req: VerifyRequest):
+    video_name = req.video_name.strip()
+    if "/" in video_name or "\\" in video_name:
+        raise HTTPException(status_code=400, detail="video_name must be a file name, not a path")
+
+    expected_drug_name = req.expected_drug_name.strip()
+    if not expected_drug_name:
+        raise HTTPException(status_code=400, detail="expected_drug_name must not be empty")
+
+    video_path = VIDEO_DIR / video_name
+    if not video_path.exists() or video_path.suffix.lower() != ".mp4":
+        raise HTTPException(status_code=404, detail=f"Video not found: {video_name}")
+
+    try:
+        result = await asyncio.to_thread(
+            recognize_video,
+            str(video_path),
+            req.model,
+            req.knowledge,
+            req.guide,
+            expected_drug_name,
+        )
+        return {
+            "video_name": result["video_name"],
+            "model": result["model"],
+            "elapsed": result["elapsed"],
+            "raw_name": result["raw_name"],
+            "canonical_name": result["canonical_name"],
+            "verify_status": result["verify_status"],
+            "verify_match_type": result["verify_match_type"],
+            "verify_reason": result["verify_reason"],
+            "expected_check": result.get("expected_check"),
+            "result": result["result"],
+        }
     except KeyError as exc:
         raise HTTPException(status_code=400, detail=f"Unknown model preset: {req.model}") from exc
     except Exception as exc:

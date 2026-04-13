@@ -11,7 +11,14 @@ class RecognizeRequest(BaseModel):
     expected_drug_name: str | None = None
 
 
+class VerifyRequest(BaseModel):
+    video_name: str
+    expected_drug_name: str
+    model: str = "qwen3-vl-8b-instruct-awq-4bit"
+    knowledge: bool = True
+    guide: bool = True
+
+
 class VideoItem(BaseModel):
     name: str
     url: str
-
