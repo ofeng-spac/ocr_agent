@@ -1,0 +1,231 @@
+[
+  {
+    "drug_id": "drug_001",
+    "canonical_name": "双黄连口服液",
+    "generic_name": "双黄连口服液",
+    "brand_names": [],
+    "aliases": [],
+    "known_confusions": [],
+    "doc_paths": [
+      "data/source_docs/text/双黄连口服液.txt"
+    ],
+    "doc_status": "available",
+    "doc_quality": "standard_leaflet",
+    "domain": "human",
+    "category": "oral_liquid",
+    "sample_count": 6,
+    "active": true,
+    "notes": "当前已有标准说明书文本，可直接用于字段抽取。"
+  },
+  {
+    "drug_id": "drug_002",
+    "canonical_name": "奥美拉唑肠溶胶囊",
+    "generic_name": "奥美拉唑肠溶胶囊",
+    "brand_names": [],
+    "aliases": [],
+    "known_confusions": [
+      "注射用奥美拉唑钠"
+    ],
+    "doc_paths": [
+      "data/source_docs/text/奥美拉唑肠溶胶囊.txt"
+    ],
+    "doc_status": "available",
+    "doc_quality": "standard_leaflet",
+    "domain": "human",
+    "category": "enteric_capsule",
+    "sample_count": 6,
+    "active": true,
+    "notes": "日志中出现过与注射剂型混淆，后续校验逻辑需限制剂型不一致误匹配。"
+  },
+  {
+    "drug_id": "drug_003",
+    "canonical_name": "孟鲁司特钠片",
+    "generic_name": "孟鲁司特钠片",
+    "brand_names": [],
+    "aliases": [
+      "孟鲁司特钠"
+    ],
+    "known_confusions": [],
+    "doc_paths": [
+      "data/source_docs/text/孟鲁司特钠片.txt"
+    ],
+    "doc_status": "available",
+    "doc_quality": "non_standard_reference",
+    "domain": "human",
+    "category": "tablet",
+    "sample_count": 7,
+    "active": true,
+    "notes": "当前资料更像化学试剂页面，不是正式说明书，后续需要替换。"
+  },
+  {
+    "drug_id": "drug_004",
+    "canonical_name": "注射用头孢噻呋钠",
+    "generic_name": "注射用头孢噻呋钠",
+    "brand_names": [],
+    "aliases": [
+      "头孢噻呋钠"
+    ],
+    "known_confusions": [],
+    "doc_paths": [
+      "data/source_docs/text/头孢噻呋钠.txt"
+    ],
+    "doc_status": "available",
+    "doc_quality": "reference_text",
+    "domain": "vet",
+    "category": "powder_for_injection",
+    "sample_count": 8,
+    "active": true,
+    "notes": "当前文本可作为参考资料，但后续最好补更标准的兽药说明书。"
+  },
+  {
+    "drug_id": "drug_005",
+    "canonical_name": "注射用头孢曲松钠",
+    "generic_name": "注射用头孢曲松钠",
+    "brand_names": [],
+    "aliases": [
+      "头孢曲松钠"
+    ],
+    "known_confusions": [
+      "注射用头孢噻肟钠",
+      "注射用头孢他啶"
+    ],
+    "doc_paths": [
+      "data/source_docs/text/注射用头孢曲松钠.txt"
+    ],
+    "doc_status": "available",
+    "doc_quality": "standard_leaflet",
+    "domain": "human",
+    "category": "powder_for_injection",
+    "sample_count": 6,
+    "active": true,
+    "notes": "已观察到与其他头孢注射剂混淆，后续需要增强相似药名约束。"
+  },
+  {
+    "drug_id": "drug_006",
+    "canonical_name": "犬瘟热、腺病毒2型、副流感、细小病毒病四联活疫苗",
+    "generic_name": "犬瘟热、腺病毒2型、副流感、细小病毒病四联活疫苗",
+    "brand_names": [
+      "卫佳伍"
+    ],
+    "aliases": [
+      "卫佳®伍 犬瘟热、腺病毒2型、副流感、细小病毒病四联活疫苗",
+      "卫佳®伍犬瘟热、腺病毒2型、副流感、细小病毒病四联活疫苗",
+      "犬瘟热、犬副流感、犬腺病毒与犬细小病毒四联活疫苗",
+      "犬瘟热、犬副流感、犬腺病毒与犬细小病毒病四联活疫苗",
+      "犬瘟热、犬腺病毒与犬细小病毒四联活疫苗"
+    ],
+    "known_confusions": [],
+    "doc_paths": [],
+    "doc_status": "missing",
+    "doc_quality": "missing",
+    "domain": "vet",
+    "category": "vaccine",
+    "sample_count": 11,
+    "active": true,
+    "notes": "当前没有正式说明书资料，后续必须补文档后才能做强校验。"
+  },
+  {
+    "drug_id": "drug_007",
+    "canonical_name": "狂犬病灭活疫苗",
+    "generic_name": "狂犬病灭活疫苗",
+    "brand_names": [
+      "贝倍旺",
+      "瑞比克",
+      "Rabvac 3"
+    ],
+    "aliases": [
+      "狂犬病灭活疫苗（PV/BHK-21株）",
+      "贝倍旺狂犬病灭活疫苗",
+      "贝倍旺狂犬病灭活疫苗（PV/BHK-21株）",
+      "狂犬病灭活疫苗（HCP-SAD株）",
+      "狂犬病灭活疫苗（HCP-SAD株）瑞比克® Rabvac® 3",
+      "狂犬病灭活疫苗（HCP-SAD株）瑞比克®3"
+    ],
+    "known_confusions": [],
+    "doc_paths": [],
+    "doc_status": "missing",
+    "doc_quality": "missing",
+    "domain": "vet",
+    "category": "vaccine",
+    "sample_count": 12,
+    "active": true,
+    "notes": "当前有较多品牌名和株系变体，但缺少正式说明书，后续需优先补齐。"
+  },
+  {
+    "drug_id": "drug_008",
+    "canonical_name": "猫鼻气管炎、杯状病毒病、泛白细胞减少症三联灭活疫苗",
+    "generic_name": "猫鼻气管炎、杯状病毒病、泛白细胞减少症三联灭活疫苗",
+    "brand_names": [
+      "金喵乐"
+    ],
+    "aliases": [
+      "金喵乐"
+    ],
+    "known_confusions": [],
+    "doc_paths": [],
+    "doc_status": "missing",
+    "doc_quality": "missing",
+    "domain": "vet",
+    "category": "vaccine",
+    "sample_count": 6,
+    "active": true,
+    "notes": "当前已知品牌别名为金喵乐，但没有正式说明书资料。"
+  },
+  {
+    "drug_id": "drug_009",
+    "canonical_name": "盐酸小檗碱片",
+    "generic_name": "盐酸小檗碱片",
+    "brand_names": [],
+    "aliases": [],
+    "known_confusions": [],
+    "doc_paths": [
+      "data/source_docs/text/盐酸小檗碱片.txt"
+    ],
+    "doc_status": "available",
+    "doc_quality": "standard_leaflet",
+    "domain": "human",
+    "category": "tablet",
+    "sample_count": 7,
+    "active": true,
+    "notes": "说明书资料较标准，可直接抽取字段。"
+  },
+  {
+    "drug_id": "drug_010",
+    "canonical_name": "蒲地蓝消炎口服液",
+    "generic_name": "蒲地蓝消炎口服液",
+    "brand_names": [],
+    "aliases": [],
+    "known_confusions": [],
+    "doc_paths": [
+      "data/source_docs/text/蒲地蓝消炎口服液.txt"
+    ],
+    "doc_status": "available",
+    "doc_quality": "pharmacopoeia_text",
+    "domain": "human",
+    "category": "oral_liquid",
+    "sample_count": 6,
+    "active": true,
+    "notes": "当前文本更像药典或制剂资料，可先用于名称和规格抽取，后续建议补正式说明书。"
+  },
+  {
+    "drug_id": "drug_011",
+    "canonical_name": "贝伐珠单抗注射液",
+    "generic_name": "贝伐珠单抗注射液",
+    "brand_names": [
+      "安维汀",
+      "Avastin"
+    ],
+    "aliases": [],
+    "known_confusions": [],
+    "doc_paths": [
+      "data/source_docs/text/贝伐珠单抗注射液.txt"
+    ],
+    "doc_status": "available",
+    "doc_quality": "standard_leaflet",
+    "domain": "human",
+    "category": "injection_solution",
+    "sample_count": 5,
+    "active": true,
+    "notes": "说明书完整，后续可用于品牌名与标准名映射。"
+  }
+]
