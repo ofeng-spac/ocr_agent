@@ -12,7 +12,8 @@ data/
 │   ├── raw/         # 原始来源文件，保留 PDF/TXT 原件
 │   └── text/        # 统一转成纯文本后的版本，供字段抽取和 RAG 使用
 └── structured/
-    └── drug_catalog.json   # 当前 11 个类别的标准药品目录
+    ├── drug_catalog.json      # 当前 11 个类别的标准药品目录
+    └── leaflet_fields.jsonl   # 从说明书中抽出的结构化字段
 ```
 
 ## 当前已纳入仓库的说明书资料
@@ -66,6 +67,10 @@ data/
 2. 构建说明书字段抽取脚本
 3. 实现标准名校验与归一
 4. 为 RAG 构建受控知识源
+
+当前字段抽取脚本为：
+
+1. `scripts/build_leaflet_fields.py`
 
 ## 后续约束
 
