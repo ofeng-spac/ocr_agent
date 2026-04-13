@@ -1,0 +1,47 @@
+[
+  {
+    "raw_name": "头孢曲松钠",
+    "expected_status": "verified_alias",
+    "expected_canonical_name": "注射用头孢曲松钠"
+  },
+  {
+    "raw_name": "头孢噻呋钠",
+    "expected_status": "verified_alias",
+    "expected_canonical_name": "注射用头孢噻呋钠"
+  },
+  {
+    "raw_name": "卫佳®伍犬瘟热、腺病毒2型、副流感、细小病毒病四联活疫苗",
+    "expected_status": "verified_alias",
+    "expected_canonical_name": "犬瘟热、腺病毒2型、副流感、细小病毒病四联活疫苗"
+  },
+  {
+    "raw_name": "贝倍旺狂犬病灭活疫苗",
+    "expected_status": "verified_alias",
+    "expected_canonical_name": "狂犬病灭活疫苗"
+  },
+  {
+    "raw_name": "金喵乐",
+    "expected_status": "verified_brand",
+    "expected_canonical_name": "猫鼻气管炎、杯状病毒病、泛白细胞减少症三联灭活疫苗"
+  },
+  {
+    "raw_name": "安维汀",
+    "expected_status": "verified_brand",
+    "expected_canonical_name": "贝伐珠单抗注射液"
+  },
+  {
+    "raw_name": "注射用奥美拉唑钠",
+    "expected_status": "review_required",
+    "expected_canonical_name": ""
+  },
+  {
+    "raw_name": "注射用头孢他啶",
+    "expected_status": "review_required",
+    "expected_canonical_name": ""
+  },
+  {
+    "raw_name": "完全不存在的药名",
+    "expected_status": "unknown",
+    "expected_canonical_name": ""
+  }
+]
