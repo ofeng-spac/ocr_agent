@@ -62,12 +62,11 @@ def list_videos() -> list[str]:
     return sorted(p.name for p in VIDEO_DIR.glob("*.mp4"))
 
 
-def recognize_video(
+def run_recognition(
     video_path: str,
     model: str = "qwen3-vl-8b-instruct-awq-4bit",
     knowledge: bool = True,
     guide: bool = True,
-    expected_drug_name: str | None = None,
 ) -> dict:
     cfg = load_config()
     api_cfg = cfg["api"][model]
@@ -82,10 +81,7 @@ def recognize_video(
     elapsed = round(time.perf_counter() - t0, 3)
 
     parsed = parse_recognition_result(raw_result)
-    verification = DrugCatalogVerifier().verify(parsed["raw_name"], parsed["evidence_text"])
-    expected_check = compare_expected(expected_drug_name, verification["canonical_name"], verification["status"])
-
-    output = {
+    return {
         "video_name": Path(video_path).name,
         "model": model,
         "elapsed": elapsed,
@@ -94,11 +90,25 @@ def recognize_video(
         "evidence_text": parsed["evidence_text"],
         "uncertainty_text": parsed["uncertainty_text"],
         "uncertainty_level": parsed["uncertainty_level"],
-        "canonical_name": verification["canonical_name"],
-        "verify_status": verification["status"],
-        "verify_match_type": verification["match_type"],
-        "verify_reason": verification["reason"],
     }
+
+
+def apply_verification(recognition_result: dict, expected_drug_name: str | None = None) -> dict:
+    verification = DrugCatalogVerifier().verify(
+        recognition_result.get("raw_name", ""),
+        recognition_result.get("evidence_text", ""),
+    )
+    expected_check = compare_expected(expected_drug_name, verification["canonical_name"], verification["status"])
+
+    output = dict(recognition_result)
+    output.update(
+        {
+            "canonical_name": verification["canonical_name"],
+            "verify_status": verification["status"],
+            "verify_match_type": verification["match_type"],
+            "verify_reason": verification["reason"],
+        }
+    )
 
     if verification.get("candidate_name"):
         output["candidate_name"] = verification["candidate_name"]
@@ -107,3 +117,19 @@ def recognize_video(
         output["expected_check"] = expected_check
 
     return output
+
+
+def recognize_video(
+    video_path: str,
+    model: str = "qwen3-vl-8b-instruct-awq-4bit",
+    knowledge: bool = True,
+    guide: bool = True,
+    expected_drug_name: str | None = None,
+) -> dict:
+    recognition_result = run_recognition(
+        video_path=video_path,
+        model=model,
+        knowledge=knowledge,
+        guide=guide,
+    )
+    return apply_verification(recognition_result, expected_drug_name)

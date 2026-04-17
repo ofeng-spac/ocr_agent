@@ -1,0 +1,17 @@
+from __future__ import annotations
+
+from typing import Literal, TypedDict
+
+
+class RecognitionWorkflowState(TypedDict, total=False):
+    request_type: Literal["recognize", "verify"]
+    video_path: str
+    video_name: str
+    model: str
+    knowledge: bool
+    guide: bool
+    expected_drug_name: str | None
+    trace_id: str
+    workflow_trace: list[dict]
+    recognition_result: dict
+    response: dict

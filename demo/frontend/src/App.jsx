@@ -301,6 +301,20 @@ export default function App() {
                   <summary>查看原始模型输出</summary>
                   <pre className="raw-output">{result.result}</pre>
                 </details>
+                {result.workflow_trace?.length ? (
+                  <div className="workflow-block">
+                    <strong>执行轨迹</strong>
+                    <div className="workflow-list">
+                      {result.workflow_trace.map((item, idx) => (
+                        <div key={`${item.node}-${idx}`} className="workflow-item">
+                          <p><strong>{item.node}</strong></p>
+                          <p>状态：{item.status}</p>
+                          <p>{item.summary}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </div>
 
               <div className="qa-block">

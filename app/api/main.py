@@ -7,11 +7,12 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
+from app.graph.workflow import invoke_recognition_workflow
 from app.models.schemas import AskRequest, RecognizeRequest, VerifyRequest
 from app.services.audit import append_audit_log, generate_trace_id, list_audit_logs
 from app.services.evaluation import load_evaluation_summary
 from app.services.rag import LeafletQAService
-from app.services.recognizer import VIDEO_DIR, list_videos, recognize_video
+from app.services.recognizer import VIDEO_DIR, list_videos
 
 
 app = FastAPI(title="Drug Recognition Agent API", version="0.1.0")
@@ -59,18 +60,15 @@ async def recognize(req: RecognizeRequest):
         raise HTTPException(status_code=404, detail=f"Video not found: {video_name}")
 
     try:
-        result = await asyncio.to_thread(
-            recognize_video,
-            str(video_path),
-            req.model,
-            req.knowledge,
-            req.guide,
-            req.expected_drug_name,
+        return await asyncio.to_thread(
+            invoke_recognition_workflow,
+            request_type="recognize",
+            video_path=str(video_path),
+            model=req.model,
+            knowledge=req.knowledge,
+            guide=req.guide,
+            expected_drug_name=req.expected_drug_name,
         )
-        trace_id = generate_trace_id("recognize")
-        result["trace_id"] = trace_id
-        append_audit_log("recognize", result, trace_id=trace_id)
-        return result
     except KeyError as exc:
         raise HTTPException(status_code=400, detail=f"Unknown model preset: {req.model}") from exc
     except Exception as exc:
@@ -93,12 +91,13 @@ async def verify(req: VerifyRequest):
 
     try:
         result = await asyncio.to_thread(
-            recognize_video,
-            str(video_path),
-            req.model,
-            req.knowledge,
-            req.guide,
-            expected_drug_name,
+            invoke_recognition_workflow,
+            request_type="verify",
+            video_path=str(video_path),
+            model=req.model,
+            knowledge=req.knowledge,
+            guide=req.guide,
+            expected_drug_name=expected_drug_name,
         )
         response = {
             "video_name": result["video_name"],
@@ -111,10 +110,9 @@ async def verify(req: VerifyRequest):
             "verify_reason": result["verify_reason"],
             "expected_check": result.get("expected_check"),
             "result": result["result"],
+            "trace_id": result.get("trace_id"),
+            "workflow_trace": result.get("workflow_trace", []),
         }
-        trace_id = generate_trace_id("verify")
-        response["trace_id"] = trace_id
-        append_audit_log("verify", response, trace_id=trace_id)
         return response
     except KeyError as exc:
         raise HTTPException(status_code=400, detail=f"Unknown model preset: {req.model}") from exc
