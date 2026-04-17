@@ -8,6 +8,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.models.schemas import AskRequest, RecognizeRequest, VerifyRequest
+from app.services.audit import append_audit_log, generate_trace_id, list_audit_logs
+from app.services.evaluation import load_evaluation_summary
 from app.services.rag import LeafletQAService
 from app.services.recognizer import VIDEO_DIR, list_videos, recognize_video
 
@@ -52,7 +54,7 @@ async def recognize(req: RecognizeRequest):
         raise HTTPException(status_code=404, detail=f"Video not found: {video_name}")
 
     try:
-        return await asyncio.to_thread(
+        result = await asyncio.to_thread(
             recognize_video,
             str(video_path),
             req.model,
@@ -60,6 +62,10 @@ async def recognize(req: RecognizeRequest):
             req.guide,
             req.expected_drug_name,
         )
+        trace_id = generate_trace_id("recognize")
+        result["trace_id"] = trace_id
+        append_audit_log("recognize", result, trace_id=trace_id)
+        return result
     except KeyError as exc:
         raise HTTPException(status_code=400, detail=f"Unknown model preset: {req.model}") from exc
     except Exception as exc:
@@ -89,7 +95,7 @@ async def verify(req: VerifyRequest):
             req.guide,
             expected_drug_name,
         )
-        return {
+        response = {
             "video_name": result["video_name"],
             "model": result["model"],
             "elapsed": result["elapsed"],
@@ -101,6 +107,10 @@ async def verify(req: VerifyRequest):
             "expected_check": result.get("expected_check"),
             "result": result["result"],
         }
+        trace_id = generate_trace_id("verify")
+        response["trace_id"] = trace_id
+        append_audit_log("verify", response, trace_id=trace_id)
+        return response
     except KeyError as exc:
         raise HTTPException(status_code=400, detail=f"Unknown model preset: {req.model}") from exc
     except Exception as exc:
@@ -112,4 +122,29 @@ def ask_leaflet(req: AskRequest):
     result = qa_service.ask(req.canonical_name, req.question)
     if result["status"] == "error":
         raise HTTPException(status_code=400, detail=result["reason"])
+    trace_id = generate_trace_id("rag")
+    result["trace_id"] = trace_id
+    append_audit_log(
+        "rag_ask",
+        {
+            "canonical_name": req.canonical_name,
+            "question": req.question,
+            **result,
+        },
+        trace_id=trace_id,
+    )
     return result
+
+
+@app.get("/api/audit_logs")
+def get_audit_logs(limit: int = 20):
+    logs = list_audit_logs(limit=limit)
+    return {
+        "count": len(logs),
+        "logs": logs,
+    }
+
+
+@app.get("/api/eval/summary")
+def get_eval_summary():
+    return load_evaluation_summary()

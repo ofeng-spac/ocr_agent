@@ -8,10 +8,14 @@ export default function App() {
   const [loadingVideos, setLoadingVideos] = useState(true);
   const [loadingResult, setLoadingResult] = useState(false);
   const [loadingQa, setLoadingQa] = useState(false);
+  const [loadingAudit, setLoadingAudit] = useState(false);
+  const [loadingEval, setLoadingEval] = useState(false);
   const [result, setResult] = useState(null);
   const [expectedDrugName, setExpectedDrugName] = useState("");
   const [question, setQuestion] = useState("");
   const [qaResult, setQaResult] = useState(null);
+  const [auditLogs, setAuditLogs] = useState([]);
+  const [evalSummary, setEvalSummary] = useState(null);
   const [error, setError] = useState("");
 
   const selectedVideoUrl = useMemo(() => {
@@ -46,6 +50,13 @@ export default function App() {
     loadVideos();
   }, []);
 
+  useEffect(() => {
+    const loadMeta = async () => {
+      await Promise.all([fetchAuditLogs(), fetchEvalSummary()]);
+    };
+    loadMeta();
+  }, []);
+
   const handleSelectVideo = (name) => {
     setSelectedVideo(name);
     setResult(null);
@@ -70,6 +81,39 @@ export default function App() {
     return data;
   };
 
+  const getJson = async (path, fallbackMessage) => {
+    const resp = await fetch(`${API_BASE}${path}`);
+    const data = await resp.json();
+    if (!resp.ok) {
+      throw new Error(data.detail || fallbackMessage);
+    }
+    return data;
+  };
+
+  const fetchAuditLogs = async () => {
+    setLoadingAudit(true);
+    try {
+      const data = await getJson("/api/audit_logs?limit=6", "加载日志失败");
+      setAuditLogs(data.logs || []);
+    } catch (err) {
+      setError((prev) => prev || err.message || "加载日志失败");
+    } finally {
+      setLoadingAudit(false);
+    }
+  };
+
+  const fetchEvalSummary = async () => {
+    setLoadingEval(true);
+    try {
+      const data = await getJson("/api/eval/summary", "加载评测摘要失败");
+      setEvalSummary(data);
+    } catch (err) {
+      setError((prev) => prev || err.message || "加载评测摘要失败");
+    } finally {
+      setLoadingEval(false);
+    }
+  };
+
   const handleRecognize = async () => {
     if (!selectedVideo) return;
 
@@ -85,6 +129,7 @@ export default function App() {
         "识别失败"
       );
       setResult(data);
+      fetchAuditLogs();
     } catch (err) {
       setError(err.message || "识别失败");
     } finally {
@@ -112,6 +157,7 @@ export default function App() {
         "核验失败"
       );
       setResult(data);
+      fetchAuditLogs();
     } catch (err) {
       setError(err.message || "核验失败");
     } finally {
@@ -138,12 +184,16 @@ export default function App() {
         "问答失败"
       );
       setQaResult(data);
+      fetchAuditLogs();
     } catch (err) {
       setError(err.message || "问答失败");
     } finally {
       setLoadingQa(false);
     }
   };
+
+  const defaultModelName = "Qwen3-VL-8B-Instruct-AWQ-4bit";
+  const defaultModelBest = evalSummary?.best_by_model?.[defaultModelName];
 
   return (
     <div className="app-shell">
@@ -307,6 +357,70 @@ export default function App() {
           ) : (
             <p className="muted">先点击“开始识别”或“开始核验”，再查看结构化结果和说明书问答。</p>
           )}
+
+          <div className="summary-block">
+            <div className="panel-title-row">
+              <h2>评测摘要</h2>
+            </div>
+            {loadingEval ? (
+              <p className="muted">正在加载评测摘要...</p>
+            ) : evalSummary?.available ? (
+              <>
+                <div className="note-block compact-block">
+                  <strong>总体推荐</strong>
+                  <p>{evalSummary.recommended_model}</p>
+                  <p>
+                    配置：{evalSummary.recommended_config?.config}，正确率：
+                    {evalSummary.recommended_config?.metrics_pct?.correct}% ，平均耗时：
+                    {evalSummary.recommended_config?.avg_time_sec}s
+                  </p>
+                </div>
+                {defaultModelBest ? (
+                  <div className="note-block compact-block">
+                    <strong>当前默认模型最佳配置</strong>
+                    <p>{defaultModelName}</p>
+                    <p>
+                      配置：{defaultModelBest.config}，正确率：
+                      {defaultModelBest.metrics_pct?.correct}% ，平均耗时：
+                      {defaultModelBest.avg_time_sec}s
+                    </p>
+                  </div>
+                ) : null}
+              </>
+            ) : (
+              <p className="muted">暂无评测摘要。</p>
+            )}
+          </div>
+
+          <div className="summary-block">
+            <div className="panel-title-row">
+              <h2>最近日志</h2>
+            </div>
+            {loadingAudit ? (
+              <p className="muted">正在加载日志...</p>
+            ) : auditLogs.length ? (
+              <div className="audit-list">
+                {auditLogs.map((log) => (
+                  <div key={log.trace_id} className="audit-item">
+                    <p><strong>{log.event_type}</strong></p>
+                    <p className="muted">{log.created_at}</p>
+                    <p className="trace-id">{log.trace_id}</p>
+                    {log.payload?.canonical_name ? (
+                      <p>标准名：{log.payload.canonical_name}</p>
+                    ) : null}
+                    {log.payload?.question ? (
+                      <p>问题：{log.payload.question}</p>
+                    ) : null}
+                    {log.payload?.status ? (
+                      <p>状态：{log.payload.status}</p>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="muted">暂无日志。</p>
+            )}
+          </div>
         </aside>
       </div>
     </div>
