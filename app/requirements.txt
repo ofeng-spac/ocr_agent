@@ -3,3 +3,4 @@ uvicorn>=0.35
 numpy>=1.26
 opencv-python>=4.10
 openai>=2.14
+qdrant-client>=1.17

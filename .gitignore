@@ -1,2 +1,3 @@
 __pycache__
 data/structured/audit_logs.jsonl
+data/qdrant/

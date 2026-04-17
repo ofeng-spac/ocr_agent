@@ -29,6 +29,11 @@ if VIDEO_DIR.exists():
     app.mount("/videos", StaticFiles(directory=str(VIDEO_DIR)), name="videos")
 
 
+@app.on_event("shutdown")
+def shutdown_event():
+    qa_service.close()
+
+
 @app.get("/api/health")
 def health():
     return {"ok": True, "service": "drug-recognition-agent"}
@@ -134,6 +139,11 @@ def ask_leaflet(req: AskRequest):
         trace_id=trace_id,
     )
     return result
+
+
+@app.post("/api/kb/reindex")
+def reindex_knowledge_base():
+    return qa_service.rebuild_index()
 
 
 @app.get("/api/audit_logs")

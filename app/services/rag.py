@@ -4,10 +4,23 @@ import json
 from pathlib import Path
 
 from app.services.verifier import normalize_name
+from app.services.vectorizer import VECTOR_SIZE, vectorize_text
+
+try:
+    from qdrant_client import QdrantClient
+    from qdrant_client.http import models as qmodels
+
+    QDRANT_AVAILABLE = True
+except Exception:
+    QDRANT_AVAILABLE = False
+    QdrantClient = None
+    qmodels = None
 
 
 ROOT = Path(__file__).resolve().parents[2]
 FIELDS_PATH = ROOT / "data" / "structured" / "leaflet_fields.jsonl"
+QDRANT_PATH = ROOT / "data" / "qdrant"
+COLLECTION_NAME = "leaflet_fields_v1"
 
 QUESTION_FIELD_RULES = [
     ("specification", ["规格", "多少毫克", "多少mg", "多大规格", "每片", "每支"]),
@@ -46,6 +59,147 @@ def infer_field_name(question: str) -> str:
 class LeafletQAService:
     def __init__(self, records: list[dict] | None = None):
         self.records = records if records is not None else load_leaflet_fields()
+        self._client = None
+
+    def _get_client(self):
+        if not QDRANT_AVAILABLE:
+            return None
+        if self._client is None:
+            QDRANT_PATH.mkdir(parents=True, exist_ok=True)
+            self._client = QdrantClient(path=str(QDRANT_PATH))
+        return self._client
+
+    def close(self) -> None:
+        if self._client is not None:
+            try:
+                self._client.close()
+            except Exception:
+                pass
+            self._client = None
+
+    def _payload_for_record(self, record: dict) -> dict:
+        return {
+            "drug_id": record["drug_id"],
+            "canonical_name": record["canonical_name"],
+            "field_name": record["field_name"],
+            "field_value": record["field_value"],
+            "source_file": record["source_file"],
+            "source_type": record["source_type"],
+        }
+
+    def rebuild_index(self) -> dict:
+        client = self._get_client()
+        if client is None:
+            return {
+                "status": "unavailable",
+                "reason": "qdrant_client 不可用，无法构建索引。",
+                "collection_name": COLLECTION_NAME,
+            }
+
+        if client.collection_exists(COLLECTION_NAME):
+            client.delete_collection(COLLECTION_NAME)
+
+        client.create_collection(
+            collection_name=COLLECTION_NAME,
+            vectors_config=qmodels.VectorParams(size=VECTOR_SIZE, distance=qmodels.Distance.COSINE),
+        )
+
+        points = []
+        for idx, record in enumerate(self.records):
+            content = f"{record['canonical_name']} {record['field_name']} {record['field_value']}"
+            points.append(
+                qmodels.PointStruct(
+                    id=idx,
+                    vector=vectorize_text(content),
+                    payload=self._payload_for_record(record),
+                )
+            )
+
+        if points:
+            client.upsert(collection_name=COLLECTION_NAME, points=points)
+
+        return {
+            "status": "ok",
+            "collection_name": COLLECTION_NAME,
+            "points": len(points),
+            "vector_size": VECTOR_SIZE,
+        }
+
+    def ensure_index(self) -> bool:
+        client = self._get_client()
+        if client is None:
+            return False
+
+        if client.collection_exists(COLLECTION_NAME):
+            info = client.get_collection(COLLECTION_NAME)
+            if info.points_count == len(self.records):
+                return True
+
+        self.rebuild_index()
+        return True
+
+    def _search_qdrant(self, canonical_name: str, target_field: str, question: str) -> list[dict]:
+        client = self._get_client()
+        if client is None:
+            return []
+
+        if not self.ensure_index():
+            return []
+
+        fields = [target_field]
+        if target_field == "brand_name":
+            fields.append("generic_name")
+
+        results = []
+        seen = set()
+        query_vector = vectorize_text(question)
+
+        for field_name in fields:
+            response = client.query_points(
+                collection_name=COLLECTION_NAME,
+                query=query_vector,
+                query_filter=qmodels.Filter(
+                    must=[
+                        qmodels.FieldCondition(
+                            key="canonical_name",
+                            match=qmodels.MatchValue(value=canonical_name),
+                        ),
+                        qmodels.FieldCondition(
+                            key="field_name",
+                            match=qmodels.MatchValue(value=field_name),
+                        ),
+                    ]
+                ),
+                limit=3,
+            )
+            for hit in response.points:
+                payload = hit.payload or {}
+                key = (
+                    payload.get("canonical_name"),
+                    payload.get("field_name"),
+                    payload.get("field_value"),
+                    payload.get("source_file"),
+                )
+                if key in seen:
+                    continue
+                seen.add(key)
+                results.append(
+                    {
+                        "field_name": payload.get("field_name", ""),
+                        "field_value": payload.get("field_value", ""),
+                        "source_file": payload.get("source_file", ""),
+                        "source_type": payload.get("source_type", ""),
+                        "score": round(hit.score or 0.0, 4),
+                    }
+                )
+        return results
+
+    @staticmethod
+    def _direct_field_hits(candidates: list[dict], target_field: str) -> list[dict]:
+        hits = [record for record in candidates if record["field_name"] == target_field]
+        if not hits and target_field == "brand_name":
+            hits = [record for record in candidates if record["field_name"] == "generic_name"]
+        return hits
 
     def ask(self, canonical_name: str, question: str) -> dict:
         canonical_name = canonical_name.strip()
@@ -83,9 +237,19 @@ class LeafletQAService:
                 "target_field": target_field,
             }
 
-        hits = [record for record in candidates if record["field_name"] == target_field]
-        if not hits and target_field == "brand_name":
-            hits = [record for record in candidates if record["field_name"] == "generic_name"]
+        qdrant_hits = self._search_qdrant(canonical_name, target_field, question)
+        if qdrant_hits:
+            answer = "；".join(hit["field_value"] for hit in qdrant_hits)
+            return {
+                "status": "ok",
+                "reason": f"已基于 Qdrant 检索并返回字段 {target_field} 的结果。",
+                "target_field": target_field,
+                "answer": answer,
+                "citations": qdrant_hits,
+                "retrieval_mode": "qdrant",
+            }
+
+        hits = self._direct_field_hits(candidates, target_field)
 
         if not hits:
             return {
@@ -113,4 +277,5 @@ class LeafletQAService:
             "target_field": target_field,
             "answer": answer,
             "citations": citations,
+            "retrieval_mode": "structured_fields",
         }
