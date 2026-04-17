@@ -19,6 +19,11 @@ class VerifyRequest(BaseModel):
     guide: bool = True
 
 
+class AskRequest(BaseModel):
+    canonical_name: str
+    question: str
+
+
 class VideoItem(BaseModel):
     name: str
     url: str

@@ -7,11 +7,13 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.models.schemas import RecognizeRequest, VerifyRequest
+from app.models.schemas import AskRequest, RecognizeRequest, VerifyRequest
+from app.services.rag import LeafletQAService
 from app.services.recognizer import VIDEO_DIR, list_videos, recognize_video
 
 
 app = FastAPI(title="Drug Recognition Agent API", version="0.1.0")
+qa_service = LeafletQAService()
 
 app.add_middleware(
     CORSMiddleware,
@@ -103,3 +105,11 @@ async def verify(req: VerifyRequest):
         raise HTTPException(status_code=400, detail=f"Unknown model preset: {req.model}") from exc
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.post("/api/rag/ask")
+def ask_leaflet(req: AskRequest):
+    result = qa_service.ask(req.canonical_name, req.question)
+    if result["status"] == "error":
+        raise HTTPException(status_code=400, detail=result["reason"])
+    return result
