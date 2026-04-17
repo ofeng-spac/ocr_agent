@@ -129,6 +129,18 @@ body {
   gap: 12px;
 }
 
+.action-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .primary-btn {
   border: none;
   border-radius: 10px;
@@ -140,9 +152,34 @@ body {
   transition: opacity 0.2s ease;
 }
 
+.secondary-btn {
+  border: 1px solid #87b6d6;
+  border-radius: 10px;
+  background: #eef7fd;
+  color: #17577d;
+  padding: 9px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 .primary-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.secondary-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.text-input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--text);
+  background: #fbfdff;
 }
 
 .video-player {
@@ -157,11 +194,96 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow: hidden;
 }
 
-.meta p {
-  margin: 4px 0;
+.result-card,
+.qa-block {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  background: #fbfdff;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+}
+
+.meta-grid p {
+  margin: 0;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-grid strong {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.note-block {
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
+.note-block p {
+  margin: 6px 0 0;
   font-size: 14px;
+  line-height: 1.5;
+}
+
+.verify-block p:first-of-type {
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.details-block {
+  margin-top: 12px;
+}
+
+.details-block summary {
+  cursor: pointer;
+  color: #17577d;
+  font-weight: 600;
+}
+
+.qa-controls {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.qa-result {
+  margin-top: 12px;
+}
+
+.qa-result p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.citations {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.citation-item {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px;
+  background: #ffffff;
+}
+
+.citation-item p {
+  margin: 4px 0;
+  font-size: 13px;
 }
 
 .raw-output {
@@ -189,6 +311,10 @@ body {
 
 @media (max-width: 1100px) {
   .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .meta-grid {
     grid-template-columns: 1fr;
   }
 
