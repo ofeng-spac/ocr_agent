@@ -20,8 +20,11 @@ from app.services.rag import LeafletQAService
 
 def main() -> None:
     service = LeafletQAService()
-    info = service.rebuild_index()
-    print(info)
+    try:
+        info = service.rebuild_index()
+        print(info)
+    finally:
+        service.close()
 
 
 if __name__ == "__main__":

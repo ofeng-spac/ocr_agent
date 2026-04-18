@@ -204,32 +204,35 @@ def build_report(summary: dict, case_results: list[dict]) -> str:
 def main() -> None:
     cases = load_cases()
     service = LeafletQAService()
-    service.ensure_index()
-    # Warm up both retrieval paths so reported latency reflects steady-state behavior.
-    service.ask("双黄连口服液", "规格是什么")
-    service.ask("贝伐珠单抗注射液", "这个药主要用于哪些场景")
+    try:
+        service.ensure_index()
+        # Warm up both retrieval paths so reported latency reflects steady-state behavior.
+        service.ask("双黄连口服液", "规格是什么")
+        service.ask("贝伐珠单抗注射液", "这个药主要用于哪些场景")
 
-    case_results = []
-    for case in cases:
-        t0 = time.perf_counter()
-        result = service.ask(case["canonical_name"], case["question"])
-        latency_ms = (time.perf_counter() - t0) * 1000
-        case_results.append(check_case(case, result, latency_ms))
+        case_results = []
+        for case in cases:
+            t0 = time.perf_counter()
+            result = service.ask(case["canonical_name"], case["question"])
+            latency_ms = (time.perf_counter() - t0) * 1000
+            case_results.append(check_case(case, result, latency_ms))
 
-    summary = summarize(case_results)
-    output = {
-        "generated_at": datetime.now().isoformat(timespec="seconds"),
-        "summary": summary,
-        "cases": case_results,
-    }
+        summary = summarize(case_results)
+        output = {
+            "generated_at": datetime.now().isoformat(timespec="seconds"),
+            "summary": summary,
+            "cases": case_results,
+        }
 
-    RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    RESULTS_PATH.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
-    REPORT_PATH.write_text(build_report(summary, case_results), encoding="utf-8")
+        RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
+        RESULTS_PATH.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
+        REPORT_PATH.write_text(build_report(summary, case_results), encoding="utf-8")
 
-    print(json.dumps(summary, ensure_ascii=False, indent=2))
-    print(f"results saved to {RESULTS_PATH}")
-    print(f"report saved to {REPORT_PATH}")
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        print(f"results saved to {RESULTS_PATH}")
+        print(f"report saved to {REPORT_PATH}")
+    finally:
+        service.close()
 
 
 if __name__ == "__main__":

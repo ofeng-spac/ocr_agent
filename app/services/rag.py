@@ -4,8 +4,9 @@ import atexit
 import json
 from pathlib import Path
 
+from app.services.embedding import get_embedding_model_name
 from app.services.verifier import normalize_name
-from app.services.vectorizer import VECTOR_SIZE, vectorize_text
+from app.services.vectorizer import get_vector_size, vectorize_text, vectorize_texts
 
 try:
     from qdrant_client import QdrantClient
@@ -162,27 +163,35 @@ class LeafletQAService:
         for collection_name in [FIELD_COLLECTION_NAME, CHUNK_COLLECTION_NAME]:
             client.create_collection(
                 collection_name=collection_name,
-                vectors_config=qmodels.VectorParams(size=VECTOR_SIZE, distance=qmodels.Distance.COSINE),
+                vectors_config=qmodels.VectorParams(size=get_vector_size(), distance=qmodels.Distance.COSINE),
             )
 
         field_points = []
+        field_texts = [
+            f"{record['canonical_name']} {record['field_name']} {record['field_value']}"
+            for record in self.records
+        ]
+        field_vectors = vectorize_texts(field_texts) if field_texts else []
         for idx, record in enumerate(self.records):
-            content = f"{record['canonical_name']} {record['field_name']} {record['field_value']}"
             field_points.append(
                 qmodels.PointStruct(
                     id=idx,
-                    vector=vectorize_text(content),
+                    vector=field_vectors[idx],
                     payload=self._payload_for_record(record),
                 )
             )
 
         chunk_points = []
+        chunk_texts = [
+            f"{chunk['canonical_name']} {chunk['section']} {chunk['chunk_text']}"
+            for chunk in self.chunks
+        ]
+        chunk_vectors = vectorize_texts(chunk_texts) if chunk_texts else []
         for idx, chunk in enumerate(self.chunks):
-            content = f"{chunk['canonical_name']} {chunk['section']} {chunk['chunk_text']}"
             chunk_points.append(
                 qmodels.PointStruct(
                     id=idx,
-                    vector=vectorize_text(content),
+                    vector=chunk_vectors[idx],
                     payload={
                         "chunk_id": chunk["chunk_id"],
                         "drug_id": chunk["drug_id"],
@@ -206,7 +215,8 @@ class LeafletQAService:
             "chunk_collection": CHUNK_COLLECTION_NAME,
             "field_points": len(field_points),
             "chunk_points": len(chunk_points),
-            "vector_size": VECTOR_SIZE,
+            "vector_size": get_vector_size(),
+            "embedding_model": get_embedding_model_name(),
         }
 
     def ensure_index(self) -> bool:
