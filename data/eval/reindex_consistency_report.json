@@ -1,0 +1,362 @@
+{
+  "generated_at": "2026-04-18T19:28:49",
+  "passed": true,
+  "rebuild_info": {
+    "status": "ok",
+    "field_collection": "leaflet_fields_v1",
+    "chunk_collection": "leaflet_chunks_v1",
+    "field_points": 46,
+    "chunk_points": 163,
+    "vector_size": 512,
+    "embedding_model": "BAAI/bge-small-zh-v1.5"
+  },
+  "before_snapshot": {
+    "leaflet_fields_v1": {
+      "points_count": 46,
+      "vector_size": 512,
+      "sample_payloads": [
+        {
+          "id": 0,
+          "payload": {
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "field_name": "generic_name",
+            "field_value": "双黄连口服液",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 1,
+          "payload": {
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "field_name": "specification",
+            "field_value": "每支装 10 毫升。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 2,
+          "payload": {
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "field_name": "appearance",
+            "field_value": "本品为棕红色的澄清液体；味甜，微苦。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 3,
+          "payload": {
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "field_name": "indications",
+            "field_value": "疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 4,
+          "payload": {
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "field_name": "dosage",
+            "field_value": "口服。一次 20 毫升（2 支），一日 3 次；小儿酌减或遵医嘱。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        }
+      ]
+    },
+    "leaflet_chunks_v1": {
+      "points_count": 163,
+      "vector_size": 512,
+      "sample_payloads": [
+        {
+          "id": 0,
+          "payload": {
+            "chunk_id": "drug_001_chunk_001",
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "section": "drug_name",
+            "chunk_text": "双黄连口服液 汉语拼音：Shuanghuanglian Koufuye",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 1,
+          "payload": {
+            "chunk_id": "drug_001_chunk_002",
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "section": "ingredients",
+            "chunk_text": "金银花、黄芩、连翘。辅料为蔗糖。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 2,
+          "payload": {
+            "chunk_id": "drug_001_chunk_003",
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "section": "appearance",
+            "chunk_text": "本品为棕红色的澄清液体；味甜，微苦。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 3,
+          "payload": {
+            "chunk_id": "drug_001_chunk_004",
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "section": "indications",
+            "chunk_text": "疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 4,
+          "payload": {
+            "chunk_id": "drug_001_chunk_005",
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "section": "specification",
+            "chunk_text": "每支装10毫升。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        }
+      ]
+    }
+  },
+  "after_snapshot": {
+    "leaflet_fields_v1": {
+      "points_count": 46,
+      "vector_size": 512,
+      "sample_payloads": [
+        {
+          "id": 0,
+          "payload": {
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "field_name": "generic_name",
+            "field_value": "双黄连口服液",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 1,
+          "payload": {
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "field_name": "specification",
+            "field_value": "每支装 10 毫升。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 2,
+          "payload": {
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "field_name": "appearance",
+            "field_value": "本品为棕红色的澄清液体；味甜，微苦。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 3,
+          "payload": {
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "field_name": "indications",
+            "field_value": "疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 4,
+          "payload": {
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "field_name": "dosage",
+            "field_value": "口服。一次 20 毫升（2 支），一日 3 次；小儿酌减或遵医嘱。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        }
+      ]
+    },
+    "leaflet_chunks_v1": {
+      "points_count": 163,
+      "vector_size": 512,
+      "sample_payloads": [
+        {
+          "id": 0,
+          "payload": {
+            "chunk_id": "drug_001_chunk_001",
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "section": "drug_name",
+            "chunk_text": "双黄连口服液 汉语拼音：Shuanghuanglian Koufuye",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 1,
+          "payload": {
+            "chunk_id": "drug_001_chunk_002",
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "section": "ingredients",
+            "chunk_text": "金银花、黄芩、连翘。辅料为蔗糖。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 2,
+          "payload": {
+            "chunk_id": "drug_001_chunk_003",
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "section": "appearance",
+            "chunk_text": "本品为棕红色的澄清液体；味甜，微苦。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 3,
+          "payload": {
+            "chunk_id": "drug_001_chunk_004",
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "section": "indications",
+            "chunk_text": "疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        },
+        {
+          "id": 4,
+          "payload": {
+            "chunk_id": "drug_001_chunk_005",
+            "drug_id": "drug_001",
+            "canonical_name": "双黄连口服液",
+            "section": "specification",
+            "chunk_text": "每支装10毫升。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet"
+          }
+        }
+      ]
+    }
+  },
+  "before_behavior": [
+    {
+      "canonical_name": "双黄连口服液",
+      "question": "规格是什么",
+      "status": "ok",
+      "route_mode": "field_query",
+      "retrieval_mode": "qdrant_fields",
+      "target_field": "specification",
+      "answer_preview": "每支装 10 毫升。",
+      "first_citation": {
+        "field_name": "specification",
+        "field_value": "每支装 10 毫升。",
+        "source_file": "data/source_docs/text/双黄连口服液.txt",
+        "source_type": "standard_leaflet",
+        "score": 0.2773
+      }
+    },
+    {
+      "canonical_name": "贝伐珠单抗注射液",
+      "question": "这个药主要用于哪些场景",
+      "status": "ok",
+      "route_mode": "semantic_query",
+      "retrieval_mode": "qdrant_chunks",
+      "target_field": null,
+      "answer_preview": "转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性",
+      "first_citation": {
+        "section": "indications",
+        "chunk_id": "drug_011_chunk_004",
+        "chunk_text": "转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性胶质母细胞瘤 贝伐珠单抗用于成人复发性胶质母细胞瘤患者的治疗。 肝细胞癌 本品联合阿替利珠单抗治疗既往未接受过全身系统性治疗的不可切除肝细胞癌患者。 上皮性卵巢癌、输卵管癌或原发性腹膜癌 贝伐珠单抗联",
+        "source_file": "data/source_docs/text/贝伐珠单抗注射液.txt",
+        "source_type": "standard_leaflet",
+        "score": 0.4455
+      }
+    },
+    {
+      "canonical_name": "狂犬病灭活疫苗",
+      "question": "适应症是什么",
+      "status": "doc_unavailable",
+      "route_mode": "field_query",
+      "retrieval_mode": null,
+      "target_field": "indications",
+      "answer_preview": "",
+      "first_citation": null
+    }
+  ],
+  "after_behavior": [
+    {
+      "canonical_name": "双黄连口服液",
+      "question": "规格是什么",
+      "status": "ok",
+      "route_mode": "field_query",
+      "retrieval_mode": "qdrant_fields",
+      "target_field": "specification",
+      "answer_preview": "每支装 10 毫升。",
+      "first_citation": {
+        "field_name": "specification",
+        "field_value": "每支装 10 毫升。",
+        "source_file": "data/source_docs/text/双黄连口服液.txt",
+        "source_type": "standard_leaflet",
+        "score": 0.2773
+      }
+    },
+    {
+      "canonical_name": "贝伐珠单抗注射液",
+      "question": "这个药主要用于哪些场景",
+      "status": "ok",
+      "route_mode": "semantic_query",
+      "retrieval_mode": "qdrant_chunks",
+      "target_field": null,
+      "answer_preview": "转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性",
+      "first_citation": {
+        "section": "indications",
+        "chunk_id": "drug_011_chunk_004",
+        "chunk_text": "转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性胶质母细胞瘤 贝伐珠单抗用于成人复发性胶质母细胞瘤患者的治疗。 肝细胞癌 本品联合阿替利珠单抗治疗既往未接受过全身系统性治疗的不可切除肝细胞癌患者。 上皮性卵巢癌、输卵管癌或原发性腹膜癌 贝伐珠单抗联",
+        "source_file": "data/source_docs/text/贝伐珠单抗注射液.txt",
+        "source_type": "standard_leaflet",
+        "score": 0.4455
+      }
+    },
+    {
+      "canonical_name": "狂犬病灭活疫苗",
+      "question": "适应症是什么",
+      "status": "doc_unavailable",
+      "route_mode": "field_query",
+      "retrieval_mode": null,
+      "target_field": "indications",
+      "answer_preview": "",
+      "first_citation": null
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-04-18T19:28:35",
+  "passed": true,
+  "catalog_count": 11,
+  "field_count": 46,
+  "chunk_count": 163,
+  "qdrant": {
+    "leaflet_fields_v1": {
+      "points_count": 46,
+      "vector_size": 512
+    },
+    "leaflet_chunks_v1": {
+      "points_count": 163,
+      "vector_size": 512
+    }
+  },
+  "errors": [],
+  "warnings": [
+    "孟鲁司特钠片 使用非标准参考资料字段: generic_name"
+  ]
+}

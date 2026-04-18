@@ -191,7 +191,7 @@
 
 ### 7.6 完成标记
 
-- [ ] 已学习
+- [x] 已学习
 
 ## 8. 模块 4：Mock / Stub 能力
 
@@ -346,11 +346,11 @@
 
 ### 12.3 在本项目中的落地任务
 
-- [ ] 校验 `drug_catalog.json`
-- [ ] 校验 `leaflet_fields.jsonl`
-- [ ] 校验 `leaflet_chunks.jsonl`
-- [ ] 校验 `Qdrant` 中 field/chunk 点数是否一致
-- [ ] 校验索引重建前后数据一致性
+- [x] 校验 `drug_catalog.json`
+- [x] 校验 `leaflet_fields.jsonl`
+- [x] 校验 `leaflet_chunks.jsonl`
+- [x] 校验 `Qdrant` 中 field/chunk 点数是否一致
+- [x] 校验索引重建前后数据一致性
 
 ### 12.4 验收标准
 
@@ -360,7 +360,7 @@
 
 ### 12.5 完成标记
 
-- [ ] 已学习
+- [x] 已学习
 
 ## 13. 模块 9：性能测试
 

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-18T19:08:36",
+  "generated_at": "2026-04-18T19:29:02",
   "summary": {
     "total_cases": 112,
     "passed_cases": 112,
@@ -13,10 +13,10 @@
     "citation_section_hit_rate": 1.0,
     "refusal_accuracy": 1.0,
     "avg_latency_ms": 5.01,
-    "p95_latency_ms": 6.18,
+    "p95_latency_ms": 6.11,
     "avg_latency_by_route_ms": {
       "field_query": 4.97,
-      "semantic_query": 5.27
+      "semantic_query": 5.25
     },
     "pass_rate_by_case_type": {
       "field": 1.0,
@@ -35,7 +35,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "药品名称是什么",
-      "latency_ms": 7.35,
+      "latency_ms": 6.06,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -60,7 +60,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "正式名称叫什么",
-      "latency_ms": 5.63,
+      "latency_ms": 5.5,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -110,7 +110,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "这个药规格多大",
-      "latency_ms": 5.82,
+      "latency_ms": 5.65,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -135,7 +135,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "外观是什么样",
-      "latency_ms": 5.07,
+      "latency_ms": 5.16,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -160,7 +160,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "性状是什么",
-      "latency_ms": 4.79,
+      "latency_ms": 5.04,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -185,7 +185,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "适应症是什么",
-      "latency_ms": 4.76,
+      "latency_ms": 4.85,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -210,7 +210,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "这个药适用于什么",
-      "latency_ms": 5.42,
+      "latency_ms": 5.32,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -235,7 +235,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "用法用量是什么",
-      "latency_ms": 5.23,
+      "latency_ms": 5.0,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -260,7 +260,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "这个药怎么用",
-      "latency_ms": 4.95,
+      "latency_ms": 4.84,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -285,7 +285,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "注意事项是什么",
-      "latency_ms": 5.34,
+      "latency_ms": 5.07,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -310,7 +310,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "使用时需要注意什么",
-      "latency_ms": 5.42,
+      "latency_ms": 5.32,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -335,7 +335,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "禁忌是什么",
-      "latency_ms": 5.04,
+      "latency_ms": 5.12,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -360,7 +360,7 @@
       "case_type": "field",
       "canonical_name": "双黄连口服液",
       "question": "哪些人不能用",
-      "latency_ms": 4.84,
+      "latency_ms": 4.83,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -385,7 +385,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "药品名称是什么",
-      "latency_ms": 5.16,
+      "latency_ms": 5.06,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -410,7 +410,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "正式名称叫什么",
-      "latency_ms": 5.12,
+      "latency_ms": 4.98,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -435,7 +435,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "规格是什么",
-      "latency_ms": 4.98,
+      "latency_ms": 4.91,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -460,7 +460,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "这个药规格多大",
-      "latency_ms": 5.05,
+      "latency_ms": 4.91,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -485,7 +485,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "外观是什么样",
-      "latency_ms": 4.95,
+      "latency_ms": 5.1,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -510,7 +510,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "性状是什么",
-      "latency_ms": 4.89,
+      "latency_ms": 4.88,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -535,7 +535,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "适应症是什么",
-      "latency_ms": 4.96,
+      "latency_ms": 4.8,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -560,7 +560,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "这个药适用于什么",
-      "latency_ms": 5.15,
+      "latency_ms": 5.08,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -585,7 +585,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "用法用量是什么",
-      "latency_ms": 5.05,
+      "latency_ms": 5.09,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -610,7 +610,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "这个药怎么用",
-      "latency_ms": 5.16,
+      "latency_ms": 5.01,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -635,7 +635,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "注意事项是什么",
-      "latency_ms": 4.97,
+      "latency_ms": 5.07,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -660,7 +660,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "使用时需要注意什么",
-      "latency_ms": 5.1,
+      "latency_ms": 5.13,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -685,7 +685,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "禁忌是什么",
-      "latency_ms": 4.93,
+      "latency_ms": 5.19,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -710,7 +710,7 @@
       "case_type": "field",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "哪些人不能用",
-      "latency_ms": 4.72,
+      "latency_ms": 4.86,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -735,7 +735,7 @@
       "case_type": "field",
       "canonical_name": "孟鲁司特钠片",
       "question": "药品名称是什么",
-      "latency_ms": 5.21,
+      "latency_ms": 5.09,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -760,7 +760,7 @@
       "case_type": "field",
       "canonical_name": "孟鲁司特钠片",
       "question": "正式名称叫什么",
-      "latency_ms": 5.01,
+      "latency_ms": 5.12,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -785,7 +785,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢噻呋钠",
       "question": "药品名称是什么",
-      "latency_ms": 5.43,
+      "latency_ms": 5.17,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -810,7 +810,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢噻呋钠",
       "question": "正式名称叫什么",
-      "latency_ms": 5.09,
+      "latency_ms": 5.1,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -835,7 +835,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢噻呋钠",
       "question": "适应症是什么",
-      "latency_ms": 4.83,
+      "latency_ms": 5.03,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -860,7 +860,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢噻呋钠",
       "question": "这个药适用于什么",
-      "latency_ms": 5.24,
+      "latency_ms": 5.27,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -885,7 +885,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢噻呋钠",
       "question": "用法用量是什么",
-      "latency_ms": 5.03,
+      "latency_ms": 5.05,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -910,7 +910,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢噻呋钠",
       "question": "这个药怎么用",
-      "latency_ms": 4.98,
+      "latency_ms": 5.0,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -935,7 +935,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "药品名称是什么",
-      "latency_ms": 4.94,
+      "latency_ms": 5.0,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -960,7 +960,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "正式名称叫什么",
-      "latency_ms": 5.08,
+      "latency_ms": 5.14,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -985,7 +985,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "规格是什么",
-      "latency_ms": 4.91,
+      "latency_ms": 4.98,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1010,7 +1010,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "这个药规格多大",
-      "latency_ms": 4.93,
+      "latency_ms": 4.96,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1035,7 +1035,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "外观是什么样",
-      "latency_ms": 5.0,
+      "latency_ms": 5.09,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1060,7 +1060,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "性状是什么",
-      "latency_ms": 4.67,
+      "latency_ms": 4.75,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1085,7 +1085,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "适应症是什么",
-      "latency_ms": 4.79,
+      "latency_ms": 5.04,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1110,7 +1110,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "这个药适用于什么",
-      "latency_ms": 5.06,
+      "latency_ms": 5.03,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1135,7 +1135,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "用法用量是什么",
-      "latency_ms": 5.23,
+      "latency_ms": 5.25,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1160,7 +1160,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "这个药怎么用",
-      "latency_ms": 4.93,
+      "latency_ms": 4.98,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1185,7 +1185,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "注意事项是什么",
-      "latency_ms": 4.97,
+      "latency_ms": 5.07,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1210,7 +1210,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "使用时需要注意什么",
-      "latency_ms": 5.38,
+      "latency_ms": 5.4,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1235,7 +1235,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "禁忌是什么",
-      "latency_ms": 4.92,
+      "latency_ms": 4.93,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1260,7 +1260,7 @@
       "case_type": "field",
       "canonical_name": "注射用头孢曲松钠",
       "question": "哪些人不能用",
-      "latency_ms": 5.0,
+      "latency_ms": 5.18,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1285,7 +1285,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "药品名称是什么",
-      "latency_ms": 5.16,
+      "latency_ms": 5.05,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1310,7 +1310,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "正式名称叫什么",
-      "latency_ms": 5.27,
+      "latency_ms": 5.31,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1335,7 +1335,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "规格是什么",
-      "latency_ms": 4.83,
+      "latency_ms": 4.88,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1360,7 +1360,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "这个药规格多大",
-      "latency_ms": 5.18,
+      "latency_ms": 5.15,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1385,7 +1385,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "外观是什么样",
-      "latency_ms": 5.09,
+      "latency_ms": 5.13,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1410,7 +1410,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "性状是什么",
-      "latency_ms": 5.06,
+      "latency_ms": 4.85,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1435,7 +1435,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "适应症是什么",
-      "latency_ms": 5.22,
+      "latency_ms": 5.0,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1460,7 +1460,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "这个药适用于什么",
-      "latency_ms": 5.1,
+      "latency_ms": 5.02,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1485,7 +1485,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "用法用量是什么",
-      "latency_ms": 5.36,
+      "latency_ms": 5.37,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1510,7 +1510,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "这个药怎么用",
-      "latency_ms": 4.9,
+      "latency_ms": 4.94,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1535,7 +1535,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "注意事项是什么",
-      "latency_ms": 5.18,
+      "latency_ms": 5.26,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1560,7 +1560,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "使用时需要注意什么",
-      "latency_ms": 5.16,
+      "latency_ms": 5.26,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1585,7 +1585,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "禁忌是什么",
-      "latency_ms": 4.85,
+      "latency_ms": 4.92,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1610,7 +1610,7 @@
       "case_type": "field",
       "canonical_name": "盐酸小檗碱片",
       "question": "哪些人不能用",
-      "latency_ms": 5.0,
+      "latency_ms": 5.23,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1635,7 +1635,7 @@
       "case_type": "field",
       "canonical_name": "蒲地蓝消炎口服液",
       "question": "药品名称是什么",
-      "latency_ms": 4.99,
+      "latency_ms": 5.23,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1660,7 +1660,7 @@
       "case_type": "field",
       "canonical_name": "蒲地蓝消炎口服液",
       "question": "正式名称叫什么",
-      "latency_ms": 5.25,
+      "latency_ms": 5.3,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1685,7 +1685,7 @@
       "case_type": "field",
       "canonical_name": "蒲地蓝消炎口服液",
       "question": "规格是什么",
-      "latency_ms": 4.94,
+      "latency_ms": 4.85,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1710,7 +1710,7 @@
       "case_type": "field",
       "canonical_name": "蒲地蓝消炎口服液",
       "question": "这个药规格多大",
-      "latency_ms": 5.17,
+      "latency_ms": 5.26,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1735,7 +1735,7 @@
       "case_type": "field",
       "canonical_name": "蒲地蓝消炎口服液",
       "question": "外观是什么样",
-      "latency_ms": 5.04,
+      "latency_ms": 5.21,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1760,7 +1760,7 @@
       "case_type": "field",
       "canonical_name": "蒲地蓝消炎口服液",
       "question": "性状是什么",
-      "latency_ms": 4.73,
+      "latency_ms": 4.78,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1785,7 +1785,7 @@
       "case_type": "field",
       "canonical_name": "蒲地蓝消炎口服液",
       "question": "适应症是什么",
-      "latency_ms": 5.0,
+      "latency_ms": 4.99,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1810,7 +1810,7 @@
       "case_type": "field",
       "canonical_name": "蒲地蓝消炎口服液",
       "question": "这个药适用于什么",
-      "latency_ms": 4.98,
+      "latency_ms": 5.13,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1835,7 +1835,7 @@
       "case_type": "field",
       "canonical_name": "蒲地蓝消炎口服液",
       "question": "用法用量是什么",
-      "latency_ms": 5.3,
+      "latency_ms": 5.26,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1860,7 +1860,7 @@
       "case_type": "field",
       "canonical_name": "蒲地蓝消炎口服液",
       "question": "这个药怎么用",
-      "latency_ms": 4.93,
+      "latency_ms": 5.05,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1885,7 +1885,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "药品名称是什么",
-      "latency_ms": 5.24,
+      "latency_ms": 5.26,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1910,7 +1910,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "正式名称叫什么",
-      "latency_ms": 5.12,
+      "latency_ms": 5.14,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1935,7 +1935,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "商品名是什么",
-      "latency_ms": 5.83,
+      "latency_ms": 5.71,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1960,7 +1960,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "品牌名是什么",
-      "latency_ms": 5.53,
+      "latency_ms": 5.81,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -1985,7 +1985,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "商品名是什么",
-      "latency_ms": 5.48,
+      "latency_ms": 5.57,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2010,7 +2010,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "品牌名是什么",
-      "latency_ms": 5.42,
+      "latency_ms": 5.55,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2035,7 +2035,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "规格是什么",
-      "latency_ms": 4.63,
+      "latency_ms": 4.76,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2060,7 +2060,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "这个药规格多大",
-      "latency_ms": 4.95,
+      "latency_ms": 5.08,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2110,7 +2110,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "性状是什么",
-      "latency_ms": 4.77,
+      "latency_ms": 5.08,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2135,7 +2135,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "适应症是什么",
-      "latency_ms": 4.91,
+      "latency_ms": 5.22,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2160,7 +2160,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "这个药适用于什么",
-      "latency_ms": 4.97,
+      "latency_ms": 5.07,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2185,7 +2185,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "用法用量是什么",
-      "latency_ms": 5.39,
+      "latency_ms": 5.31,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2210,7 +2210,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "这个药怎么用",
-      "latency_ms": 5.04,
+      "latency_ms": 5.05,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2260,7 +2260,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "使用时需要注意什么",
-      "latency_ms": 5.17,
+      "latency_ms": 5.3,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2285,7 +2285,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "禁忌是什么",
-      "latency_ms": 4.99,
+      "latency_ms": 5.13,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2310,7 +2310,7 @@
       "case_type": "field",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "哪些人不能用",
-      "latency_ms": 4.83,
+      "latency_ms": 4.81,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2335,7 +2335,7 @@
       "case_type": "semantic",
       "canonical_name": "双黄连口服液",
       "question": "这个药主要用于哪些场景",
-      "latency_ms": 6.13,
+      "latency_ms": 5.97,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2359,7 +2359,7 @@
       "case_type": "semantic",
       "canonical_name": "双黄连口服液",
       "question": "这个药有哪些使用提醒",
-      "latency_ms": 6.34,
+      "latency_ms": 6.23,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2383,7 +2383,7 @@
       "case_type": "semantic",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "这个药一般治疗哪些问题",
-      "latency_ms": 6.22,
+      "latency_ms": 6.07,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2407,7 +2407,7 @@
       "case_type": "semantic",
       "canonical_name": "奥美拉唑肠溶胶囊",
       "question": "这个药有什么慎用提醒",
-      "latency_ms": 7.71,
+      "latency_ms": 7.38,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2431,7 +2431,7 @@
       "case_type": "semantic",
       "canonical_name": "注射用头孢噻呋钠",
       "question": "这个药一般治疗哪些感染",
-      "latency_ms": 6.06,
+      "latency_ms": 6.0,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2455,7 +2455,7 @@
       "case_type": "semantic",
       "canonical_name": "注射用头孢噻呋钠",
       "question": "这个药通常怎么给药",
-      "latency_ms": 6.06,
+      "latency_ms": 5.99,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2479,7 +2479,7 @@
       "case_type": "semantic",
       "canonical_name": "注射用头孢曲松钠",
       "question": "这个药一般治疗哪些感染",
-      "latency_ms": 6.18,
+      "latency_ms": 6.11,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2503,7 +2503,7 @@
       "case_type": "semantic",
       "canonical_name": "注射用头孢曲松钠",
       "question": "这个药通常怎么给药",
-      "latency_ms": 6.11,
+      "latency_ms": 6.05,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2527,7 +2527,7 @@
       "case_type": "semantic",
       "canonical_name": "盐酸小檗碱片",
       "question": "这个药一般用于什么情况",
-      "latency_ms": 6.13,
+      "latency_ms": 6.33,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2551,7 +2551,7 @@
       "case_type": "semantic",
       "canonical_name": "蒲地蓝消炎口服液",
       "question": "这个药主要用于哪些场景",
-      "latency_ms": 6.06,
+      "latency_ms": 6.45,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2575,7 +2575,7 @@
       "case_type": "semantic",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "这个药主要用于哪些场景",
-      "latency_ms": 6.09,
+      "latency_ms": 6.07,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2599,7 +2599,7 @@
       "case_type": "semantic",
       "canonical_name": "贝伐珠单抗注射液",
       "question": "这个药有哪些风险和注意事项",
-      "latency_ms": 8.39,
+      "latency_ms": 8.61,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2623,7 +2623,7 @@
       "case_type": "refusal",
       "canonical_name": "狂犬病灭活疫苗",
       "question": "适应症是什么",
-      "latency_ms": 0.35,
+      "latency_ms": 0.39,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2645,7 +2645,7 @@
       "case_type": "refusal",
       "canonical_name": "狂犬病灭活疫苗",
       "question": "这个药主要用于什么",
-      "latency_ms": 0.31,
+      "latency_ms": 0.29,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2666,7 +2666,7 @@
       "case_type": "refusal",
       "canonical_name": "犬瘟热、腺病毒2型、副流感、细小病毒病四联活疫苗",
       "question": "规格是什么",
-      "latency_ms": 0.36,
+      "latency_ms": 0.34,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2688,7 +2688,7 @@
       "case_type": "refusal",
       "canonical_name": "犬瘟热、腺病毒2型、副流感、细小病毒病四联活疫苗",
       "question": "这个药主要用于什么",
-      "latency_ms": 0.35,
+      "latency_ms": 0.33,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2709,7 +2709,7 @@
       "case_type": "refusal",
       "canonical_name": "猫鼻气管炎、杯状病毒病、泛白细胞减少症三联灭活疫苗",
       "question": "适应症是什么",
-      "latency_ms": 0.36,
+      "latency_ms": 0.35,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2731,7 +2731,7 @@
       "case_type": "refusal",
       "canonical_name": "猫鼻气管炎、杯状病毒病、泛白细胞减少症三联灭活疫苗",
       "question": "这个药主要用于什么",
-      "latency_ms": 0.35,
+      "latency_ms": 0.34,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2752,7 +2752,7 @@
       "case_type": "refusal",
       "canonical_name": "孟鲁司特钠片",
       "question": "适应症是什么",
-      "latency_ms": 5.77,
+      "latency_ms": 5.08,
       "checks": {
         "route_mode": true,
         "status": true,
@@ -2774,7 +2774,7 @@
       "case_type": "refusal",
       "canonical_name": "孟鲁司特钠片",
       "question": "这个药主要用于什么场景",
-      "latency_ms": 5.86,
+      "latency_ms": 5.84,
       "checks": {
         "route_mode": true,
         "status": true,

@@ -82,6 +82,8 @@ def main() -> None:
         run_step("pytest", [python, "-m", "pytest", "-q", "tests"]),
         run_step("verifier_regression", [python, "scripts/check_name_verifier.py"]),
         run_step("build_rag_eval_cases", [python, "scripts/build_rag_eval_cases.py"]),
+        run_step("data_integrity", [python, "scripts/check_data_integrity.py"]),
+        run_step("reindex_consistency", [python, "scripts/check_reindex_consistency.py"]),
         run_step("rag_eval", [python, "scripts/eval_rag.py"]),
     ]
 
@@ -93,6 +95,8 @@ def main() -> None:
         "artifacts": {
             "rag_eval_results": load_json_if_exists(ROOT / "data" / "eval" / "rag_eval_results.json"),
             "rag_eval_report_path": str(ROOT / "data" / "eval" / "rag_eval_report.md"),
+            "data_integrity_report": load_json_if_exists(ROOT / "data" / "eval" / "data_integrity_report.json"),
+            "reindex_consistency_report": load_json_if_exists(ROOT / "data" / "eval" / "reindex_consistency_report.json"),
         },
         "highlights": {
             "pytest": extract_pytest_summary(steps[0]["stdout"]),

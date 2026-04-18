@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-18T19:08:37",
+  "generated_at": "2026-04-18T19:29:03",
   "python": "/home/vision/micromamba/envs/ocr/bin/python",
   "all_passed": true,
   "steps": [
@@ -12,11 +12,11 @@
         "-q",
         "tests"
       ],
-      "started_at": "2026-04-18T19:08:18",
-      "elapsed_ms": 6260.37,
+      "started_at": "2026-04-18T19:28:17",
+      "elapsed_ms": 6276.78,
       "returncode": 0,
       "passed": true,
-      "stdout": ".......................................                                  [100%]\n=============================== warnings summary ===============================\napp/api/main.py:33\n  /home/vision/users/flb/Kestrel-Recognition/app/api/main.py:33: DeprecationWarning: \n          on_event is deprecated, use lifespan event handlers instead.\n  \n          Read more about it in the\n          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).\n          \n    @app.on_event(\"shutdown\")\n\n../../../micromamba/envs/ocr/lib/python3.12/site-packages/fastapi/applications.py:4598\n  /home/vision/micromamba/envs/ocr/lib/python3.12/site-packages/fastapi/applications.py:4598: DeprecationWarning: \n          on_event is deprecated, use lifespan event handlers instead.\n  \n          Read more about it in the\n          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).\n          \n    return self.router.on_event(event_type)  # ty: ignore[deprecated]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n39 passed, 2 warnings in 0.05s\n",
+      "stdout": ".......................................                                  [100%]\n=============================== warnings summary ===============================\napp/api/main.py:33\n  /home/vision/users/flb/Kestrel-Recognition/app/api/main.py:33: DeprecationWarning: \n          on_event is deprecated, use lifespan event handlers instead.\n  \n          Read more about it in the\n          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).\n          \n    @app.on_event(\"shutdown\")\n\n../../../micromamba/envs/ocr/lib/python3.12/site-packages/fastapi/applications.py:4598\n  /home/vision/micromamba/envs/ocr/lib/python3.12/site-packages/fastapi/applications.py:4598: DeprecationWarning: \n          on_event is deprecated, use lifespan event handlers instead.\n  \n          Read more about it in the\n          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).\n          \n    return self.router.on_event(event_type)  # ty: ignore[deprecated]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n39 passed, 2 warnings in 0.04s\n",
       "stderr": ""
     },
     {
@@ -25,8 +25,8 @@
         "/home/vision/micromamba/envs/ocr/bin/python",
         "scripts/check_name_verifier.py"
       ],
-      "started_at": "2026-04-18T19:08:24",
-      "elapsed_ms": 31.65,
+      "started_at": "2026-04-18T19:28:24",
+      "elapsed_ms": 28.45,
       "returncode": 0,
       "passed": true,
       "stdout": "[01] PASS | raw_name=头孢曲松钠 | status=verified_alias | canonical=注射用头孢曲松钠\n[02] PASS | raw_name=头孢噻呋钠 | status=verified_alias | canonical=注射用头孢噻呋钠\n[03] PASS | raw_name=卫佳®伍犬瘟热、腺病毒2型、副流感、细小病毒病四联活疫苗 | status=verified_alias | canonical=犬瘟热、腺病毒2型、副流感、细小病毒病四联活疫苗\n[04] PASS | raw_name=贝倍旺狂犬病灭活疫苗 | status=verified_alias | canonical=狂犬病灭活疫苗\n[05] PASS | raw_name=金喵乐 | status=verified_brand | canonical=猫鼻气管炎、杯状病毒病、泛白细胞减少症三联灭活疫苗\n[06] PASS | raw_name=安维汀 | status=verified_brand | canonical=贝伐珠单抗注射液\n[07] PASS | raw_name=注射用奥美拉唑钠 | status=review_required | canonical=\n[08] PASS | raw_name=注射用头孢他啶 | status=review_required | canonical=\n[09] PASS | raw_name=完全不存在的药名 | status=unknown | canonical=\n\npassed 9/9 cases\n",
@@ -38,12 +38,38 @@
         "/home/vision/micromamba/envs/ocr/bin/python",
         "scripts/build_rag_eval_cases.py"
       ],
-      "started_at": "2026-04-18T19:08:24",
-      "elapsed_ms": 20.99,
+      "started_at": "2026-04-18T19:28:24",
+      "elapsed_ms": 22.6,
       "returncode": 0,
       "passed": true,
       "stdout": "wrote 112 cases to /home/vision/users/flb/Kestrel-Recognition/data/eval/rag_eval_cases.jsonl\nfield cases: 92\nsemantic cases: 12\nrefusal cases: 8\n",
       "stderr": ""
+    },
+    {
+      "name": "data_integrity",
+      "command": [
+        "/home/vision/micromamba/envs/ocr/bin/python",
+        "scripts/check_data_integrity.py"
+      ],
+      "started_at": "2026-04-18T19:28:24",
+      "elapsed_ms": 11933.75,
+      "returncode": 0,
+      "passed": true,
+      "stdout": "{\n  \"generated_at\": \"2026-04-18T19:28:35\",\n  \"passed\": true,\n  \"catalog_count\": 11,\n  \"field_count\": 46,\n  \"chunk_count\": 163,\n  \"qdrant\": {\n    \"leaflet_fields_v1\": {\n      \"points_count\": 46,\n      \"vector_size\": 512\n    },\n    \"leaflet_chunks_v1\": {\n      \"points_count\": 163,\n      \"vector_size\": 512\n    }\n  },\n  \"errors\": [],\n  \"warnings\": [\n    \"孟鲁司特钠片 使用非标准参考资料字段: generic_name\"\n  ]\n}\nreport saved to /home/vision/users/flb/Kestrel-Recognition/data/eval/data_integrity_report.json\n",
+      "stderr": "Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n\nLoading weights:   0%|          | 0/71 [00:00<?, ?it/s]\nLoading weights: 100%|██████████| 71/71 [00:00<00:00, 16569.05it/s]\n\u001b[1mBertModel LOAD REPORT\u001b[0m from: BAAI/bge-small-zh-v1.5\nKey                     | Status     |  | \n------------------------+------------+--+-\nembeddings.position_ids | UNEXPECTED |  | \n\nNotes:\n- UNEXPECTED:\tcan be ignored when loading from different task/architecture; not ok if you expect identical arch.\n"
+    },
+    {
+      "name": "reindex_consistency",
+      "command": [
+        "/home/vision/micromamba/envs/ocr/bin/python",
+        "scripts/check_reindex_consistency.py"
+      ],
+      "started_at": "2026-04-18T19:28:36",
+      "elapsed_ms": 14391.72,
+      "returncode": 0,
+      "passed": true,
+      "stdout": "{\n  \"generated_at\": \"2026-04-18T19:28:49\",\n  \"passed\": true,\n  \"rebuild_info\": {\n    \"status\": \"ok\",\n    \"field_collection\": \"leaflet_fields_v1\",\n    \"chunk_collection\": \"leaflet_chunks_v1\",\n    \"field_points\": 46,\n    \"chunk_points\": 163,\n    \"vector_size\": 512,\n    \"embedding_model\": \"BAAI/bge-small-zh-v1.5\"\n  },\n  \"before_snapshot\": {\n    \"leaflet_fields_v1\": {\n      \"points_count\": 46,\n      \"vector_size\": 512,\n      \"sample_payloads\": [\n        {\n          \"id\": 0,\n          \"payload\": {\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"field_name\": \"generic_name\",\n            \"field_value\": \"双黄连口服液\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 1,\n          \"payload\": {\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"field_name\": \"specification\",\n            \"field_value\": \"每支装 10 毫升。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 2,\n          \"payload\": {\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"field_name\": \"appearance\",\n            \"field_value\": \"本品为棕红色的澄清液体；味甜，微苦。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 3,\n          \"payload\": {\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"field_name\": \"indications\",\n            \"field_value\": \"疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 4,\n          \"payload\": {\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"field_name\": \"dosage\",\n            \"field_value\": \"口服。一次 20 毫升（2 支），一日 3 次；小儿酌减或遵医嘱。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        }\n      ]\n    },\n    \"leaflet_chunks_v1\": {\n      \"points_count\": 163,\n      \"vector_size\": 512,\n      \"sample_payloads\": [\n        {\n          \"id\": 0,\n          \"payload\": {\n            \"chunk_id\": \"drug_001_chunk_001\",\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"section\": \"drug_name\",\n            \"chunk_text\": \"双黄连口服液 汉语拼音：Shuanghuanglian Koufuye\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 1,\n          \"payload\": {\n            \"chunk_id\": \"drug_001_chunk_002\",\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"section\": \"ingredients\",\n            \"chunk_text\": \"金银花、黄芩、连翘。辅料为蔗糖。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 2,\n          \"payload\": {\n            \"chunk_id\": \"drug_001_chunk_003\",\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"section\": \"appearance\",\n            \"chunk_text\": \"本品为棕红色的澄清液体；味甜，微苦。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 3,\n          \"payload\": {\n            \"chunk_id\": \"drug_001_chunk_004\",\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"section\": \"indications\",\n            \"chunk_text\": \"疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 4,\n          \"payload\": {\n            \"chunk_id\": \"drug_001_chunk_005\",\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"section\": \"specification\",\n            \"chunk_text\": \"每支装10毫升。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        }\n      ]\n    }\n  },\n  \"after_snapshot\": {\n    \"leaflet_fields_v1\": {\n      \"points_count\": 46,\n      \"vector_size\": 512,\n      \"sample_payloads\": [\n        {\n          \"id\": 0,\n          \"payload\": {\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"field_name\": \"generic_name\",\n            \"field_value\": \"双黄连口服液\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 1,\n          \"payload\": {\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"field_name\": \"specification\",\n            \"field_value\": \"每支装 10 毫升。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 2,\n          \"payload\": {\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"field_name\": \"appearance\",\n            \"field_value\": \"本品为棕红色的澄清液体；味甜，微苦。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 3,\n          \"payload\": {\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"field_name\": \"indications\",\n            \"field_value\": \"疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 4,\n          \"payload\": {\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"field_name\": \"dosage\",\n            \"field_value\": \"口服。一次 20 毫升（2 支），一日 3 次；小儿酌减或遵医嘱。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        }\n      ]\n    },\n    \"leaflet_chunks_v1\": {\n      \"points_count\": 163,\n      \"vector_size\": 512,\n      \"sample_payloads\": [\n        {\n          \"id\": 0,\n          \"payload\": {\n            \"chunk_id\": \"drug_001_chunk_001\",\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"section\": \"drug_name\",\n            \"chunk_text\": \"双黄连口服液 汉语拼音：Shuanghuanglian Koufuye\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 1,\n          \"payload\": {\n            \"chunk_id\": \"drug_001_chunk_002\",\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"section\": \"ingredients\",\n            \"chunk_text\": \"金银花、黄芩、连翘。辅料为蔗糖。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 2,\n          \"payload\": {\n            \"chunk_id\": \"drug_001_chunk_003\",\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"section\": \"appearance\",\n            \"chunk_text\": \"本品为棕红色的澄清液体；味甜，微苦。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 3,\n          \"payload\": {\n            \"chunk_id\": \"drug_001_chunk_004\",\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"section\": \"indications\",\n            \"chunk_text\": \"疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        },\n        {\n          \"id\": 4,\n          \"payload\": {\n            \"chunk_id\": \"drug_001_chunk_005\",\n            \"drug_id\": \"drug_001\",\n            \"canonical_name\": \"双黄连口服液\",\n            \"section\": \"specification\",\n            \"chunk_text\": \"每支装10毫升。\",\n            \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n            \"source_type\": \"standard_leaflet\"\n          }\n        }\n      ]\n    }\n  },\n  \"before_behavior\": [\n    {\n      \"canonical_name\": \"双黄连口服液\",\n      \"question\": \"规格是什么\",\n      \"status\": \"ok\",\n      \"route_mode\": \"field_query\",\n      \"retrieval_mode\": \"qdrant_fields\",\n      \"target_field\": \"specification\",\n      \"answer_preview\": \"每支装 10 毫升。\",\n      \"first_citation\": {\n        \"field_name\": \"specification\",\n        \"field_value\": \"每支装 10 毫升。\",\n        \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n        \"source_type\": \"standard_leaflet\",\n        \"score\": 0.2773\n      }\n    },\n    {\n      \"canonical_name\": \"贝伐珠单抗注射液\",\n      \"question\": \"这个药主要用于哪些场景\",\n      \"status\": \"ok\",\n      \"route_mode\": \"semantic_query\",\n      \"retrieval_mode\": \"qdrant_chunks\",\n      \"target_field\": null,\n      \"answer_preview\": \"转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性\",\n      \"first_citation\": {\n        \"section\": \"indications\",\n        \"chunk_id\": \"drug_011_chunk_004\",\n        \"chunk_text\": \"转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性胶质母细胞瘤 贝伐珠单抗用于成人复发性胶质母细胞瘤患者的治疗。 肝细胞癌 本品联合阿替利珠单抗治疗既往未接受过全身系统性治疗的不可切除肝细胞癌患者。 上皮性卵巢癌、输卵管癌或原发性腹膜癌 贝伐珠单抗联\",\n        \"source_file\": \"data/source_docs/text/贝伐珠单抗注射液.txt\",\n        \"source_type\": \"standard_leaflet\",\n        \"score\": 0.4455\n      }\n    },\n    {\n      \"canonical_name\": \"狂犬病灭活疫苗\",\n      \"question\": \"适应症是什么\",\n      \"status\": \"doc_unavailable\",\n      \"route_mode\": \"field_query\",\n      \"retrieval_mode\": null,\n      \"target_field\": \"indications\",\n      \"answer_preview\": \"\",\n      \"first_citation\": null\n    }\n  ],\n  \"after_behavior\": [\n    {\n      \"canonical_name\": \"双黄连口服液\",\n      \"question\": \"规格是什么\",\n      \"status\": \"ok\",\n      \"route_mode\": \"field_query\",\n      \"retrieval_mode\": \"qdrant_fields\",\n      \"target_field\": \"specification\",\n      \"answer_preview\": \"每支装 10 毫升。\",\n      \"first_citation\": {\n        \"field_name\": \"specification\",\n        \"field_value\": \"每支装 10 毫升。\",\n        \"source_file\": \"data/source_docs/text/双黄连口服液.txt\",\n        \"source_type\": \"standard_leaflet\",\n        \"score\": 0.2773\n      }\n    },\n    {\n      \"canonical_name\": \"贝伐珠单抗注射液\",\n      \"question\": \"这个药主要用于哪些场景\",\n      \"status\": \"ok\",\n      \"route_mode\": \"semantic_query\",\n      \"retrieval_mode\": \"qdrant_chunks\",\n      \"target_field\": null,\n      \"answer_preview\": \"转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性\",\n      \"first_citation\": {\n        \"section\": \"indications\",\n        \"chunk_id\": \"drug_011_chunk_004\",\n        \"chunk_text\": \"转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性胶质母细胞瘤 贝伐珠单抗用于成人复发性胶质母细胞瘤患者的治疗。 肝细胞癌 本品联合阿替利珠单抗治疗既往未接受过全身系统性治疗的不可切除肝细胞癌患者。 上皮性卵巢癌、输卵管癌或原发性腹膜癌 贝伐珠单抗联\",\n        \"source_file\": \"data/source_docs/text/贝伐珠单抗注射液.txt\",\n        \"source_type\": \"standard_leaflet\",\n        \"score\": 0.4455\n      }\n    },\n    {\n      \"canonical_name\": \"狂犬病灭活疫苗\",\n      \"question\": \"适应症是什么\",\n      \"status\": \"doc_unavailable\",\n      \"route_mode\": \"field_query\",\n      \"retrieval_mode\": null,\n      \"target_field\": \"indications\",\n      \"answer_preview\": \"\",\n      \"first_citation\": null\n    }\n  ],\n  \"errors\": []\n}\nreport saved to /home/vision/users/flb/Kestrel-Recognition/data/eval/reindex_consistency_report.json\n",
+      "stderr": "Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n\nLoading weights:   0%|          | 0/71 [00:00<?, ?it/s]\nLoading weights: 100%|██████████| 71/71 [00:00<00:00, 15825.04it/s]\n\u001b[1mBertModel LOAD REPORT\u001b[0m from: BAAI/bge-small-zh-v1.5\nKey                     | Status     |  | \n------------------------+------------+--+-\nembeddings.position_ids | UNEXPECTED |  | \n\nNotes:\n- UNEXPECTED:\tcan be ignored when loading from different task/architecture; not ok if you expect identical arch.\n"
     },
     {
       "name": "rag_eval",
@@ -51,17 +77,17 @@
         "/home/vision/micromamba/envs/ocr/bin/python",
         "scripts/eval_rag.py"
       ],
-      "started_at": "2026-04-18T19:08:24",
-      "elapsed_ms": 13030.6,
+      "started_at": "2026-04-18T19:28:50",
+      "elapsed_ms": 12804.76,
       "returncode": 0,
       "passed": true,
-      "stdout": "{\n  \"total_cases\": 112,\n  \"passed_cases\": 112,\n  \"overall_pass_rate\": 1.0,\n  \"route_accuracy\": 1.0,\n  \"status_accuracy\": 1.0,\n  \"retrieval_mode_accuracy\": 1.0,\n  \"target_field_accuracy\": 1.0,\n  \"answer_hit_rate\": 1.0,\n  \"citation_field_hit_rate\": 1.0,\n  \"citation_section_hit_rate\": 1.0,\n  \"refusal_accuracy\": 1.0,\n  \"avg_latency_ms\": 5.01,\n  \"p95_latency_ms\": 6.18,\n  \"avg_latency_by_route_ms\": {\n    \"field_query\": 4.97,\n    \"semantic_query\": 5.27\n  },\n  \"pass_rate_by_case_type\": {\n    \"field\": 1.0,\n    \"semantic\": 1.0,\n    \"refusal\": 1.0\n  },\n  \"count_by_case_type\": {\n    \"field\": 92,\n    \"semantic\": 12,\n    \"refusal\": 8\n  }\n}\nresults saved to /home/vision/users/flb/Kestrel-Recognition/data/eval/rag_eval_results.json\nreport saved to /home/vision/users/flb/Kestrel-Recognition/data/eval/rag_eval_report.md\n",
-      "stderr": "Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n\nLoading weights:   0%|          | 0/71 [00:00<?, ?it/s]\nLoading weights: 100%|██████████| 71/71 [00:00<00:00, 17313.70it/s]\n\u001b[1mBertModel LOAD REPORT\u001b[0m from: BAAI/bge-small-zh-v1.5\nKey                     | Status     |  | \n------------------------+------------+--+-\nembeddings.position_ids | UNEXPECTED |  | \n\nNotes:\n- UNEXPECTED:\tcan be ignored when loading from different task/architecture; not ok if you expect identical arch.\n"
+      "stdout": "{\n  \"total_cases\": 112,\n  \"passed_cases\": 112,\n  \"overall_pass_rate\": 1.0,\n  \"route_accuracy\": 1.0,\n  \"status_accuracy\": 1.0,\n  \"retrieval_mode_accuracy\": 1.0,\n  \"target_field_accuracy\": 1.0,\n  \"answer_hit_rate\": 1.0,\n  \"citation_field_hit_rate\": 1.0,\n  \"citation_section_hit_rate\": 1.0,\n  \"refusal_accuracy\": 1.0,\n  \"avg_latency_ms\": 5.01,\n  \"p95_latency_ms\": 6.11,\n  \"avg_latency_by_route_ms\": {\n    \"field_query\": 4.97,\n    \"semantic_query\": 5.25\n  },\n  \"pass_rate_by_case_type\": {\n    \"field\": 1.0,\n    \"semantic\": 1.0,\n    \"refusal\": 1.0\n  },\n  \"count_by_case_type\": {\n    \"field\": 92,\n    \"semantic\": 12,\n    \"refusal\": 8\n  }\n}\nresults saved to /home/vision/users/flb/Kestrel-Recognition/data/eval/rag_eval_results.json\nreport saved to /home/vision/users/flb/Kestrel-Recognition/data/eval/rag_eval_report.md\n",
+      "stderr": "Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n\nLoading weights:   0%|          | 0/71 [00:00<?, ?it/s]\nLoading weights: 100%|██████████| 71/71 [00:00<00:00, 16102.28it/s]\n\u001b[1mBertModel LOAD REPORT\u001b[0m from: BAAI/bge-small-zh-v1.5\nKey                     | Status     |  | \n------------------------+------------+--+-\nembeddings.position_ids | UNEXPECTED |  | \n\nNotes:\n- UNEXPECTED:\tcan be ignored when loading from different task/architecture; not ok if you expect identical arch.\n"
     }
   ],
   "artifacts": {
     "rag_eval_results": {
-      "generated_at": "2026-04-18T19:08:36",
+      "generated_at": "2026-04-18T19:29:02",
       "summary": {
         "total_cases": 112,
         "passed_cases": 112,
@@ -75,10 +101,10 @@
         "citation_section_hit_rate": 1.0,
         "refusal_accuracy": 1.0,
         "avg_latency_ms": 5.01,
-        "p95_latency_ms": 6.18,
+        "p95_latency_ms": 6.11,
         "avg_latency_by_route_ms": {
           "field_query": 4.97,
-          "semantic_query": 5.27
+          "semantic_query": 5.25
         },
         "pass_rate_by_case_type": {
           "field": 1.0,
@@ -97,7 +123,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "药品名称是什么",
-          "latency_ms": 7.35,
+          "latency_ms": 6.06,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -122,7 +148,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "正式名称叫什么",
-          "latency_ms": 5.63,
+          "latency_ms": 5.5,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -172,7 +198,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "这个药规格多大",
-          "latency_ms": 5.82,
+          "latency_ms": 5.65,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -197,7 +223,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "外观是什么样",
-          "latency_ms": 5.07,
+          "latency_ms": 5.16,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -222,7 +248,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "性状是什么",
-          "latency_ms": 4.79,
+          "latency_ms": 5.04,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -247,7 +273,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "适应症是什么",
-          "latency_ms": 4.76,
+          "latency_ms": 4.85,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -272,7 +298,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "这个药适用于什么",
-          "latency_ms": 5.42,
+          "latency_ms": 5.32,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -297,7 +323,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "用法用量是什么",
-          "latency_ms": 5.23,
+          "latency_ms": 5.0,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -322,7 +348,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "这个药怎么用",
-          "latency_ms": 4.95,
+          "latency_ms": 4.84,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -347,7 +373,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "注意事项是什么",
-          "latency_ms": 5.34,
+          "latency_ms": 5.07,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -372,7 +398,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "使用时需要注意什么",
-          "latency_ms": 5.42,
+          "latency_ms": 5.32,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -397,7 +423,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "禁忌是什么",
-          "latency_ms": 5.04,
+          "latency_ms": 5.12,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -422,7 +448,7 @@
           "case_type": "field",
           "canonical_name": "双黄连口服液",
           "question": "哪些人不能用",
-          "latency_ms": 4.84,
+          "latency_ms": 4.83,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -447,7 +473,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "药品名称是什么",
-          "latency_ms": 5.16,
+          "latency_ms": 5.06,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -472,7 +498,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "正式名称叫什么",
-          "latency_ms": 5.12,
+          "latency_ms": 4.98,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -497,7 +523,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "规格是什么",
-          "latency_ms": 4.98,
+          "latency_ms": 4.91,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -522,7 +548,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "这个药规格多大",
-          "latency_ms": 5.05,
+          "latency_ms": 4.91,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -547,7 +573,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "外观是什么样",
-          "latency_ms": 4.95,
+          "latency_ms": 5.1,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -572,7 +598,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "性状是什么",
-          "latency_ms": 4.89,
+          "latency_ms": 4.88,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -597,7 +623,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "适应症是什么",
-          "latency_ms": 4.96,
+          "latency_ms": 4.8,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -622,7 +648,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "这个药适用于什么",
-          "latency_ms": 5.15,
+          "latency_ms": 5.08,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -647,7 +673,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "用法用量是什么",
-          "latency_ms": 5.05,
+          "latency_ms": 5.09,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -672,7 +698,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "这个药怎么用",
-          "latency_ms": 5.16,
+          "latency_ms": 5.01,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -697,7 +723,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "注意事项是什么",
-          "latency_ms": 4.97,
+          "latency_ms": 5.07,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -722,7 +748,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "使用时需要注意什么",
-          "latency_ms": 5.1,
+          "latency_ms": 5.13,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -747,7 +773,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "禁忌是什么",
-          "latency_ms": 4.93,
+          "latency_ms": 5.19,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -772,7 +798,7 @@
           "case_type": "field",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "哪些人不能用",
-          "latency_ms": 4.72,
+          "latency_ms": 4.86,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -797,7 +823,7 @@
           "case_type": "field",
           "canonical_name": "孟鲁司特钠片",
           "question": "药品名称是什么",
-          "latency_ms": 5.21,
+          "latency_ms": 5.09,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -822,7 +848,7 @@
           "case_type": "field",
           "canonical_name": "孟鲁司特钠片",
           "question": "正式名称叫什么",
-          "latency_ms": 5.01,
+          "latency_ms": 5.12,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -847,7 +873,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢噻呋钠",
           "question": "药品名称是什么",
-          "latency_ms": 5.43,
+          "latency_ms": 5.17,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -872,7 +898,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢噻呋钠",
           "question": "正式名称叫什么",
-          "latency_ms": 5.09,
+          "latency_ms": 5.1,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -897,7 +923,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢噻呋钠",
           "question": "适应症是什么",
-          "latency_ms": 4.83,
+          "latency_ms": 5.03,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -922,7 +948,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢噻呋钠",
           "question": "这个药适用于什么",
-          "latency_ms": 5.24,
+          "latency_ms": 5.27,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -947,7 +973,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢噻呋钠",
           "question": "用法用量是什么",
-          "latency_ms": 5.03,
+          "latency_ms": 5.05,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -972,7 +998,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢噻呋钠",
           "question": "这个药怎么用",
-          "latency_ms": 4.98,
+          "latency_ms": 5.0,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -997,7 +1023,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "药品名称是什么",
-          "latency_ms": 4.94,
+          "latency_ms": 5.0,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1022,7 +1048,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "正式名称叫什么",
-          "latency_ms": 5.08,
+          "latency_ms": 5.14,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1047,7 +1073,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "规格是什么",
-          "latency_ms": 4.91,
+          "latency_ms": 4.98,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1072,7 +1098,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "这个药规格多大",
-          "latency_ms": 4.93,
+          "latency_ms": 4.96,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1097,7 +1123,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "外观是什么样",
-          "latency_ms": 5.0,
+          "latency_ms": 5.09,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1122,7 +1148,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "性状是什么",
-          "latency_ms": 4.67,
+          "latency_ms": 4.75,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1147,7 +1173,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "适应症是什么",
-          "latency_ms": 4.79,
+          "latency_ms": 5.04,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1172,7 +1198,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "这个药适用于什么",
-          "latency_ms": 5.06,
+          "latency_ms": 5.03,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1197,7 +1223,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "用法用量是什么",
-          "latency_ms": 5.23,
+          "latency_ms": 5.25,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1222,7 +1248,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "这个药怎么用",
-          "latency_ms": 4.93,
+          "latency_ms": 4.98,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1247,7 +1273,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "注意事项是什么",
-          "latency_ms": 4.97,
+          "latency_ms": 5.07,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1272,7 +1298,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "使用时需要注意什么",
-          "latency_ms": 5.38,
+          "latency_ms": 5.4,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1297,7 +1323,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "禁忌是什么",
-          "latency_ms": 4.92,
+          "latency_ms": 4.93,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1322,7 +1348,7 @@
           "case_type": "field",
           "canonical_name": "注射用头孢曲松钠",
           "question": "哪些人不能用",
-          "latency_ms": 5.0,
+          "latency_ms": 5.18,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1347,7 +1373,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "药品名称是什么",
-          "latency_ms": 5.16,
+          "latency_ms": 5.05,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1372,7 +1398,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "正式名称叫什么",
-          "latency_ms": 5.27,
+          "latency_ms": 5.31,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1397,7 +1423,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "规格是什么",
-          "latency_ms": 4.83,
+          "latency_ms": 4.88,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1422,7 +1448,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "这个药规格多大",
-          "latency_ms": 5.18,
+          "latency_ms": 5.15,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1447,7 +1473,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "外观是什么样",
-          "latency_ms": 5.09,
+          "latency_ms": 5.13,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1472,7 +1498,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "性状是什么",
-          "latency_ms": 5.06,
+          "latency_ms": 4.85,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1497,7 +1523,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "适应症是什么",
-          "latency_ms": 5.22,
+          "latency_ms": 5.0,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1522,7 +1548,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "这个药适用于什么",
-          "latency_ms": 5.1,
+          "latency_ms": 5.02,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1547,7 +1573,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "用法用量是什么",
-          "latency_ms": 5.36,
+          "latency_ms": 5.37,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1572,7 +1598,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "这个药怎么用",
-          "latency_ms": 4.9,
+          "latency_ms": 4.94,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1597,7 +1623,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "注意事项是什么",
-          "latency_ms": 5.18,
+          "latency_ms": 5.26,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1622,7 +1648,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "使用时需要注意什么",
-          "latency_ms": 5.16,
+          "latency_ms": 5.26,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1647,7 +1673,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "禁忌是什么",
-          "latency_ms": 4.85,
+          "latency_ms": 4.92,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1672,7 +1698,7 @@
           "case_type": "field",
           "canonical_name": "盐酸小檗碱片",
           "question": "哪些人不能用",
-          "latency_ms": 5.0,
+          "latency_ms": 5.23,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1697,7 +1723,7 @@
           "case_type": "field",
           "canonical_name": "蒲地蓝消炎口服液",
           "question": "药品名称是什么",
-          "latency_ms": 4.99,
+          "latency_ms": 5.23,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1722,7 +1748,7 @@
           "case_type": "field",
           "canonical_name": "蒲地蓝消炎口服液",
           "question": "正式名称叫什么",
-          "latency_ms": 5.25,
+          "latency_ms": 5.3,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1747,7 +1773,7 @@
           "case_type": "field",
           "canonical_name": "蒲地蓝消炎口服液",
           "question": "规格是什么",
-          "latency_ms": 4.94,
+          "latency_ms": 4.85,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1772,7 +1798,7 @@
           "case_type": "field",
           "canonical_name": "蒲地蓝消炎口服液",
           "question": "这个药规格多大",
-          "latency_ms": 5.17,
+          "latency_ms": 5.26,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1797,7 +1823,7 @@
           "case_type": "field",
           "canonical_name": "蒲地蓝消炎口服液",
           "question": "外观是什么样",
-          "latency_ms": 5.04,
+          "latency_ms": 5.21,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1822,7 +1848,7 @@
           "case_type": "field",
           "canonical_name": "蒲地蓝消炎口服液",
           "question": "性状是什么",
-          "latency_ms": 4.73,
+          "latency_ms": 4.78,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1847,7 +1873,7 @@
           "case_type": "field",
           "canonical_name": "蒲地蓝消炎口服液",
           "question": "适应症是什么",
-          "latency_ms": 5.0,
+          "latency_ms": 4.99,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1872,7 +1898,7 @@
           "case_type": "field",
           "canonical_name": "蒲地蓝消炎口服液",
           "question": "这个药适用于什么",
-          "latency_ms": 4.98,
+          "latency_ms": 5.13,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1897,7 +1923,7 @@
           "case_type": "field",
           "canonical_name": "蒲地蓝消炎口服液",
           "question": "用法用量是什么",
-          "latency_ms": 5.3,
+          "latency_ms": 5.26,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1922,7 +1948,7 @@
           "case_type": "field",
           "canonical_name": "蒲地蓝消炎口服液",
           "question": "这个药怎么用",
-          "latency_ms": 4.93,
+          "latency_ms": 5.05,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1947,7 +1973,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "药品名称是什么",
-          "latency_ms": 5.24,
+          "latency_ms": 5.26,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1972,7 +1998,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "正式名称叫什么",
-          "latency_ms": 5.12,
+          "latency_ms": 5.14,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -1997,7 +2023,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "商品名是什么",
-          "latency_ms": 5.83,
+          "latency_ms": 5.71,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2022,7 +2048,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "品牌名是什么",
-          "latency_ms": 5.53,
+          "latency_ms": 5.81,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2047,7 +2073,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "商品名是什么",
-          "latency_ms": 5.48,
+          "latency_ms": 5.57,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2072,7 +2098,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "品牌名是什么",
-          "latency_ms": 5.42,
+          "latency_ms": 5.55,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2097,7 +2123,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "规格是什么",
-          "latency_ms": 4.63,
+          "latency_ms": 4.76,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2122,7 +2148,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "这个药规格多大",
-          "latency_ms": 4.95,
+          "latency_ms": 5.08,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2172,7 +2198,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "性状是什么",
-          "latency_ms": 4.77,
+          "latency_ms": 5.08,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2197,7 +2223,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "适应症是什么",
-          "latency_ms": 4.91,
+          "latency_ms": 5.22,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2222,7 +2248,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "这个药适用于什么",
-          "latency_ms": 4.97,
+          "latency_ms": 5.07,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2247,7 +2273,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "用法用量是什么",
-          "latency_ms": 5.39,
+          "latency_ms": 5.31,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2272,7 +2298,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "这个药怎么用",
-          "latency_ms": 5.04,
+          "latency_ms": 5.05,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2322,7 +2348,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "使用时需要注意什么",
-          "latency_ms": 5.17,
+          "latency_ms": 5.3,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2347,7 +2373,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "禁忌是什么",
-          "latency_ms": 4.99,
+          "latency_ms": 5.13,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2372,7 +2398,7 @@
           "case_type": "field",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "哪些人不能用",
-          "latency_ms": 4.83,
+          "latency_ms": 4.81,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2397,7 +2423,7 @@
           "case_type": "semantic",
           "canonical_name": "双黄连口服液",
           "question": "这个药主要用于哪些场景",
-          "latency_ms": 6.13,
+          "latency_ms": 5.97,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2421,7 +2447,7 @@
           "case_type": "semantic",
           "canonical_name": "双黄连口服液",
           "question": "这个药有哪些使用提醒",
-          "latency_ms": 6.34,
+          "latency_ms": 6.23,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2445,7 +2471,7 @@
           "case_type": "semantic",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "这个药一般治疗哪些问题",
-          "latency_ms": 6.22,
+          "latency_ms": 6.07,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2469,7 +2495,7 @@
           "case_type": "semantic",
           "canonical_name": "奥美拉唑肠溶胶囊",
           "question": "这个药有什么慎用提醒",
-          "latency_ms": 7.71,
+          "latency_ms": 7.38,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2493,7 +2519,7 @@
           "case_type": "semantic",
           "canonical_name": "注射用头孢噻呋钠",
           "question": "这个药一般治疗哪些感染",
-          "latency_ms": 6.06,
+          "latency_ms": 6.0,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2517,7 +2543,7 @@
           "case_type": "semantic",
           "canonical_name": "注射用头孢噻呋钠",
           "question": "这个药通常怎么给药",
-          "latency_ms": 6.06,
+          "latency_ms": 5.99,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2541,7 +2567,7 @@
           "case_type": "semantic",
           "canonical_name": "注射用头孢曲松钠",
           "question": "这个药一般治疗哪些感染",
-          "latency_ms": 6.18,
+          "latency_ms": 6.11,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2565,7 +2591,7 @@
           "case_type": "semantic",
           "canonical_name": "注射用头孢曲松钠",
           "question": "这个药通常怎么给药",
-          "latency_ms": 6.11,
+          "latency_ms": 6.05,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2589,7 +2615,7 @@
           "case_type": "semantic",
           "canonical_name": "盐酸小檗碱片",
           "question": "这个药一般用于什么情况",
-          "latency_ms": 6.13,
+          "latency_ms": 6.33,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2613,7 +2639,7 @@
           "case_type": "semantic",
           "canonical_name": "蒲地蓝消炎口服液",
           "question": "这个药主要用于哪些场景",
-          "latency_ms": 6.06,
+          "latency_ms": 6.45,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2637,7 +2663,7 @@
           "case_type": "semantic",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "这个药主要用于哪些场景",
-          "latency_ms": 6.09,
+          "latency_ms": 6.07,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2661,7 +2687,7 @@
           "case_type": "semantic",
           "canonical_name": "贝伐珠单抗注射液",
           "question": "这个药有哪些风险和注意事项",
-          "latency_ms": 8.39,
+          "latency_ms": 8.61,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2685,7 +2711,7 @@
           "case_type": "refusal",
           "canonical_name": "狂犬病灭活疫苗",
           "question": "适应症是什么",
-          "latency_ms": 0.35,
+          "latency_ms": 0.39,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2707,7 +2733,7 @@
           "case_type": "refusal",
           "canonical_name": "狂犬病灭活疫苗",
           "question": "这个药主要用于什么",
-          "latency_ms": 0.31,
+          "latency_ms": 0.29,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2728,7 +2754,7 @@
           "case_type": "refusal",
           "canonical_name": "犬瘟热、腺病毒2型、副流感、细小病毒病四联活疫苗",
           "question": "规格是什么",
-          "latency_ms": 0.36,
+          "latency_ms": 0.34,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2750,7 +2776,7 @@
           "case_type": "refusal",
           "canonical_name": "犬瘟热、腺病毒2型、副流感、细小病毒病四联活疫苗",
           "question": "这个药主要用于什么",
-          "latency_ms": 0.35,
+          "latency_ms": 0.33,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2771,7 +2797,7 @@
           "case_type": "refusal",
           "canonical_name": "猫鼻气管炎、杯状病毒病、泛白细胞减少症三联灭活疫苗",
           "question": "适应症是什么",
-          "latency_ms": 0.36,
+          "latency_ms": 0.35,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2793,7 +2819,7 @@
           "case_type": "refusal",
           "canonical_name": "猫鼻气管炎、杯状病毒病、泛白细胞减少症三联灭活疫苗",
           "question": "这个药主要用于什么",
-          "latency_ms": 0.35,
+          "latency_ms": 0.34,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2814,7 +2840,7 @@
           "case_type": "refusal",
           "canonical_name": "孟鲁司特钠片",
           "question": "适应症是什么",
-          "latency_ms": 5.77,
+          "latency_ms": 5.08,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2836,7 +2862,7 @@
           "case_type": "refusal",
           "canonical_name": "孟鲁司特钠片",
           "question": "这个药主要用于什么场景",
-          "latency_ms": 5.86,
+          "latency_ms": 5.84,
           "checks": {
             "route_mode": true,
             "status": true,
@@ -2854,13 +2880,396 @@
         }
       ]
     },
-    "rag_eval_report_path": "/home/vision/users/flb/Kestrel-Recognition/data/eval/rag_eval_report.md"
+    "rag_eval_report_path": "/home/vision/users/flb/Kestrel-Recognition/data/eval/rag_eval_report.md",
+    "data_integrity_report": {
+      "generated_at": "2026-04-18T19:28:35",
+      "passed": true,
+      "catalog_count": 11,
+      "field_count": 46,
+      "chunk_count": 163,
+      "qdrant": {
+        "leaflet_fields_v1": {
+          "points_count": 46,
+          "vector_size": 512
+        },
+        "leaflet_chunks_v1": {
+          "points_count": 163,
+          "vector_size": 512
+        }
+      },
+      "errors": [],
+      "warnings": [
+        "孟鲁司特钠片 使用非标准参考资料字段: generic_name"
+      ]
+    },
+    "reindex_consistency_report": {
+      "generated_at": "2026-04-18T19:28:49",
+      "passed": true,
+      "rebuild_info": {
+        "status": "ok",
+        "field_collection": "leaflet_fields_v1",
+        "chunk_collection": "leaflet_chunks_v1",
+        "field_points": 46,
+        "chunk_points": 163,
+        "vector_size": 512,
+        "embedding_model": "BAAI/bge-small-zh-v1.5"
+      },
+      "before_snapshot": {
+        "leaflet_fields_v1": {
+          "points_count": 46,
+          "vector_size": 512,
+          "sample_payloads": [
+            {
+              "id": 0,
+              "payload": {
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "field_name": "generic_name",
+                "field_value": "双黄连口服液",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 1,
+              "payload": {
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "field_name": "specification",
+                "field_value": "每支装 10 毫升。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 2,
+              "payload": {
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "field_name": "appearance",
+                "field_value": "本品为棕红色的澄清液体；味甜，微苦。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 3,
+              "payload": {
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "field_name": "indications",
+                "field_value": "疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 4,
+              "payload": {
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "field_name": "dosage",
+                "field_value": "口服。一次 20 毫升（2 支），一日 3 次；小儿酌减或遵医嘱。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            }
+          ]
+        },
+        "leaflet_chunks_v1": {
+          "points_count": 163,
+          "vector_size": 512,
+          "sample_payloads": [
+            {
+              "id": 0,
+              "payload": {
+                "chunk_id": "drug_001_chunk_001",
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "section": "drug_name",
+                "chunk_text": "双黄连口服液 汉语拼音：Shuanghuanglian Koufuye",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 1,
+              "payload": {
+                "chunk_id": "drug_001_chunk_002",
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "section": "ingredients",
+                "chunk_text": "金银花、黄芩、连翘。辅料为蔗糖。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 2,
+              "payload": {
+                "chunk_id": "drug_001_chunk_003",
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "section": "appearance",
+                "chunk_text": "本品为棕红色的澄清液体；味甜，微苦。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 3,
+              "payload": {
+                "chunk_id": "drug_001_chunk_004",
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "section": "indications",
+                "chunk_text": "疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 4,
+              "payload": {
+                "chunk_id": "drug_001_chunk_005",
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "section": "specification",
+                "chunk_text": "每支装10毫升。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            }
+          ]
+        }
+      },
+      "after_snapshot": {
+        "leaflet_fields_v1": {
+          "points_count": 46,
+          "vector_size": 512,
+          "sample_payloads": [
+            {
+              "id": 0,
+              "payload": {
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "field_name": "generic_name",
+                "field_value": "双黄连口服液",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 1,
+              "payload": {
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "field_name": "specification",
+                "field_value": "每支装 10 毫升。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 2,
+              "payload": {
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "field_name": "appearance",
+                "field_value": "本品为棕红色的澄清液体；味甜，微苦。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 3,
+              "payload": {
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "field_name": "indications",
+                "field_value": "疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 4,
+              "payload": {
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "field_name": "dosage",
+                "field_value": "口服。一次 20 毫升（2 支），一日 3 次；小儿酌减或遵医嘱。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            }
+          ]
+        },
+        "leaflet_chunks_v1": {
+          "points_count": 163,
+          "vector_size": 512,
+          "sample_payloads": [
+            {
+              "id": 0,
+              "payload": {
+                "chunk_id": "drug_001_chunk_001",
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "section": "drug_name",
+                "chunk_text": "双黄连口服液 汉语拼音：Shuanghuanglian Koufuye",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 1,
+              "payload": {
+                "chunk_id": "drug_001_chunk_002",
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "section": "ingredients",
+                "chunk_text": "金银花、黄芩、连翘。辅料为蔗糖。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 2,
+              "payload": {
+                "chunk_id": "drug_001_chunk_003",
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "section": "appearance",
+                "chunk_text": "本品为棕红色的澄清液体；味甜，微苦。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 3,
+              "payload": {
+                "chunk_id": "drug_001_chunk_004",
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "section": "indications",
+                "chunk_text": "疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            },
+            {
+              "id": 4,
+              "payload": {
+                "chunk_id": "drug_001_chunk_005",
+                "drug_id": "drug_001",
+                "canonical_name": "双黄连口服液",
+                "section": "specification",
+                "chunk_text": "每支装10毫升。",
+                "source_file": "data/source_docs/text/双黄连口服液.txt",
+                "source_type": "standard_leaflet"
+              }
+            }
+          ]
+        }
+      },
+      "before_behavior": [
+        {
+          "canonical_name": "双黄连口服液",
+          "question": "规格是什么",
+          "status": "ok",
+          "route_mode": "field_query",
+          "retrieval_mode": "qdrant_fields",
+          "target_field": "specification",
+          "answer_preview": "每支装 10 毫升。",
+          "first_citation": {
+            "field_name": "specification",
+            "field_value": "每支装 10 毫升。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet",
+            "score": 0.2773
+          }
+        },
+        {
+          "canonical_name": "贝伐珠单抗注射液",
+          "question": "这个药主要用于哪些场景",
+          "status": "ok",
+          "route_mode": "semantic_query",
+          "retrieval_mode": "qdrant_chunks",
+          "target_field": null,
+          "answer_preview": "转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性",
+          "first_citation": {
+            "section": "indications",
+            "chunk_id": "drug_011_chunk_004",
+            "chunk_text": "转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性胶质母细胞瘤 贝伐珠单抗用于成人复发性胶质母细胞瘤患者的治疗。 肝细胞癌 本品联合阿替利珠单抗治疗既往未接受过全身系统性治疗的不可切除肝细胞癌患者。 上皮性卵巢癌、输卵管癌或原发性腹膜癌 贝伐珠单抗联",
+            "source_file": "data/source_docs/text/贝伐珠单抗注射液.txt",
+            "source_type": "standard_leaflet",
+            "score": 0.4455
+          }
+        },
+        {
+          "canonical_name": "狂犬病灭活疫苗",
+          "question": "适应症是什么",
+          "status": "doc_unavailable",
+          "route_mode": "field_query",
+          "retrieval_mode": null,
+          "target_field": "indications",
+          "answer_preview": "",
+          "first_citation": null
+        }
+      ],
+      "after_behavior": [
+        {
+          "canonical_name": "双黄连口服液",
+          "question": "规格是什么",
+          "status": "ok",
+          "route_mode": "field_query",
+          "retrieval_mode": "qdrant_fields",
+          "target_field": "specification",
+          "answer_preview": "每支装 10 毫升。",
+          "first_citation": {
+            "field_name": "specification",
+            "field_value": "每支装 10 毫升。",
+            "source_file": "data/source_docs/text/双黄连口服液.txt",
+            "source_type": "standard_leaflet",
+            "score": 0.2773
+          }
+        },
+        {
+          "canonical_name": "贝伐珠单抗注射液",
+          "question": "这个药主要用于哪些场景",
+          "status": "ok",
+          "route_mode": "semantic_query",
+          "retrieval_mode": "qdrant_chunks",
+          "target_field": null,
+          "answer_preview": "转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性",
+          "first_citation": {
+            "section": "indications",
+            "chunk_id": "drug_011_chunk_004",
+            "chunk_text": "转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性胶质母细胞瘤 贝伐珠单抗用于成人复发性胶质母细胞瘤患者的治疗。 肝细胞癌 本品联合阿替利珠单抗治疗既往未接受过全身系统性治疗的不可切除肝细胞癌患者。 上皮性卵巢癌、输卵管癌或原发性腹膜癌 贝伐珠单抗联",
+            "source_file": "data/source_docs/text/贝伐珠单抗注射液.txt",
+            "source_type": "standard_leaflet",
+            "score": 0.4455
+          }
+        },
+        {
+          "canonical_name": "狂犬病灭活疫苗",
+          "question": "适应症是什么",
+          "status": "doc_unavailable",
+          "route_mode": "field_query",
+          "retrieval_mode": null,
+          "target_field": "indications",
+          "answer_preview": "",
+          "first_citation": null
+        }
+      ],
+      "errors": []
+    }
   },
   "highlights": {
     "pytest": {
       "passed": 39,
       "failed": null,
-      "raw": "39 passed, 2 warnings in 0.05s"
+      "raw": "39 passed, 2 warnings in 0.04s"
     },
     "verifier_regression": {
       "passed": 9,
