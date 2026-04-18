@@ -2,12 +2,13 @@ from __future__ import annotations
 
 from langgraph.graph import END, START, StateGraph
 
-from app.graph.state import RecognitionWorkflowState
+from app.graph.state import RagWorkflowState, RecognitionWorkflowState
 from app.services.audit import append_audit_log, generate_trace_id
+from app.services.rag import get_leaflet_qa_service
 from app.services.recognizer import apply_verification, run_recognition
 
 
-def _append_trace(state: RecognitionWorkflowState, node: str, status: str, summary: str) -> list[dict]:
+def _append_trace(state: dict, node: str, status: str, summary: str) -> list[dict]:
     trace = list(state.get("workflow_trace", []))
     trace.append({"node": node, "status": status, "summary": summary})
     return trace
@@ -60,6 +61,26 @@ def audit_node(state: RecognitionWorkflowState) -> RecognitionWorkflowState:
     }
 
 
+def rag_node(state: RagWorkflowState) -> RagWorkflowState:
+    qa_service = get_leaflet_qa_service()
+    result = qa_service.ask(state["canonical_name"], state["question"])
+    result["trace_id"] = state["trace_id"]
+    result["canonical_name"] = state["canonical_name"]
+    result["question"] = state["question"]
+
+    summary = (
+        f"说明书问答完成，status={result.get('status')}，"
+        f"target_field={result.get('target_field') or 'unknown'}"
+    )
+    trace = _append_trace(state, "rag_node", "ok", summary)
+    result["workflow_trace"] = trace
+    return {
+        "rag_result": result,
+        "response": result,
+        "workflow_trace": trace,
+    }
+
+
 def build_recognition_graph():
     graph = StateGraph(RecognitionWorkflowState)
     graph.add_node("recognize_node", recognize_node)
@@ -72,14 +93,32 @@ def build_recognition_graph():
     return graph.compile()
 
 
-_GRAPH = None
+def build_rag_graph():
+    graph = StateGraph(RagWorkflowState)
+    graph.add_node("rag_node", rag_node)
+    graph.add_node("audit_node", audit_node)
+    graph.add_edge(START, "rag_node")
+    graph.add_edge("rag_node", "audit_node")
+    graph.add_edge("audit_node", END)
+    return graph.compile()
+
+
+_RECOGNITION_GRAPH = None
+_RAG_GRAPH = None
 
 
 def get_recognition_graph():
-    global _GRAPH
-    if _GRAPH is None:
-        _GRAPH = build_recognition_graph()
-    return _GRAPH
+    global _RECOGNITION_GRAPH
+    if _RECOGNITION_GRAPH is None:
+        _RECOGNITION_GRAPH = build_recognition_graph()
+    return _RECOGNITION_GRAPH
+
+
+def get_rag_graph():
+    global _RAG_GRAPH
+    if _RAG_GRAPH is None:
+        _RAG_GRAPH = build_rag_graph()
+    return _RAG_GRAPH
 
 
 def invoke_recognition_workflow(
@@ -104,4 +143,17 @@ def invoke_recognition_workflow(
         "workflow_trace": [],
     }
     final_state = get_recognition_graph().invoke(state)
+    return final_state["response"]
+
+
+def invoke_rag_workflow(*, canonical_name: str, question: str) -> dict:
+    trace_id = generate_trace_id("rag")
+    state: RagWorkflowState = {
+        "request_type": "rag",
+        "canonical_name": canonical_name,
+        "question": question,
+        "trace_id": trace_id,
+        "workflow_trace": [],
+    }
+    final_state = get_rag_graph().invoke(state)
     return final_state["response"]

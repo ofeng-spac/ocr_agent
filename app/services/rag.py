@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import atexit
 import json
 from pathlib import Path
 
@@ -279,3 +280,23 @@ class LeafletQAService:
             "citations": citations,
             "retrieval_mode": "structured_fields",
         }
+
+
+_QA_SERVICE: LeafletQAService | None = None
+
+
+def get_leaflet_qa_service() -> LeafletQAService:
+    global _QA_SERVICE
+    if _QA_SERVICE is None:
+        _QA_SERVICE = LeafletQAService()
+    return _QA_SERVICE
+
+
+def _close_global_qa_service() -> None:
+    global _QA_SERVICE
+    if _QA_SERVICE is not None:
+        _QA_SERVICE.close()
+        _QA_SERVICE = None
+
+
+atexit.register(_close_global_qa_service)

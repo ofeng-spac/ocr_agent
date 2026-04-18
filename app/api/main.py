@@ -7,16 +7,16 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.graph.workflow import invoke_recognition_workflow
+from app.graph.workflow import invoke_rag_workflow, invoke_recognition_workflow
 from app.models.schemas import AskRequest, RecognizeRequest, VerifyRequest
-from app.services.audit import append_audit_log, generate_trace_id, list_audit_logs
+from app.services.audit import list_audit_logs
 from app.services.evaluation import load_evaluation_summary
-from app.services.rag import LeafletQAService
+from app.services.rag import get_leaflet_qa_service
 from app.services.recognizer import VIDEO_DIR, list_videos
 
 
 app = FastAPI(title="Drug Recognition Agent API", version="0.1.0")
-qa_service = LeafletQAService()
+qa_service = get_leaflet_qa_service()
 
 app.add_middleware(
     CORSMiddleware,
@@ -122,20 +122,9 @@ async def verify(req: VerifyRequest):
 
 @app.post("/api/rag/ask")
 def ask_leaflet(req: AskRequest):
-    result = qa_service.ask(req.canonical_name, req.question)
+    result = invoke_rag_workflow(canonical_name=req.canonical_name, question=req.question)
     if result["status"] == "error":
         raise HTTPException(status_code=400, detail=result["reason"])
-    trace_id = generate_trace_id("rag")
-    result["trace_id"] = trace_id
-    append_audit_log(
-        "rag_ask",
-        {
-            "canonical_name": req.canonical_name,
-            "question": req.question,
-            **result,
-        },
-        trace_id=trace_id,
-    )
     return result
 
 

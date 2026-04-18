@@ -344,6 +344,9 @@ export default function App() {
                     <p><strong>字段</strong> {qaResult.target_field}</p>
                     <p><strong>状态</strong> {qaResult.status}</p>
                     <p><strong>说明</strong> {qaResult.reason}</p>
+                    {qaResult.trace_id ? (
+                      <p><strong>Trace</strong> {qaResult.trace_id}</p>
+                    ) : null}
                     {qaResult.answer ? (
                       <div className="note-block">
                         <strong>回答</strong>
@@ -360,6 +363,20 @@ export default function App() {
                             <p className="muted">{item.source_file}</p>
                           </div>
                         ))}
+                      </div>
+                    ) : null}
+                    {qaResult.workflow_trace?.length ? (
+                      <div className="workflow-block">
+                        <strong>问答轨迹</strong>
+                        <div className="workflow-list">
+                          {qaResult.workflow_trace.map((item, idx) => (
+                            <div key={`${item.node}-${idx}`} className="workflow-item">
+                              <p><strong>{item.node}</strong></p>
+                              <p>状态：{item.status}</p>
+                              <p>{item.summary}</p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     ) : null}
                   </div>
