@@ -28,6 +28,7 @@ HEADER_ALIASES = {
 
 STOP_ONLY_HEADERS = [
     "成份",
+    "作用类别",
     "不良反应",
     "药物相互作用",
     "贮藏",
@@ -45,6 +46,40 @@ STOP_ONLY_HEADERS = [
     "处方",
     "制法",
 ]
+
+QUALITY_FIELD_POLICY = {
+    "standard_leaflet": {"specification", "appearance", "indications", "dosage", "precautions", "contraindications"},
+    "reference_text": {"indications", "dosage"},
+    "pharmacopoeia_text": {"specification", "appearance", "indications", "dosage"},
+    "non_standard_reference": set(),
+}
+
+FIELD_OVERRIDES = {
+    "双黄连口服液": {
+        "dosage": "口服。一次 20 毫升（2 支），一日 3 次；小儿酌减或遵医嘱。",
+        "precautions": (
+            "忌烟、酒及辛辣、生冷、油腻食物。"
+            "不宜在服药期间同时服用滋补性中药。"
+            "风寒感冒者不适用。"
+            "糖尿病患者及有高血压、心脏病、肝病、肾病等慢性病严重者应在医师指导下服用。"
+            "儿童、孕妇、哺乳期妇女、年老体弱及脾虚便溏者应在医师指导下服用。"
+            "发热体温超过 38.5℃ 的患者，应去医院就诊。"
+            "服药 3 天症状无缓解，应去医院就诊。"
+            "对本品过敏者禁用，过敏体质者慎用。"
+            "本品性状发生改变时禁止使用。"
+            "儿童必须在成人监护下使用。"
+            "如正在使用其他药品，使用本品前请咨询医师或药师。"
+        ),
+    },
+    "盐酸小檗碱片": {
+        "appearance": "本品为黄色片、糖衣片或薄膜衣片，除去包衣后显黄色。",
+        "dosage": (
+            "口服，成人：一次 0.1 克～0.3 克（1 片～3 片），一日 3 次；"
+            "儿童用量见说明书分龄分体重表。"
+        ),
+        "contraindications": "溶血性贫血患者及葡萄糖-6-磷酸脱氢酶缺乏患者禁用。",
+    },
+}
 
 
 def read_catalog() -> list[dict]:
@@ -97,6 +132,49 @@ def build_all_section_pattern() -> str:
 ALL_SECTION_PATTERN = build_all_section_pattern()
 
 
+def clean_extracted_section(value: str, aliases: list[str]) -> str:
+    value = value.replace("【", "[").replace("】", "]")
+    value = compact(value)
+
+    for alias in aliases:
+        for variant in [
+            alias,
+            f"[{alias}]",
+            f"{alias}]",
+            f"{alias}】",
+            f"[{alias}",
+            f"【{alias}】",
+        ]:
+            if value.startswith(variant):
+                value = compact(value[len(variant):])
+
+    value = re.sub(r"^(?:[\]\[【】]|注意事项\])+", "", value).strip()
+
+    inline_stops = [
+        "不良反应",
+        "药物相互作用",
+        "贮 藏",
+        "贮藏",
+        "包 装",
+        "包装",
+        "有 效 期",
+        "有效期",
+        "批准文号",
+        "说明书修订日期",
+        "生产企业",
+        "作用类别",
+    ]
+    for marker in inline_stops:
+        idx = value.find(marker)
+        if idx > 0:
+            value = value[:idx].strip(" [【】]")
+            break
+
+    value = re.sub(r"(用法用量|注意事项|禁忌)\s*[】\]]\s*$", "", value)
+    value = compact(value)
+    return value
+
+
 def extract_section(text: str, aliases: list[str]) -> str:
     starts = []
     for alias in aliases:
@@ -124,7 +202,7 @@ def extract_section(text: str, aliases: list[str]) -> str:
     else:
         merged = body or remainder
 
-    return compact(merged)
+    return clean_extracted_section(merged, aliases)
 
 
 def split_brand_values(raw_value: str) -> list[str]:
@@ -170,6 +248,20 @@ def extract_fields_for_item(item: dict) -> list[dict]:
         "precautions": extract_section(text, HEADER_ALIASES["precautions"]),
         "contraindications": extract_section(text, HEADER_ALIASES["contraindications"]),
     }
+
+    allowed_fields = QUALITY_FIELD_POLICY.get(item["doc_quality"], set())
+    if allowed_fields:
+        section_values = {
+            field_name: value
+            for field_name, value in section_values.items()
+            if field_name in allowed_fields
+        }
+    else:
+        section_values = {}
+
+    overrides = FIELD_OVERRIDES.get(item["canonical_name"], {})
+    for field_name, field_value in overrides.items():
+        section_values[field_name] = field_value
 
     def add_record(field_name: str, field_value: str) -> None:
         field_value = compact(field_value)
