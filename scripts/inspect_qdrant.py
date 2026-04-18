@@ -45,12 +45,12 @@ def show_summary(client: QdrantClient) -> None:
     print("distance:", info.config.params.vectors.distance)
 
 
-def load_points(client: QdrantClient, limit: int, drug: str | None = None):
+def load_points(client: QdrantClient, limit: int, drug: str | None = None, with_vectors: bool = False):
     kwargs = {
         "collection_name": COLLECTION_NAME,
         "limit": limit,
         "with_payload": True,
-        "with_vectors": False,
+        "with_vectors": with_vectors,
     }
     if drug:
         kwargs["scroll_filter"] = qmodels.Filter(
@@ -72,6 +72,7 @@ def main() -> None:
     parser.add_argument("--summary", action="store_true", help="show collection summary only")
     parser.add_argument("--limit", type=int, default=10, help="number of points to print")
     parser.add_argument("--drug", type=str, default="", help="filter by canonical drug name")
+    parser.add_argument("--with-vectors", action="store_true", help="also print stored vectors")
     args = parser.parse_args()
 
     client = get_client()
@@ -81,11 +82,23 @@ def main() -> None:
             return
 
         drug = args.drug.strip() or None
-        points = load_points(client, limit=max(1, min(args.limit, 100)), drug=drug)
+        points = load_points(
+            client,
+            limit=max(1, min(args.limit, 100)),
+            drug=drug,
+            with_vectors=args.with_vectors,
+        )
         for idx, point in enumerate(points, start=1):
             print(f"--- point {idx}")
             print("id:", point.id)
             print(json.dumps(point.payload, ensure_ascii=False, indent=2))
+            if args.with_vectors:
+                vector = getattr(point, "vector", None)
+                if vector is None:
+                    print("vector: <not loaded>")
+                else:
+                    print("vector_dim:", len(vector))
+                    print("vector:", json.dumps(vector, ensure_ascii=False))
     finally:
         client.close()
 
