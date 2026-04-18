@@ -24,30 +24,36 @@ from qdrant_client.http import models as qmodels
 
 
 QDRANT_PATH = ROOT / "data" / "qdrant"
-COLLECTION_NAME = "leaflet_fields_v1"
+DEFAULT_COLLECTION = "leaflet_fields_v1"
 
 
 def get_client() -> QdrantClient:
     return QdrantClient(path=str(QDRANT_PATH))
 
 
-def show_summary(client: QdrantClient) -> None:
+def show_summary(client: QdrantClient, collection_name: str) -> None:
     cols = client.get_collections().collections
     print("collections:", [c.name for c in cols])
-    if not any(c.name == COLLECTION_NAME for c in cols):
-        print(f"collection {COLLECTION_NAME!r} not found")
+    if not any(c.name == collection_name for c in cols):
+        print(f"collection {collection_name!r} not found")
         return
 
-    info = client.get_collection(COLLECTION_NAME)
-    print("collection_name:", COLLECTION_NAME)
+    info = client.get_collection(collection_name)
+    print("collection_name:", collection_name)
     print("points_count:", info.points_count)
     print("vector_size:", info.config.params.vectors.size)
     print("distance:", info.config.params.vectors.distance)
 
 
-def load_points(client: QdrantClient, limit: int, drug: str | None = None, with_vectors: bool = False):
+def load_points(
+    client: QdrantClient,
+    collection_name: str,
+    limit: int,
+    drug: str | None = None,
+    with_vectors: bool = False,
+):
     kwargs = {
-        "collection_name": COLLECTION_NAME,
+        "collection_name": collection_name,
         "limit": limit,
         "with_payload": True,
         "with_vectors": with_vectors,
@@ -73,17 +79,19 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=10, help="number of points to print")
     parser.add_argument("--drug", type=str, default="", help="filter by canonical drug name")
     parser.add_argument("--with-vectors", action="store_true", help="also print stored vectors")
+    parser.add_argument("--collection", type=str, default=DEFAULT_COLLECTION, help="collection name")
     args = parser.parse_args()
 
     client = get_client()
     try:
-        show_summary(client)
+        show_summary(client, args.collection)
         if args.summary:
             return
 
         drug = args.drug.strip() or None
         points = load_points(
             client,
+            collection_name=args.collection,
             limit=max(1, min(args.limit, 100)),
             drug=drug,
             with_vectors=args.with_vectors,
