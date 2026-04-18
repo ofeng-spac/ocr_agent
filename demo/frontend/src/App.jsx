@@ -218,6 +218,7 @@ export default function App() {
                 className={name === selectedVideo ? "video-item active" : "video-item"}
                 onClick={() => handleSelectVideo(name)}
                 type="button"
+                data-testid={`video-item-${name}`}
               >
                 {name}
               </button>
@@ -237,6 +238,7 @@ export default function App() {
               value={expectedDrugName}
               onChange={(e) => setExpectedDrugName(e.target.value)}
               placeholder="输入期望药名，例如：注射用头孢噻呋钠"
+              data-testid="expected-drug-input"
             />
             <div className="action-buttons">
               <button
@@ -244,6 +246,7 @@ export default function App() {
                 type="button"
                 disabled={!selectedVideo || loadingResult}
                 onClick={handleRecognize}
+                data-testid="recognize-btn"
               >
                 {loadingResult ? "处理中..." : "开始识别"}
               </button>
@@ -252,6 +255,7 @@ export default function App() {
                 type="button"
                 disabled={!selectedVideo || !expectedDrugName.trim() || loadingResult}
                 onClick={handleVerify}
+                data-testid="verify-btn"
               >
                 {loadingResult ? "处理中..." : "开始核验"}
               </button>
@@ -271,13 +275,13 @@ export default function App() {
 
           {result ? (
             <>
-              <div className="result-card">
+              <div className="result-card" data-testid="result-card">
                 <div className="meta-grid">
-                  <p><strong>视频</strong><span>{result.video_name}</span></p>
-                  <p><strong>耗时</strong><span>{result.elapsed}s</span></p>
-                  <p><strong>原始名称</strong><span>{result.raw_name || "未提取到"}</span></p>
-                  <p><strong>标准名称</strong><span>{result.canonical_name || "未确认"}</span></p>
-                  <p><strong>校验状态</strong><span>{result.verify_status}</span></p>
+                  <p><strong>视频</strong><span data-testid="video-name-value">{result.video_name}</span></p>
+                  <p><strong>耗时</strong><span data-testid="elapsed-value">{result.elapsed}s</span></p>
+                  <p><strong>原始名称</strong><span data-testid="raw-name-value">{result.raw_name || "未提取到"}</span></p>
+                  <p><strong>标准名称</strong><span data-testid="canonical-name-value">{result.canonical_name || "未确认"}</span></p>
+                  <p><strong>校验状态</strong><span data-testid="verify-status-value">{result.verify_status}</span></p>
                   <p><strong>匹配类型</strong><span>{result.verify_match_type}</span></p>
                   <p><strong>不确定性</strong><span>{result.uncertainty_level || "-"}</span></p>
                   <p><strong>候选名称</strong><span>{result.candidate_name || "-"}</span></p>
@@ -328,19 +332,21 @@ export default function App() {
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
                     placeholder="例如：这个药的适应症是什么"
+                    data-testid="qa-question-input"
                   />
                   <button
                     className="secondary-btn"
                     type="button"
                     disabled={!result.canonical_name || !question.trim() || loadingQa}
                     onClick={handleAsk}
+                    data-testid="qa-ask-btn"
                   >
                     {loadingQa ? "问答中..." : "开始问答"}
                   </button>
                 </div>
 
                 {qaResult ? (
-                  <div className="qa-result">
+                  <div className="qa-result" data-testid="qa-result">
                     <p><strong>字段</strong> {qaResult.target_field}</p>
                     <p><strong>状态</strong> {qaResult.status}</p>
                     <p><strong>说明</strong> {qaResult.reason}</p>
@@ -350,7 +356,7 @@ export default function App() {
                     {qaResult.answer ? (
                       <div className="note-block">
                         <strong>回答</strong>
-                        <p>{qaResult.answer}</p>
+                        <p data-testid="qa-answer">{qaResult.answer}</p>
                       </div>
                     ) : null}
                     {qaResult.citations?.length ? (

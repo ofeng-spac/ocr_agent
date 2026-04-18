@@ -1,0 +1,49 @@
+{
+  "generated_at": "2026-04-18T21:24:35",
+  "host": "http://127.0.0.1:8091",
+  "users": 3,
+  "spawn_rate": 1,
+  "run_time": "20s",
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "[2026-04-18 21:24:15,900] aimax01/INFO/locust.main: Starting Locust 2.43.4\n[2026-04-18 21:24:15,900] aimax01/INFO/locust.main: Run time limit set to 20 seconds\n[2026-04-18 21:24:15,901] aimax01/INFO/locust.runners: Ramping to 3 users at a rate of 1.00 per second\n[2026-04-18 21:24:17,904] aimax01/INFO/locust.runners: All users spawned: {\"DrugAgentUser\": 3} (3 total users)\n[2026-04-18 21:24:35,821] aimax01/INFO/locust.main: --run-time limit reached, shutting down\n[2026-04-18 21:24:35,837] aimax01/INFO/locust.main: Shutting down (exit code 0)\nType     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s\n--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------\nPOST     POST /api/rag/ask [field]                                                         27     0(0.00%) |     11       8      23     12 |    1.38        0.00\nPOST     POST /api/rag/ask [semantic]                                                      30     0(0.00%) |     13       9      21     13 |    1.54        0.00\n--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------\n         Aggregated                                                                        57     0(0.00%) |     12       8      23     12 |    2.92        0.00\n\nResponse time percentiles (approximated)\nType     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs\n--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------\nPOST     POST /api/rag/ask [field]                                                              12     12     12     12     13     13     23     23     23     23     23     27\nPOST     POST /api/rag/ask [semantic]                                                           13     13     14     14     16     19     22     22     22     22     22     30\n--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------\n         Aggregated                                                                             12     13     13     13     15     19     22     23     23     23     23     57\n\n",
+  "aggregated": {
+    "name": "Aggregated",
+    "request_count": 54,
+    "failure_count": 0,
+    "avg_response_ms": 12.64961453853175,
+    "median_response_ms": 12.0,
+    "min_response_ms": 8.88662994839251,
+    "max_response_ms": 23.03950989153236,
+    "rps": 2.8506843835060853,
+    "p95_ms": 19.0,
+    "p99_ms": 23.0
+  },
+  "routes": {
+    "field": {
+      "name": "POST /api/rag/ask [field]",
+      "request_count": 25,
+      "failure_count": 0,
+      "avg_response_ms": 11.752305566333234,
+      "median_response_ms": 12.0,
+      "min_response_ms": 8.88662994839251,
+      "max_response_ms": 23.03950989153236,
+      "rps": 1.3197612886602246,
+      "p95_ms": 13.0,
+      "p99_ms": 23.0
+    },
+    "semantic": {
+      "name": "POST /api/rag/ask [semantic]",
+      "request_count": 29,
+      "failure_count": 0,
+      "avg_response_ms": 13.423156755944264,
+      "median_response_ms": 13.0,
+      "min_response_ms": 9.899717988446355,
+      "max_response_ms": 21.951112081296742,
+      "rps": 1.5309230948458605,
+      "p95_ms": 19.0,
+      "p99_ms": 22.0
+    }
+  },
+  "csv_prefix": "/home/vision/users/flb/Kestrel-Recognition/data/eval/perf_rag/rag_perf"
+}
