@@ -1,0 +1,298 @@
+{
+  "generated_at": "2026-04-18T13:48:57",
+  "summary": {
+    "total_cases": 12,
+    "passed_cases": 12,
+    "overall_pass_rate": 1.0,
+    "route_accuracy": 1.0,
+    "status_accuracy": 1.0,
+    "retrieval_mode_accuracy": 1.0,
+    "target_field_accuracy": 1.0,
+    "answer_hit_rate": 1.0,
+    "citation_field_hit_rate": 1.0,
+    "citation_section_hit_rate": 1.0,
+    "refusal_accuracy": 1.0,
+    "avg_latency_ms": 0.99,
+    "avg_latency_by_route_ms": {
+      "field_query": 0.77,
+      "semantic_query": 1.43
+    }
+  },
+  "cases": [
+    {
+      "case_id": "field_001",
+      "canonical_name": "双黄连口服液",
+      "question": "规格是什么",
+      "latency_ms": 1.36,
+      "checks": {
+        "route_mode": true,
+        "status": true,
+        "retrieval_mode": true,
+        "target_field": true,
+        "answer_contains": true,
+        "citation_field": true,
+        "latency_recorded": true
+      },
+      "passed": true,
+      "result": {
+        "status": "ok",
+        "route_mode": "field_query",
+        "retrieval_mode": "qdrant_fields",
+        "target_field": "specification",
+        "answer_preview": "每支装 10 毫升。",
+        "citations_count": 1
+      }
+    },
+    {
+      "case_id": "field_002",
+      "canonical_name": "盐酸小檗碱片",
+      "question": "禁忌是什么",
+      "latency_ms": 0.83,
+      "checks": {
+        "route_mode": true,
+        "status": true,
+        "retrieval_mode": true,
+        "target_field": true,
+        "answer_contains": true,
+        "citation_field": true,
+        "latency_recorded": true
+      },
+      "passed": true,
+      "result": {
+        "status": "ok",
+        "route_mode": "field_query",
+        "retrieval_mode": "qdrant_fields",
+        "target_field": "contraindications",
+        "answer_preview": "溶血性贫血患者及葡萄糖-6-磷酸脱氢酶缺乏患者禁用。",
+        "citations_count": 1
+      }
+    },
+    {
+      "case_id": "field_003",
+      "canonical_name": "奥美拉唑肠溶胶囊",
+      "question": "用法用量是什么",
+      "latency_ms": 0.81,
+      "checks": {
+        "route_mode": true,
+        "status": true,
+        "retrieval_mode": true,
+        "target_field": true,
+        "answer_contains": true,
+        "citation_field": true,
+        "latency_recorded": true
+      },
+      "passed": true,
+      "result": {
+        "status": "ok",
+        "route_mode": "field_query",
+        "retrieval_mode": "qdrant_fields",
+        "target_field": "dosage",
+        "answer_preview": "口服，不可咀嚼。 1、消化性溃疡：每次 20mg（1 粒），每日 1～2 次，每日晨起吞服或早晚各一次，胃溃疡疗程 通常为 4～8 周，十二指肠溃疡疗程通常 2～4 周。 2、反流性食管炎：每次 20～60mg（1～3 粒），每日 1～2 次。晨起吞服或早晚各一次，疗程 通常为 4～8 周。 3、 卓－艾综合征：初始剂量为每次 60mg（3 粒） ，每日 1 次，以后每日总剂量可根据病情调 整为 ",
+        "citations_count": 1
+      }
+    },
+    {
+      "case_id": "field_004",
+      "canonical_name": "贝伐珠单抗注射液",
+      "question": "商品名是什么",
+      "latency_ms": 1.22,
+      "checks": {
+        "route_mode": true,
+        "status": true,
+        "retrieval_mode": true,
+        "target_field": true,
+        "answer_contains": true,
+        "citation_field": true,
+        "latency_recorded": true
+      },
+      "passed": true,
+      "result": {
+        "status": "ok",
+        "route_mode": "field_query",
+        "retrieval_mode": "qdrant_fields",
+        "target_field": "brand_name",
+        "answer_preview": "Avastin；安维汀；贝伐珠单抗注射液",
+        "citations_count": 3
+      }
+    },
+    {
+      "case_id": "field_005",
+      "canonical_name": "孟鲁司特钠片",
+      "question": "正式名称是什么",
+      "latency_ms": 0.71,
+      "checks": {
+        "route_mode": true,
+        "status": true,
+        "retrieval_mode": true,
+        "target_field": true,
+        "answer_contains": true,
+        "citation_field": true,
+        "latency_recorded": true
+      },
+      "passed": true,
+      "result": {
+        "status": "ok",
+        "route_mode": "field_query",
+        "retrieval_mode": "qdrant_fields",
+        "target_field": "generic_name",
+        "answer_preview": "孟鲁司特钠片",
+        "citations_count": 1
+      }
+    },
+    {
+      "case_id": "semantic_001",
+      "canonical_name": "双黄连口服液",
+      "question": "这个药主要用于哪些场景",
+      "latency_ms": 1.37,
+      "checks": {
+        "route_mode": true,
+        "status": true,
+        "retrieval_mode": true,
+        "answer_contains": true,
+        "citation_section": true,
+        "latency_recorded": true
+      },
+      "passed": true,
+      "result": {
+        "status": "ok",
+        "route_mode": "semantic_query",
+        "retrieval_mode": "qdrant_chunks",
+        "target_field": null,
+        "answer_preview": "疏风解表，清热解毒。用于外感风热所致的感冒，症见发热、咳嗽、咽痛。",
+        "citations_count": 1
+      }
+    },
+    {
+      "case_id": "semantic_002",
+      "canonical_name": "贝伐珠单抗注射液",
+      "question": "这个药主要用于哪些场景",
+      "latency_ms": 1.74,
+      "checks": {
+        "route_mode": true,
+        "status": true,
+        "retrieval_mode": true,
+        "answer_contains": true,
+        "citation_section": true,
+        "latency_recorded": true
+      },
+      "passed": true,
+      "result": {
+        "status": "ok",
+        "route_mode": "semantic_query",
+        "retrieval_mode": "qdrant_chunks",
+        "target_field": null,
+        "answer_preview": "转移性结直肠癌 贝伐珠单抗联合以氟尿嘧啶类为基础的化疗适用于转移性结直肠癌患者的治疗。 晚期、转移性或复发性非小细胞肺癌 1 贝伐珠单抗联合以铂类为基础的化疗用于不可切除的晚期、转移性或复发性非鳞状细胞非小细胞肺 癌患者的一线治疗。 复发性胶质母细胞瘤 贝伐珠单抗用于成人复发性胶质母细胞瘤患者的治疗。 肝细胞癌 本品联合阿替利珠单抗治疗既往未接受过全身系统性治疗的不可切除肝细胞癌患者。 上皮性卵巢",
+        "citations_count": 2
+      }
+    },
+    {
+      "case_id": "semantic_003",
+      "canonical_name": "注射用头孢曲松钠",
+      "question": "这个药一般治疗哪些感染",
+      "latency_ms": 1.35,
+      "checks": {
+        "route_mode": true,
+        "status": true,
+        "retrieval_mode": true,
+        "answer_contains": true,
+        "citation_section": true,
+        "latency_recorded": true
+      },
+      "passed": true,
+      "result": {
+        "status": "ok",
+        "route_mode": "semantic_query",
+        "retrieval_mode": "qdrant_chunks",
+        "target_field": null,
+        "answer_preview": "用于敏感致病菌所致的下呼吸道感染、尿路、胆道感染，以及腹腔感染、盆腔感染、皮肤 软组织感染、骨和关节感染、败血症、脑膜炎等及手术期感染预防。本品单剂可治疗单纯性淋 病。",
+        "citations_count": 1
+      }
+    },
+    {
+      "case_id": "semantic_004",
+      "canonical_name": "蒲地蓝消炎口服液",
+      "question": "这个药主要用于哪些场景",
+      "latency_ms": 1.25,
+      "checks": {
+        "route_mode": true,
+        "status": true,
+        "retrieval_mode": true,
+        "answer_contains": true,
+        "citation_section": true,
+        "latency_recorded": true
+      },
+      "passed": true,
+      "result": {
+        "status": "ok",
+        "route_mode": "semantic_query",
+        "retrieval_mode": "qdrant_chunks",
+        "target_field": null,
+        "answer_preview": "清热解毒，消肿利咽。用于疖肿、腮腺炎、咽炎、扁桃体炎。",
+        "citations_count": 1
+      }
+    },
+    {
+      "case_id": "refusal_001",
+      "canonical_name": "狂犬病灭活疫苗",
+      "question": "适应症是什么",
+      "latency_ms": 0.24,
+      "checks": {
+        "route_mode": true,
+        "status": true,
+        "target_field": true,
+        "latency_recorded": true
+      },
+      "passed": true,
+      "result": {
+        "status": "doc_unavailable",
+        "route_mode": "field_query",
+        "retrieval_mode": null,
+        "target_field": "indications",
+        "answer_preview": "",
+        "citations_count": 0
+      }
+    },
+    {
+      "case_id": "refusal_002",
+      "canonical_name": "猫鼻气管炎、杯状病毒病、泛白细胞减少症三联灭活疫苗",
+      "question": "规格是什么",
+      "latency_ms": 0.27,
+      "checks": {
+        "route_mode": true,
+        "status": true,
+        "target_field": true,
+        "latency_recorded": true
+      },
+      "passed": true,
+      "result": {
+        "status": "doc_unavailable",
+        "route_mode": "field_query",
+        "retrieval_mode": null,
+        "target_field": "specification",
+        "answer_preview": "",
+        "citations_count": 0
+      }
+    },
+    {
+      "case_id": "refusal_003",
+      "canonical_name": "孟鲁司特钠片",
+      "question": "适应症是什么",
+      "latency_ms": 0.69,
+      "checks": {
+        "route_mode": true,
+        "status": true,
+        "target_field": true,
+        "latency_recorded": true
+      },
+      "passed": true,
+      "result": {
+        "status": "field_unavailable",
+        "route_mode": "field_query",
+        "retrieval_mode": null,
+        "target_field": "indications",
+        "answer_preview": "",
+        "citations_count": 0
+      }
+    }
+  ]
+}
