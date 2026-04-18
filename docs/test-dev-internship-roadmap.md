@@ -209,11 +209,11 @@
 
 ### 8.3 在本项目中的落地任务
 
-- [ ] mock `recognize_video` 的大模型调用
+- [x] mock `recognize_video` 的大模型调用
 - [ ] mock `LeafletQAService` 的 Qdrant 返回
 - [ ] mock `audit` 写入逻辑
 - [ ] mock 本地文件读取
-- [ ] 建立纯离线测试模式
+- [x] 建立纯离线测试模式
 
 ### 8.4 验收标准
 
