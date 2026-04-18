@@ -136,12 +136,12 @@
 
 ### 6.4 在本项目中的落地任务
 
-- [ ] 为 `/api/health` 和 `/api/videos` 写基础接口测试
-- [ ] 为 `/api/recognize` 写成功路径测试
-- [ ] 为 `/api/verify` 写成功路径测试
-- [ ] 为 `/api/rag/ask` 写字段检索和语义检索测试
-- [ ] 为错误输入写异常测试
-- [ ] 为缺视频、空参数、错误参数写负例测试
+- [x] 为 `/api/health` 和 `/api/videos` 写基础接口测试
+- [x] 为 `/api/recognize` 写成功路径测试
+- [x] 为 `/api/verify` 写成功路径测试
+- [x] 为 `/api/rag/ask` 写字段检索和语义检索测试
+- [x] 为错误输入写异常测试
+- [x] 为缺视频、空参数、错误参数写负例测试
 
 ### 6.5 验收标准
 
@@ -177,11 +177,11 @@
 
 ### 7.4 在本项目中的落地任务
 
-- [ ] 将 `verifier_cases.json` 纳入自动回归流程
-- [ ] 将 `rag_eval_cases.jsonl` 纳入自动回归流程
-- [ ] 增加回归执行入口脚本，例如 `scripts/run_regression.py`
+- [x] 将 `verifier_cases.json` 纳入自动回归流程
+- [x] 将 `rag_eval_cases.jsonl` 纳入自动回归流程
+- [x] 增加回归执行入口脚本，例如 `scripts/run_regression.py`
 - [ ] 增加结果对比输出
-- [ ] 增加“失败样例明细”输出
+- [x] 增加“失败样例明细”输出
 
 ### 7.5 验收标准
 
@@ -210,7 +210,7 @@
 ### 8.3 在本项目中的落地任务
 
 - [x] mock `recognize_video` 的大模型调用
-- [ ] mock `LeafletQAService` 的 Qdrant 返回
+- [x] mock `LeafletQAService` 的 Qdrant 返回
 - [ ] mock `audit` 写入逻辑
 - [ ] mock 本地文件读取
 - [x] 建立纯离线测试模式
