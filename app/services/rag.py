@@ -37,10 +37,22 @@ QUESTION_FIELD_RULES = [
 ]
 
 SEMANTIC_SECTION_RULES = [
-    (["适应症", "主治", "用途", "哪些场景", "适用于", "治疗", "疾病"], ["indications"]),
+    (["适应症", "主治", "用途", "用于", "哪些场景", "适用于", "治疗", "疾病", "感染"], ["indications"]),
     (["注意", "风险", "慎用", "不良反应", "副作用"], ["precautions", "contraindications"]),
     (["怎么用", "给药", "输注", "服用", "剂量", "频次"], ["dosage"]),
     (["外观", "长什么样"], ["appearance"]),
+]
+
+SEMANTIC_ROUTE_PATTERNS = [
+    "主要用于",
+    "哪些场景",
+    "什么场景",
+    "一般用于",
+    "有哪些风险",
+    "风险和注意事项",
+    "使用提醒",
+    "慎用提醒",
+    "治疗哪些感染",
 ]
 
 
@@ -75,6 +87,9 @@ def infer_field_name(question: str) -> str | None:
 
 
 def route_question(question: str) -> tuple[str, str | None]:
+    normalized_question = normalize_name(question)
+    if any(normalize_name(pattern) in normalized_question for pattern in SEMANTIC_ROUTE_PATTERNS):
+        return "semantic_query", None
     field_name = infer_field_name(question)
     if field_name:
         return "field_query", field_name

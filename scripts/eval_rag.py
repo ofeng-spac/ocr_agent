@@ -13,6 +13,7 @@ import sys
 import time
 from collections import Counter, defaultdict
 from datetime import datetime
+from math import ceil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -75,6 +76,7 @@ def check_case(case: dict, result: dict, latency_ms: float) -> dict:
 
     return {
         "case_id": case["case_id"],
+        "case_type": case.get("case_type", "unknown"),
         "canonical_name": case["canonical_name"],
         "question": case["question"],
         "latency_ms": round(latency_ms, 2),
@@ -98,6 +100,7 @@ def summarize(case_results: list[dict]) -> dict:
     metric_counts = Counter()
     metric_totals = Counter()
     route_groups = defaultdict(list)
+    case_type_groups = defaultdict(list)
     refusal_cases = []
 
     for item in case_results:
@@ -108,9 +111,21 @@ def summarize(case_results: list[dict]) -> dict:
 
         route_mode = item["result"]["route_mode"] or "unknown"
         route_groups[route_mode].append(item["latency_ms"])
+        case_type_groups[item.get("case_type", "unknown")].append(item)
 
         if item["result"]["status"] in {"doc_unavailable", "field_unavailable", "semantic_unavailable"}:
             refusal_cases.append(item)
+
+    def rate(group: list[dict]) -> float:
+        if not group:
+            return 0.0
+        return round(sum(1 for item in group if item["passed"]) / len(group), 4)
+
+    all_latencies = sorted(item["latency_ms"] for item in case_results)
+    p95_latency = 0.0
+    if all_latencies:
+        idx = max(0, ceil(len(all_latencies) * 0.95) - 1)
+        p95_latency = round(all_latencies[idx], 2)
 
     metrics = {
         "total_cases": total,
@@ -125,9 +140,18 @@ def summarize(case_results: list[dict]) -> dict:
         "citation_section_hit_rate": round(metric_counts["citation_section"] / metric_totals["citation_section"], 4) if metric_totals["citation_section"] else 0.0,
         "refusal_accuracy": round(sum(1 for item in refusal_cases if item["passed"]) / len(refusal_cases), 4) if refusal_cases else 0.0,
         "avg_latency_ms": round(sum(item["latency_ms"] for item in case_results) / total, 2) if total else 0.0,
+        "p95_latency_ms": p95_latency,
         "avg_latency_by_route_ms": {
             route: round(sum(values) / len(values), 2)
             for route, values in route_groups.items()
+        },
+        "pass_rate_by_case_type": {
+            case_type: rate(items)
+            for case_type, items in case_type_groups.items()
+        },
+        "count_by_case_type": {
+            case_type: len(items)
+            for case_type, items in case_type_groups.items()
         },
     }
     return metrics
@@ -150,6 +174,7 @@ def build_report(summary: dict, case_results: list[dict]) -> str:
         f"- Citation section hit rate: {summary['citation_section_hit_rate']:.2%}",
         f"- Refusal accuracy: {summary['refusal_accuracy']:.2%}",
         f"- Avg latency: {summary['avg_latency_ms']} ms",
+        f"- P95 latency: {summary['p95_latency_ms']} ms",
         "",
         "## Avg Latency by Route",
         "",
@@ -158,12 +183,17 @@ def build_report(summary: dict, case_results: list[dict]) -> str:
     for route, latency in sorted(summary["avg_latency_by_route_ms"].items()):
         lines.append(f"- {route}: {latency} ms")
 
+    lines.extend(["", "## Pass Rate by Case Type", ""])
+    for case_type, pass_rate in sorted(summary["pass_rate_by_case_type"].items()):
+        count = summary["count_by_case_type"].get(case_type, 0)
+        lines.append(f"- {case_type}: {pass_rate:.2%} ({count} cases)")
+
     lines.extend(["", "## Case Results", ""])
-    lines.append("| Case | Passed | Route | Status | Retrieval | Latency(ms) |")
-    lines.append("|:--|:--:|:--|:--|:--|--:|")
+    lines.append("| Case | Type | Passed | Route | Status | Retrieval | Latency(ms) |")
+    lines.append("|:--|:--|:--:|:--|:--|:--|--:|")
     for item in case_results:
         lines.append(
-            f"| {item['case_id']} | {'Y' if item['passed'] else 'N'} | "
+            f"| {item['case_id']} | {item['case_type']} | {'Y' if item['passed'] else 'N'} | "
             f"{item['result']['route_mode']} | {item['result']['status']} | "
             f"{item['result']['retrieval_mode']} | {item['latency_ms']} |"
         )
@@ -175,6 +205,9 @@ def main() -> None:
     cases = load_cases()
     service = LeafletQAService()
     service.ensure_index()
+    # Warm up both retrieval paths so reported latency reflects steady-state behavior.
+    service.ask("双黄连口服液", "规格是什么")
+    service.ask("贝伐珠单抗注射液", "这个药主要用于哪些场景")
 
     case_results = []
     for case in cases:
