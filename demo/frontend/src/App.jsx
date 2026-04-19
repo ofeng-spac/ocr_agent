@@ -2,6 +2,37 @@ import { useEffect, useMemo, useState } from "react";
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
+function WorkflowTimeline({ title, items }) {
+  if (!items?.length) {
+    return null;
+  }
+
+  return (
+    <div className="workflow-block">
+      <strong>{title}</strong>
+      <div className="workflow-timeline">
+        {items.map((item, idx) => (
+          <div key={`${item.node}-${idx}`} className="timeline-item">
+            <div className="timeline-marker" />
+            <div className="timeline-card">
+              <div className="timeline-head">
+                <span className="timeline-node">{item.node}</span>
+                <span className={`timeline-status status-${item.status}`}>{item.status}</span>
+              </div>
+              <p className="timeline-summary">{item.summary}</p>
+              <div className="timeline-meta">
+                {item.duration_ms !== undefined ? <span>耗时 {item.duration_ms} ms</span> : null}
+                {item.started_at ? <span>开始 {item.started_at}</span> : null}
+                {item.finished_at ? <span>结束 {item.finished_at}</span> : null}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState("");
@@ -305,20 +336,7 @@ export default function App() {
                   <summary>查看原始模型输出</summary>
                   <pre className="raw-output">{result.result}</pre>
                 </details>
-                {result.workflow_trace?.length ? (
-                  <div className="workflow-block">
-                    <strong>执行轨迹</strong>
-                    <div className="workflow-list">
-                      {result.workflow_trace.map((item, idx) => (
-                        <div key={`${item.node}-${idx}`} className="workflow-item">
-                          <p><strong>{item.node}</strong></p>
-                          <p>状态：{item.status}</p>
-                          <p>{item.summary}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
+                <WorkflowTimeline title="执行轨迹" items={result.workflow_trace} />
               </div>
 
               <div className="qa-block">
@@ -371,20 +389,7 @@ export default function App() {
                         ))}
                       </div>
                     ) : null}
-                    {qaResult.workflow_trace?.length ? (
-                      <div className="workflow-block">
-                        <strong>问答轨迹</strong>
-                        <div className="workflow-list">
-                          {qaResult.workflow_trace.map((item, idx) => (
-                            <div key={`${item.node}-${idx}`} className="workflow-item">
-                              <p><strong>{item.node}</strong></p>
-                              <p>状态：{item.status}</p>
-                              <p>{item.summary}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ) : null}
+                    <WorkflowTimeline title="问答轨迹" items={qaResult.workflow_trace} />
                   </div>
                 ) : (
                   <p className="muted">当前支持规格、适应症、用法用量、注意事项、禁忌等字段问答。</p>
