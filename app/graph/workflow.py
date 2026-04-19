@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import time
+from datetime import datetime
+
 from langgraph.graph import END, START, StateGraph
 
 from app.graph.state import RagWorkflowState, RecognitionWorkflowState
@@ -8,24 +11,50 @@ from app.services.rag import get_leaflet_qa_service
 from app.services.recognizer import apply_verification, run_recognition
 
 
-def _append_trace(state: dict, node: str, status: str, summary: str) -> list[dict]:
+def _now_iso() -> str:
+    return datetime.now().isoformat(timespec="milliseconds")
+
+
+def _append_trace(
+    state: dict,
+    node: str,
+    status: str,
+    summary: str,
+    *,
+    started_at: str | None = None,
+    finished_at: str | None = None,
+    duration_ms: float | None = None,
+) -> list[dict]:
     trace = list(state.get("workflow_trace", []))
-    trace.append({"node": node, "status": status, "summary": summary})
+    item = {"node": node, "status": status, "summary": summary}
+    if started_at is not None:
+        item["started_at"] = started_at
+    if finished_at is not None:
+        item["finished_at"] = finished_at
+    if duration_ms is not None:
+        item["duration_ms"] = round(duration_ms, 2)
+    trace.append(item)
     return trace
 
 
 def recognize_node(state: RecognitionWorkflowState) -> RecognitionWorkflowState:
+    started_at = _now_iso()
+    t0 = time.perf_counter()
     recognition_result = run_recognition(
         video_path=state["video_path"],
         model=state["model"],
         knowledge=state["knowledge"],
         guide=state["guide"],
     )
+    finished_at = _now_iso()
     trace = _append_trace(
         state,
         "recognize_node",
         "ok",
         f"识别完成，raw_name={recognition_result.get('raw_name') or '未提取'}",
+        started_at=started_at,
+        finished_at=finished_at,
+        duration_ms=(time.perf_counter() - t0) * 1000,
     )
     return {
         "recognition_result": recognition_result,
@@ -34,6 +63,8 @@ def recognize_node(state: RecognitionWorkflowState) -> RecognitionWorkflowState:
 
 
 def verify_node(state: RecognitionWorkflowState) -> RecognitionWorkflowState:
+    started_at = _now_iso()
+    t0 = time.perf_counter()
     response = apply_verification(state["recognition_result"], state.get("expected_drug_name"))
     response["trace_id"] = state["trace_id"]
 
@@ -41,7 +72,16 @@ def verify_node(state: RecognitionWorkflowState) -> RecognitionWorkflowState:
         f"标准名校验完成，status={response.get('verify_status')}，"
         f"canonical_name={response.get('canonical_name') or '未确认'}"
     )
-    trace = _append_trace(state, "verify_node", "ok", summary)
+    finished_at = _now_iso()
+    trace = _append_trace(
+        state,
+        "verify_node",
+        "ok",
+        summary,
+        started_at=started_at,
+        finished_at=finished_at,
+        duration_ms=(time.perf_counter() - t0) * 1000,
+    )
     response["workflow_trace"] = trace
     return {
         "response": response,
@@ -50,9 +90,20 @@ def verify_node(state: RecognitionWorkflowState) -> RecognitionWorkflowState:
 
 
 def audit_node(state: RecognitionWorkflowState) -> RecognitionWorkflowState:
+    started_at = _now_iso()
+    t0 = time.perf_counter()
     event_type = f"{state['request_type']}_workflow"
     append_audit_log(event_type, state["response"], trace_id=state["trace_id"])
-    trace = _append_trace(state, "audit_node", "ok", "审计日志已写入。")
+    finished_at = _now_iso()
+    trace = _append_trace(
+        state,
+        "audit_node",
+        "ok",
+        "审计日志已写入。",
+        started_at=started_at,
+        finished_at=finished_at,
+        duration_ms=(time.perf_counter() - t0) * 1000,
+    )
     response = dict(state["response"])
     response["workflow_trace"] = trace
     return {
@@ -62,6 +113,8 @@ def audit_node(state: RecognitionWorkflowState) -> RecognitionWorkflowState:
 
 
 def rag_node(state: RagWorkflowState) -> RagWorkflowState:
+    started_at = _now_iso()
+    t0 = time.perf_counter()
     qa_service = get_leaflet_qa_service()
     result = qa_service.ask(state["canonical_name"], state["question"])
     result["trace_id"] = state["trace_id"]
@@ -72,7 +125,16 @@ def rag_node(state: RagWorkflowState) -> RagWorkflowState:
         f"说明书问答完成，status={result.get('status')}，"
         f"target_field={result.get('target_field') or 'unknown'}"
     )
-    trace = _append_trace(state, "rag_node", "ok", summary)
+    finished_at = _now_iso()
+    trace = _append_trace(
+        state,
+        "rag_node",
+        "ok",
+        summary,
+        started_at=started_at,
+        finished_at=finished_at,
+        duration_ms=(time.perf_counter() - t0) * 1000,
+    )
     result["workflow_trace"] = trace
     return {
         "rag_result": result,
